@@ -2,7 +2,7 @@ class Language{
     constructor(data){
         this.search = data.search || "";
         this.sortA = data.sortA || "";
-        this.sortB = data.sortA || "";
+        this.sortB = data.sortB || "";
     }
 }
 
