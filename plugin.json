@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "author": "BuildFire",
   "pluginName": "Default Template",
@@ -23,3 +24,33 @@
   "features": [],
   "languages": ["en"]
 }
+=======
+{
+  "author": "LOTR",
+  "pluginName": "Training Plugin - LOTR",
+  "pluginDescription": "Plugin for training aspects",
+  "supportEmail": "devSupport@buildfire.com",
+  "control": {
+    "content": {
+      "enabled": true
+    },
+    "design":{
+      "enabled": false
+    },
+    "settings": {
+      "enabled": true
+    },
+    "customTabs": [
+      { "title": "Tests", "url": "/tests/index.html" },
+      { "title": "Introduction", "url":"/introduction/index.html"},
+      { "title": "Analytics", "url":"/analytics/index.html" },
+      { "title": "Language", "url":"/language/index.html" }
+  ]
+  },
+  "widget": {
+
+  },
+  "features": [],
+  "languages": ["en"]
+}
+>>>>>>> ce72be661502704b5a042193f05ad475ac4a878b

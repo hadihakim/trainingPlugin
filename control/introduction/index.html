@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="../../widget/common/js/introduction.js"></script>
+  <script src="../../../../scripts/tinymce/tinymce.min.js"></script>
+  <script src="../../../../scripts/buildfire.js"></script>
+  <!-- Load helper.css to use our helper classes -->
+  <link href="../../../../styles/helper.css" rel="stylesheet" />
+  <link href="../../../../styles/siteIcons.css" rel="stylesheet" />
+
+  <!-- JS -->
+  <script src="../../../../scripts/jquery/jquery-1.11.2.min.js"></script>
+  <script src="../../../../scripts/buildfire.js"></script>
+  <script src="../../../../scripts/sortable.min.js"></script>
+  <script src="../../../../scripts/buildfire/components/carousel/carousel.js"></script>
+</head>
+<body>
+  <div class="carousel"></div></br>
+  <textarea id="wysiwygContent" name="content"></textarea>
+  <script>
+    tinymce.init({
+      selector: "#wysiwygContent",
+    });
+    //create a new instance of the buildfire carousel editor
+    let editor = new buildfire.components.carousel.editor(".carousel");
+
+    //save any changes in items
+    const save = (items) => {
+        //console.log(items, "It is the save button");
+      Introductions.save(items, (err, res) => {
+        if (err)
+          console.error(err);
+        else
+          console.log("item saved in datastore");
+      })
+    }
+    
+    Introductions.get((err, res) => {
+      if (err)
+        console.error(err);
+      else
+        Introductions.loadItems(res.data.images)
+        console.log(res, "Its introduction loading")
+    })
+
+    Introductions.carouselEvents();
+  </script>
+</body>
+
+</html>
