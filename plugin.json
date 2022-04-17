@@ -1,7 +1,7 @@
 {
-  "author": "BuildFire",
-  "pluginName": "Default Template",
-  "pluginDescription": "Bare bones plugin showing simple autonomy of a plugin",
+  "author": "LOTR",
+  "pluginName": "Training Plugin - LOTR",
+  "pluginDescription": "Plugin for training aspects",
   "supportEmail": "devSupport@buildfire.com",
   "control": {
     "content": {
@@ -11,10 +11,13 @@
       "enabled": false
     },
     "settings": {
-      "enabled": false
+      "enabled": true
     },
     "customTabs": [
-      { "title": "Tests", "url": "/tests/index.html" }
+      { "title": "Tests", "url": "/tests/index.html" },
+      { "title": "Introduction", "url":"/introduction/index.html"},
+      { "title": "Analytics", "url":"/analytics/index.html" },
+      { "title": "Language", "url":"/language/index.html" }
   ]
   },
   "widget": {
