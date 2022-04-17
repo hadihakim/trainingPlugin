@@ -58,10 +58,4 @@ const Introductions = {
         editor.loadItems(images);
         tinymce.activeEditor.setContent(`${description}`);
     }
-    /*wysiwygEvent: () => {
-        document.getElementById('wysiwygContent').addEventListener('input', function () {
-            //save({ images: editor.items, description: tinymce.activeEditor.getContent() || "" });
-            console.log(" Inside Controller inputChange wysiwyg")
-        });
-    }*/
 }

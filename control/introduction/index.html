@@ -24,7 +24,7 @@
       setup:(editor)=>{
         editor.on("keyup",(e)=>{
           let content=tinymce.activeEditor.getContent();
-          Introductions.save({images:editor.items,description:content},(err,res)=>{
+          Introductions.save({ images:getImages(), description:content },(err,res)=>{
             if(err) console.error(err);
             console.log(res);
           });
@@ -32,6 +32,11 @@
         })
       }
     });
+
+    const getImages = () => {
+      return editor.items;
+      
+    }
     //create a new instance of the buildfire carousel editor
     let editor = new buildfire.components.carousel.editor(".carousel");
     
@@ -45,7 +50,6 @@
           console.log("item saved in datastore");
       })
     }
-    //hello
     Introductions.get((err, res) => {
       if (err)
         console.error(err);
