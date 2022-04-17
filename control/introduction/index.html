@@ -21,6 +21,16 @@
   <script>
     tinymce.init({
       selector: "#wysiwygContent",
+      setup:(editor)=>{
+        editor.on("keyup",(e)=>{
+          let content=tinymce.activeEditor.getContent();
+          Introductions.save({images:editor.items,description:content},(err,res)=>{
+            if(err) console.error(err);
+            console.log(res);
+          });
+          
+        })
+      }
     });
     //create a new instance of the buildfire carousel editor
     let editor = new buildfire.components.carousel.editor(".carousel");
