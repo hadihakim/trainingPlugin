@@ -1,34 +1,3 @@
-<<<<<<< HEAD
-class Language{
-    constructor(data){
-        this.search = data.search || "";
-        this.sortA = data.sortA || "";
-        this.sortB = data.sortB || "";
-    }
-}
-
-const Languages={
-    TAG: "Language",
-    get: (callback)=> {
-        buildfire.datastore.get(Languages.TAG, (err, res) => {
-            if(err) return callback(err, null);
-            else return callback(null, res);
-        })
-    }, 
-    save: (obj,callback)=> {
-        buildfire.datastore.save(new Language(obj), Languages.TAG, (err, res) => {
-            if(err) return callback(err, null);
-            else return callback(null, res);
-        })
-    },
-    update: (id,obj,callback)=> {
-        buildfire.datastore.update(id,obj,Languages.TAG, (err, res) => {
-            if(err) return callback(err, null);
-            else return callback(null, res);
-        })
-    }
-    
-=======
 class Language{
     constructor(data){
         this.search = data.search || "";
@@ -66,5 +35,4 @@ const Languages={
         })
     }
     
->>>>>>> ce72be661502704b5a042193f05ad475ac4a878b
 }

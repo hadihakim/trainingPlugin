@@ -5,40 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="../../widget/common/js/item.js"></script>
   <script src="../../../../scripts/buildfire.js"></script>
-  <script src="../../../../scripts/tinymce/ui-tinymce.js"></script>
 </head>
 
 <body>
   <body>
-    <textarea name="content" id="wysiwygContent"></textarea>
-    <script>
-      let content;
-      tinymce.init({
-        selector: "#wysiwygContent",
-        setup: function (editor) {
-          editor.on("keyup", function (e) {
-            content = editor.getContent();
-            console.log(content);
-          });
-  
-          editor.on("keydown",function(e){
-            log("end")
-          })
-        },
-      });
-  
-      // buildfire.datastore.insert(
-      //   {
-      //     wysiwygContent: content,
-      //   },
-      //   (err, result) => {
-      //     if (err) return console.error("Error while inserting your data", err);
-  
-      //     console.log("Insert successful", result);
-      //   }
-      // );
-    </script>
-  </body>
 </body>
 
 </html>
