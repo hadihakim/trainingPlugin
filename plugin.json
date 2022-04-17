@@ -11,7 +11,7 @@
       "enabled": false
     },
     "settings": {
-      "enabled": true
+      "enabled": false
     },
     "customTabs": [
       { "title": "Tests", "url": "/tests/index.html" },

@@ -36,24 +36,32 @@ const Introductions = {
     carouselEvents: () => {
         // this method will be called when a new item added to the list
         editor.onAddItems = function (items) {
-            save({ images: editor.items, description: "dummy description" });
+            save({ images: editor.items, description: tinymce.activeEditor.getContent() || "" });
+            //console.log(tinymce.activeEditor.getContent(), "Testing WYSIWYG ")
         };
         // this method will be called when an item deleted from the list
         editor.onDeleteItem = function (item, index) {
-            save({ images: editor.items, description: "dummy description" });
+            save({ images: editor.items, description: tinymce.activeEditor.getContent() || "" });
         };
         // this method will be called when you edit item details
         editor.onItemChange = function (item) {
-            save({ images: editor.items, description: "dummy description" });
+            save({ images: editor.items, description: tinymce.activeEditor.getContent() || "" });
         };
         // this method will be called when you change the order of items
         editor.onOrderChange = function (item, oldIndex, newIndex) {
-            save({ images: editor.items, description: "dummy description" });
+            save({ images: editor.items, description: tinymce.activeEditor.getContent() || "" });
         };
     },
-    /// handle the loading
-    loadItems: (images)=> {
+    //handle the loading
+    loadItems: (images, description) => {
         // create an instance and pass it the items if you don't have items yet just pass []
-      editor.loadItems(images);
+        editor.loadItems(images);
+        tinymce.activeEditor.setContent(`${description}`);
     }
+    /*wysiwygEvent: () => {
+        document.getElementById('wysiwygContent').addEventListener('input', function () {
+            //save({ images: editor.items, description: tinymce.activeEditor.getContent() || "" });
+            console.log(" Inside Controller inputChange wysiwyg")
+        });
+    }*/
 }
