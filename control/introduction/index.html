@@ -20,7 +20,7 @@
 <body>
   <div class="container" id="introduction-container">
     <div class="introDes">
-      <p class="infoNote">Add an introduction section with images, text and other elements with the text editor. </p>
+      <p class="">Add an introduction section with images, text and other elements with the text editor. </p>
     </div>
     
     <div class="carousel"></div></br>
@@ -28,20 +28,17 @@
   </div>
   
   <script>
-    //document.getElementById("wysiwygContent").style.backgroundColor = red;
     tinymce.init({
       selector: "#wysiwygContent",
       setup:(editor)=>{
-        editor.on("keyup",(e)=>{
+        editor.on("keyup change",(e)=>{
           let content=tinymce.activeEditor.getContent();
           Introductions.save({ images: Introductions.getImages(), description:content },(err,res)=>{
             if(err) console.error(err);
             console.log(res);
           });
-        })
+        });
       },
-      content_style:
-    "body { background: #edf6f6; color: #626b75; font-size: 14pt; font-family: Arial; }",
     });
     //create a new instance of the buildfire carousel editor
     let editor = new buildfire.components.carousel.editor(".carousel");
