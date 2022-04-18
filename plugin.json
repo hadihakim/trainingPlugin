@@ -21,7 +21,7 @@
   ]
   },
   "widget": {
-
+    "enabled": true
   },
   "features": [],
   "languages": ["en"]

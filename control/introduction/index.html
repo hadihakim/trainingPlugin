@@ -28,30 +28,26 @@
   </div>
   
   <script>
+    //document.getElementById("wysiwygContent").style.backgroundColor = red;
     tinymce.init({
       selector: "#wysiwygContent",
       setup:(editor)=>{
         editor.on("keyup",(e)=>{
           let content=tinymce.activeEditor.getContent();
-          Introductions.save({ images:getImages(), description:content },(err,res)=>{
+          Introductions.save({ images: Introductions.getImages(), description:content },(err,res)=>{
             if(err) console.error(err);
             console.log(res);
           });
-          
         })
-      }
+      },
+      content_style:
+    "body { background: #edf6f6; color: #626b75; font-size: 14pt; font-family: Arial; }",
     });
-
-    const getImages = () => {
-      return editor.items;
-      
-    }
     //create a new instance of the buildfire carousel editor
     let editor = new buildfire.components.carousel.editor(".carousel");
     
     //save any changes in items
     const save = (items) => {
-        //console.log(items, "It is the save button");
       Introductions.save(items, (err, res) => {
         if (err)
           console.error(err);
@@ -59,6 +55,7 @@
           console.log("item saved in datastore");
       })
     }
+
     Introductions.get((err, res) => {
       if (err)
         console.error(err);
@@ -67,7 +64,6 @@
         console.log(res, "Its introduction loading")
     })
     Introductions.carouselEvents();
-    //Introductions.wysiwygEvent();
   </script>
 </body>
 

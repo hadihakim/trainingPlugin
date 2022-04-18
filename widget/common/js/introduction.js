@@ -52,6 +52,9 @@ const Introductions = {
             save({ images: editor.items, description: tinymce.activeEditor.getContent() || "" });
         };
     },
+    getImages: () => {
+        return editor.items;
+    },
     //handle the loading
     loadItems: (images, description) => {
         // create an instance and pass it the items if you don't have items yet just pass []
