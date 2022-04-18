@@ -18,12 +18,15 @@
   <script src="../../../../scripts/buildfire/components/carousel/carousel.js"></script>
 </head>
 <body>
-  <div class="introDes">
-    <p class="infoNote">Add an introduction section with images, text and other elements with the text editor. </p>
+  <div class="container" id="introduction-container">
+    <div class="introDes">
+      <p class="infoNote">Add an introduction section with images, text and other elements with the text editor. </p>
+    </div>
+    
+    <div class="carousel"></div></br>
+    <textarea id="wysiwygContent" name="content"></textarea>
   </div>
   
-  <div class="carousel"></div></br>
-  <textarea id="wysiwygContent" name="content"></textarea>
   <script>
     tinymce.init({
       selector: "#wysiwygContent",
