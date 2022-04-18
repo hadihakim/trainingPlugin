@@ -28,7 +28,6 @@
   </div>
   
   <script>
-    //document.getElementById("wysiwygContent").style.backgroundColor = red;
     tinymce.init({
       selector: "#wysiwygContent",
       setup:(editor)=>{
@@ -46,21 +45,12 @@
     //create a new instance of the buildfire carousel editor
     let editor = new buildfire.components.carousel.editor(".carousel");
     
-    //save any changes in items
-    const save = (items) => {
-      Introductions.save(items, (err, res) => {
-        if (err)
-          console.error(err);
-        else
-          console.log("item saved in datastore");
-      })
-    }
 
     Introductions.get((err, res) => {
       if (err)
         console.error(err);
       else
-        Introductions.loadItems(res.data.images, res.data.description)
+        Introductions.loadItemsCP(res.data.images, res.data.description)
         console.log(res, "Its introduction loading")
     })
     Introductions.carouselEvents();
