@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Example Plugin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+	<!-- JS -->
+	<script src="../../../../scripts/buildfire.min.js"></script>
+  <script src="../../../../scripts/buildfire/components/images/thumbnail.js"></script>
+  
+  <!-- Load helper.css to use our helper classes. -->
+	<link href="../../../../styles/helper.css" rel="stylesheet">
+  <link href="../../../../styles/siteStyle.css" rel="stylesheet">
+  <link href="../../../../styles/control/siteIcons-control.css" rel="stylesheet">
+  <link href="../../../../styles/control/bf-base.css" rel="stylesheet">
+</head>
+<body class="sub-page">
+    <div class="container slide-in padding-bottom-twenty">
+        <h1>This is a section title</h1>
+    
+        <p class="info-note margin-bottom-twenty">This is an info note <a class="link" href="">This is a link</a></p>
+​
+        <div class="row">
+            <div class="col-md-9">
+                <div class="input-group margin-bottom-twenty">
+                    <input type="text" class="form-control" placeholder="Search">
+                    <span class="input-group-btn">
+                        <button  class="btn btn-info stretch margin-left-zero">
+                            <span class="icon icon-magnifier"></span>
+                        </button>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <button class="btn btn-success stretch"><span class="icon icon-plus margin-right-ten"></span>Add Item</button>
+            </div>
+        </div>
+        <table class="table table-bf">
+            <thead>
+                <td></td>
+                <th><h5>Title <span class="icon icon-chevron-down"></span></h5></th>
+                <th><h5>Subtitle</h5></th>
+                <th><h5 class="text-center">Date of Creation</h5></th>
+                <th><h5 class="text-right">Number</h5></th>
+                <th><h5></h5></th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><div class="img-holder aspect-1-1"><img src="" alt=""></div></td>
+                    <td>Title Name</td>
+                    <td>Subtitle Name</td>
+                    <td class="text-center">Jan 23, 2022</td>
+                    <td class="text-right">189</td>
+                    <td>
+                        <div class="pull-right">
+                            <button class="btn bf-btn-icon"><span class="icon icon-pencil"></span></button>
+                            <button class="btn bf-btn-icon"><span class="icon icon-cross2"></span></button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="well empty-state-lg">
+            <h5 class="text-center">Empty State</h5>
+        </div>
+        <div class="row margin-bottom-fifteen">
+            <div class="col-md-3">
+                <label for="text1">Input Name <span class="text-danger">*</span> </label>
+            </div>
+            <div class="col-md-9">
+                <input id="text1" type="text" class="form-control">
+            </div>
+        </div>
+        <div class="row margin-bottom-fifteen">
+            <div class="col-md-3">
+                <label for="text2">Input Name</label>
+            </div>
+            <div class="col-md-9">
+                <input id="text2" type="text" class="form-control">
+            </div>
+        </div>
+    
+        <div class="margin-bottom-twenty image-picker aspect-1-1 thumbnail-picker"></div>
+​
+        <div class="maring-bottom-twenty">
+            <span class="icon icon-chart-settings"></span>
+            <span class="icon icon-magnifier"></span>
+            <span class="icon icon-list4"></span>
+            <span class="icon icon-funnel"></span>
+            <span class="icon icon-box"></span>
+            <span class="icon icon-tab"></span>
+            <span class="icon icon-phone-wave"></span>
+            <span class="icon icon-pencil-ruler2"></span>
+            <span class="icon icon-lock"></span>
+            <span class="icon icon-paper-plane"></span>
+            <span class="icon icon-document"></span>
+            <span class="icon icon-profile"></span>
+            <span class="icon icon-home"></span>
+            <span class="icon icon-brush2"></span>
+            <span class="icon icon-cog"></span>
+            <span class="icon icon-hammer-wrench"></span>
+            <span class="icon icon-files"></span>
+            <span class="icon icon-window"></span>
+            <span class="icon icon-bubble-question"></span>
+            <span class="icon icon-pie-chart"></span>
+            <span class="icon icon-puzzle"></span>
+            <span class="icon icon-bullhorn"></span>
+            <span class="icon icon-link2"></span>
+            <span class="icon icon-menu"></span>
+            <span class="icon icon-check"></span>
+            <span class="icon icon-cross2"></span>
+            <span class="icon icon-chevron-down"></span>
+            <span class="icon icon-chevron-left"></span>
+            <span class="icon icon-backward-circle"></span>
+            <span class="icon icon-play-circle"></span>
+            <span class="icon icon-pause-circle"></span>
+            <span class="icon icon-forward-circle"></span>
+            <span class="icon icon-cart"></span>
+            <span class="icon icon-cart-plus"></span>
+            <span class="icon icon-shovel"></span>
+            <span class="icon icon-pencil3"></span>
+            <span class="icon icon-cli"></span>
+            <span class="icon icon-users2"></span>
+            <span class="icon icon-shuffle"></span>
+            <span class="icon icon-repeat-one"></span>
+            <span class="icon icon-repeat"></span>
+            <span class="icon icon-volume-high"></span>
+            <span class="icon icon-laptop-phone"></span>
+            <span class="icon icon-ellipsis"></span>
+            <span class="icon icon-aim"></span>
+            <span class="icon map-marker1"></span>
+            <span class="icon location"></span>
+            <span class="icon calendar-check"></span>
+            <span class="icon chevron-right"></span>
+            <span class="icon icon-bug"></span>
+            <span class="icon icon-home2"></span>
+            <span class="icon icon-city"></span>
+            <span class="icon icon-palette"></span>
+            <span class="icon icon-pencil-ruler"></span>
+            <span class="icon icon-fire"></span>
+            <span class="icon icon-shield-check"></span>
+            <span class="icon icon-cog2"></span>
+            <span class="icon icon-hammer-wrench2"></span>
+            <span class="icon icon-heart2"></span>
+            <span class="icon icon-copy"></span>
+            <span class="icon icon-clipboard-text"></span>
+            <span class="icon icon-document2"></span>
+            <span class="icon icon-film-play"></span>
+            <span class="icon icon-picture"></span>
+            <span class="icon icon-user"></span>
+            <span class="icon icon-users22"></span>
+            <span class="icon icon-tag"></span>
+            <span class="icon icon-credit-card"></span>
+            <span class="icon icon-bag-dollar"></span>
+            <span class="icon icon-map-marker2"></span>
+            <span class="icon icon-map-marker-down"></span>
+            <span class="icon icon-map"></span>
+            <span class="icon icon-location2"></span>
+            <span class="icon icon-calendar-full"></span>
+            <span class="icon icon-smartphone-notification"></span>
+            <span class="icon icon-bubble-dots"></span>
+            <span class="icon icon-lifebuoy"></span>
+            <span class="icon icon-brain"></span>
+            <span class="icon icon-beaker"></span>
+            <span class="icon icon-chart-growth"></span>
+            <span class="icon icon-check-square"></span>
+            <span class="icon icon-briefcase"></span>
+            <span class="icon icon-network"></span>
+            <span class="icon icon-alarm"></span>
+            <span class="icon icon-billing"></span>
+            <span class="icon icon-plus"></span>
+            <span class="icon icon-store"></span>
+            <span class="icon icon-heart"></span>
+            <span class="icon icon-camera2"></span>
+            <span class="icon icon-icon-tags"></span>
+            <span class="icon icon-bubble"></span>
+            <span class="icon icon-list"></span>
+            <span class="icon icon-border-all1"></span>
+            <span class="icon icon-graph"></span>
+            <span class="icon icon-lamp"></span>
+            <span class="icon icon-license2"></span>
+            <span class="icon icon-bookmark2"></span>
+            <span class="icon icon-pencil5"></span>
+            <span class="icon icon-star"></span>
+            <span class="icon icon-star-empty"></span>
+            <span class="icon icon-analytics"></span>
+            <span class="icon icon-commerce"></span>
+            <span class="icon icon-dashboard"></span>
+            <span class="icon icon-design"></span>
+            <span class="icon icon-notifications"></span>
+            <span class="icon icon-screens"></span>
+            <span class="icon icon-users"></span>
+​
+        </div>
+​
+​
+    </div>
+    
+    <!-- Bottom actions require adding the .sub-page class on the <body> tag for correct scrolling  -->
+    <div class="bottom-actions">
+        <button class="btn btn-default">Cancel</button>
+        <button class="btn btn-success">Save</button>
+    </div>
+    
+    <script>
+        const thumbnail = new buildfire.components.images.thumbnail(".thumbnail-picker", {
+            imageUrl: '',
+            title: "Icon",
+            dimensionsLabel: "400x400",
+            multiSelection: false
+        });
+    </script> 
+</body>
+</html>

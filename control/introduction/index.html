@@ -9,6 +9,7 @@
   <link href="../../../../styles/helper.css" rel="stylesheet" />
   <link href="../../../../styles/siteIcons.css" rel="stylesheet" />
   <link href="../../widget/common/css/introduction.css" rel="stylesheet"/>
+  <link href="../../../../styles/control/bf-base.css" rel="stylesheet">
 
 
   <!-- JS -->
@@ -19,10 +20,7 @@
 </head>
 <body>
   <div class="container" id="introduction-container">
-    <div class="introDes">
-      <p class="">Add an introduction section with images, text and other elements with the text editor. </p>
-    </div>
-    
+      <p class="info-note margin-bottom-twenty">Add an introduction section with images, text and other elements with the text editor.</p>
     <div class="carousel"></div></br>
     <textarea id="wysiwygContent" name="content"></textarea>
   </div>
@@ -42,7 +40,7 @@
     });
     //create a new instance of the buildfire carousel editor
     let editor = new buildfire.components.carousel.editor(".carousel");
-    
+
     Introductions.get((err, res) => {
       if (err)
         console.error(err);
