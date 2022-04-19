@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="../../../../styles/control/siteIcons-control.css" />
   <script src="../../widget/common/js/item.js"></script>
   <script src="../../../../scripts/buildfire.js"></script>
+  <script src="../js/control.js" defer></script>
 </head>
 
 <body>
@@ -22,8 +23,8 @@
     <div class="row">
       <div class="col-md-9 search-input">
         <div class="input-group margin-bottom-twenty">
-          <input type="text" placeholder="Search" class="form-control" />
-          <span class="input-group-btn"><button class="btn btn-info stretch">
+          <input type="text" placeholder="Search" class="form-control" id="searchInput"/>
+          <span class="input-group-btn"><button class="btn btn-info stretch" id="searchButton">
               <span class="icon icon-magnifier"></span></button></span>
         </div>
       </div>
@@ -34,8 +35,8 @@
         </button>
       </div>
     </div>
-    <div class="row items-table" id="items-table">
-      <table class="table table-bf">
+    <div class="row items-table" >
+      <table class="table table-bf" id="items-table">
         <thead>
           <td></td>
           <th>
@@ -51,26 +52,6 @@
             <h5></h5>
           </th>
         </thead>
-        <tbody id="tbody">
-          <!--tr>
-              <td>
-                <div class="img-holder aspect-1-1"><img src="" alt="" /></div>
-              </td>
-              <td><a href="./subPage.html" class="link">Linke test</a></td>
-              <td>Subtitle Name</td>
-              <td class="text-center">Jan 23, 2022</td>
-              <td>
-                <div class="pull-right">
-                  <button class="btn bf-btn-icon">
-                    <span class="icon icon-pencil"></span>
-                  </button>
-                  <button class="btn bf-btn-icon">
-                    <span class="icon icon-cross2"></span>
-                  </button>
-                </div>
-              </td>
-            </tr-->
-        </tbody>
       </table>
     </div>
   </div>
@@ -80,7 +61,7 @@
     <div class="container">
       <div class="row empty-row">
         <h5 class="text-center">
-          You haven’t added anything yet. <br />
+          You haven't added anything yet. <br />
           Add sample data to preview this feature
         </h5>
       </div>
@@ -93,36 +74,7 @@
     </div>
   </div>
   <script>
-    let addItem = document.getElementById("addItem");
-    addItem.addEventListener("click", (e) => {
-      /*Items.search(
-        {
-          filter: {
-            $or: [{ "$json.Subtitle": "test2" }],
-          },
-          // sort: { rank: 1, lastName: -1 },
-          // fields: ["rank", "lastName"],
-          // skip: 20,
-          // limit: 10,
-        },
-        (err, res) => {
-          err ? console.error(err) : console.log(res);
-        }
-      );*/
-    });
-    Items.load((err, res) => {
-      if (err) console.error(err);
-
-      else if (res && res.data && res.data.length) {
-        document.getElementById("empty-state").style.display = "none";
-        Items.ui_create('tr', document.getElementById('tbody'), ``, [''])
-      } else {
-        document.getElementById("items-table").style.display = "none";
-
-      }
-
-
-    });
+    
   </script>
 </body>
 

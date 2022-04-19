@@ -79,5 +79,29 @@ const Items = {
           return callback(null, res)
       }
     })
+  },
+  searchFilter:(searchItem,callback)=>{
+    if(searchItem==="" || searchItem===undefined){
+      Items.search({
+      }, (err, res) => {
+        if(err) return callback(err, null)
+        else {
+            return callback(null, res)
+        }
+      })
+    }
+    Items.search({
+      filter: {
+        $or: [
+          { "$json.title": searchItem },
+          { "$json.Subtitle": searchItem },
+        ],
+      }
+    }, (err, res) => {
+      if(err) return callback(err, null)
+      else {
+          return callback(null, res)
+      }
+    })
   }
 };
