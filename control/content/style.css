@@ -9,17 +9,14 @@
   color: #ed4b4b;
 }
 
-.empty-row{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
+.empty-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
-.search-input{
+.search-input {
   padding: 0 !important;
 }
-
-.search-btn{
+.search-btn {
   padding-right: 0 !important;
 }
