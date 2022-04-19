@@ -15,3 +15,11 @@
     align-items: center;
     
 }
+
+.search-input{
+  padding: 0 !important;
+}
+
+.search-btn{
+  padding-right: 0 !important;
+}

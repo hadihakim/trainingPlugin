@@ -71,4 +71,13 @@ const Items = {
     if (appendTo) appendTo.appendChild(e);
     return e;
   },
+
+  load: (callback) => {
+    Items.search({}, (err, res) => {
+      if(err) return callback(err, null)
+      else {
+          return callback(null, res)
+      }
+    })
+  }
 };
