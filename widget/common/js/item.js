@@ -127,4 +127,14 @@ const Items = {
       }
     );
   },
+  thumbnailEvents : (imageUrl)=>{
+    thumbnail.onChange = (imageUrl) => {
+      console.log("Image was changed to", imageUrl);
+  };
+  thumbnail.onDelete = (imageUrl) => {
+      console.log("Image was delted", imageUrl);
+  };
+  thumbnail.loadbackground(imgUrl);
+  }
+  
 };
