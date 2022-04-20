@@ -147,3 +147,15 @@ titleSort.addEventListener("click", (e) => {
     }
   });
 });
+
+
+
+const croppedImage =(imgUrl)=>{
+  let croppedImg = buildfire.imageLib.cropImage(
+    imgUrl,
+     { size: "600px", aspect: "1:1" }
+   );
+   console.log("Cropped image url", croppedImg);
+   return croppedImg;
+    
+}

@@ -15,6 +15,7 @@
     <link href="../../../../styles/control/siteIcons-control.css" rel="stylesheet">
     <link href="../../../../styles/control/bf-base.css" rel="stylesheet">
     <script src="../../../../scripts/tinymce/tinymce.min.js"></script>
+    <script src="../../widget/common/js/item.js"></script>
 
     <title>Document</title>
 </head>
@@ -27,14 +28,14 @@
             <div class="col-md-auto">
                 <label for="text">List Image & Cover image <span class="text-danger">*</span> </label>
             </div>
-            <div class="col-3">
-                <div class="margin-bottom-twenty image-picker aspect-1-1 thumbnail-picker">+</div>
-            </div>
-            <div class="col-6">
-                <div class="margin-bottom-twenty image-picker aspect-1-1 thumbnail-picker2">+</div>
-            </div>
+            <!-- <div class="col"> -->
+            <div class="margin-bottom-twenty image-picker aspect-1-1 thumbnail-picker">+</div>
+            <!-- </div>
+            <div class="col"> -->
+            <div class="margin-bottom-twenty image-picker aspect-1-1 thumbnail-picker2">+</div>
+            <!-- </div> -->
         </div>
-    <!-- </div>
+        <!-- </div>
 
 
     <div class="container slide-in padding-bottom-twenty"> -->
@@ -60,8 +61,8 @@
         </div>
 
         <div class="bottom-actions margin-bottom-fifteen">
-            <button class="btn btn-default">Cancel</button>
-            <button class="btn btn-success">Save</button>
+            <button class="btn btn-default" onclick="location.href = './index.html';">Cancel</button>
+            <button class="btn btn-success" id="save-btn">Save</button>
         </div>
 
     </div>
@@ -71,9 +72,14 @@
         const thumbnail = new buildfire.components.images.thumbnail(".thumbnail-picker", {
             imageUrl: '',
             title: " ",
-            dimensionsLabel: "Recommended:\n 600 x 600px",
+            dimensionsLabel: "Recommended: 600 x 600px",
             multiSelection: false
-        });
+
+        }
+        );
+        Items.thumbnailEvents();
+
+        console.log(thumbnail.imageUrl);
         // thumbnail.loadbackground("https://placekitten.com/750/1334");
 
         const thumbnail2 = new buildfire.components.images.thumbnail(".thumbnail-picker2", {
@@ -87,6 +93,22 @@
         tinymce.init({
             selector: "#wysiwygContent",
         });
+
+        document.getElementById("save-btn").addEventListener('click', (e) => {
+            let data = {
+                title : tilte-text.value,
+                Subtitle : subTitle-text.value,
+                listImage :croppedImage(thumbnail.imageUrl),
+                coverImage:croppedImage(thumbnail2.imageUrl),
+                description : tinymce.activeEditor.getContent()
+            };
+            console.log("insude btn ");
+            Items.insert(data,(err,res)=>{
+            if(err) console.error(err);
+            console.log(res +" data saved");
+        })
+        })
+        
     </script>
 
 </body>
