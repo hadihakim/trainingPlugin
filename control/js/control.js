@@ -25,9 +25,8 @@ Items.load((err, res) => {
       document.getElementById("items-table"),
       `
         ${res
-          .map((el) => {
-            const obj = el;
-            return `
+        .map((el) => {
+          return `
           <tr>
           <td><div class="img-holder aspect-1-1"><img src="${el.data.listImage}" alt=""></div></td>
           <td>${el.data.title}</td>
@@ -35,14 +34,14 @@ Items.load((err, res) => {
           <td class="text-center">${el.data.createdOn}</td>
           <td>
                         <div class="pull-right">
-                            <button class="btn bf-btn-icon" id="${el.id}" onclick="showSubPage(${el})"><span class="icon icon-pencil"></span></button>
+                            <button class="btn bf-btn-icon" id="${el.id}" onclick="helpershowSubPage('${el.id}')"><span class="icon icon-pencil"></span></button>
                             <button class="btn bf-btn-icon"><span class="icon icon-cross2"></span></button>
                         </div>
                     </td>
           </tr>
           `;
-          })
-          .join("")}
+        })
+        .join("")}
         
         `,
       ["tableBody"]
@@ -175,3 +174,11 @@ const showSubPage = (item) => {
 }
 
 
+function helpershowSubPage(id) {
+  console.log(id + " id");
+  Items.getById(id, (err, res) => {
+    if (err) console.log(err)
+    console.log(res.data + "inside showSub");
+    showSubPage(res);
+  })
+}

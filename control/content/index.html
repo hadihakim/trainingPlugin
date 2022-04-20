@@ -115,7 +115,7 @@
         </div>
         <div class="row margin-bottom-fifteen">
           <div class="col-md-3">
-            <label for="subTitle-text">Subtitle</label>
+            <label for="subTitle">Subtitle</label>
           </div>
           <div class="col-md-9">
             <input id="subtitle" type="text" class="form-control" />
@@ -157,7 +157,21 @@
     tinymce.init({
       selector: "#wysiwygContent",
     });
+    function test() {
+      let newItem = {
+        title: title.value,
+        Subtitle: subtitle.value,
+        listImage: thumbnail.imageUrl,
+        coverImage: thumbnail2.imageUrl,
+        description: tinymce.activeEditor.getContent()
+      }
+      console.log("new item", newItem);
 
+      Items.insert(newItem, (err, res) => {
+        if (err) console.error(err);
+        else console.log(res);
+      })
+    }
 
 
 
@@ -175,6 +189,30 @@
         }
       );
     }
+
+    const showSubPage = (item) => {
+      console.log("from show", item);
+      document.getElementById("mainPage").style.display = "none";
+      document.getElementById("subPage").style.display = "block";
+      if (item) {
+        document.getElementById("title").value = item.data.title;
+        document.getElementById("subtitle").value = item.data.Subtitle;
+        tinymce.activeEditor.setContent(item.data.description);
+        thumbnail.loadbackground(item.data.listImage);
+        thumbnail2.loadbackground(item.data.coverImage);
+
+
+
+        // console.log("from if" + item);
+      }
+    };
+
+    const hideSubPage = () => {
+      document.getElementById("mainPage").style.display = "block";
+      document.getElementById("subPage").style.display = "none";
+      document.getElementById("title").value = "";
+    }
+
   </script>
 </body>
 
