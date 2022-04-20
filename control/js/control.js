@@ -36,7 +36,7 @@ Items.load((err, res) => {
           <td class="text-center">${el.data.createdOn}</td>
           <td>
                         <div class="pull-right">
-                            <button class="btn bf-btn-icon id="${el.id}" onclick="showSubPage(${el.id})"><span class="icon icon-pencil"></span></button>
+                            <button class="btn bf-btn-icon" id="${el.id}" onclick="showSubPage('${el.id}')"><span class="icon icon-pencil"></span></button>
                             <button class="btn bf-btn-icon"><span class="icon icon-cross2"></span></button>
                         </div>
                     </td>
@@ -154,3 +154,25 @@ const croppedImage = (imgUrl) => {
 };
 // document.getElementById("subPage").style.display = "none";
 
+const showSubPage = (item) => {
+  console.log("from show", item);
+  document.getElementById("mainPage").style.display = "none";
+  document.getElementById("subPage").style.display = "block";
+  if (item) {
+    Items.getById(item,(err,res)=>{
+      if(err) console.error(err);
+      else
+      console.log("the res",res);
+      document.getElementById("title").value = res.data.title;
+      document.getElementById("subtitle").value = res.data.Subtitle;
+      tinymce.tinymce.activeEditor.setContent(res.data.description);
+    })
+    console.log("from if");
+  }
+};
+
+const hideSubPage = () => {
+  document.getElementById("mainPage").style.display = "block";
+  document.getElementById("subPage").style.display = "none";
+  document.getElementById("title").value = "";
+};

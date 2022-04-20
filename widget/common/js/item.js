@@ -1,6 +1,6 @@
 class Item {
   constructor(data) {
-    this.id=data.id;
+    this.id = data.id;
     this.title = data.title || "";
     this.Subtitle = data.Subtitle || 0;
     this.listImage = data.listImage || "";
@@ -87,6 +87,7 @@ const Items = {
     });
   },
   searchFilter: (searchItem, callback) => {
+    console.log("from SF", searchItem);
     if (searchItem === "" || searchItem === null) {
       Items.search({}, (err, res) => {
         if (err) return callback(err, null);
