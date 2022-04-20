@@ -81,7 +81,7 @@ const Items = {
     })
   },
   searchFilter:(searchItem,callback)=>{
-    if(searchItem==="" || searchItem===undefined){
+    if(searchItem==="" || searchItem===null){
       Items.search({
       }, (err, res) => {
         if(err) return callback(err, null)
@@ -89,6 +89,7 @@ const Items = {
             return callback(null, res)
         }
       })
+      return;
     }
     Items.search({
       filter: {
@@ -103,5 +104,18 @@ const Items = {
           return callback(null, res)
       }
     })
-  }
+  },
+  searchSort:(sort,callback)=>{
+    let sortB = null;
+    (sort > 0) ? sortB = -1 : sortB = 1;
+    Items.search({
+      sort: { title: sort, Subtitle: sortB},
+    }, (err, res) => {
+      if(err) return callback(err, null)
+      else {
+          return callback(null, res)
+      }
+    })
+  }  
 };
+
