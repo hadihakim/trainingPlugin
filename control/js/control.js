@@ -169,17 +169,10 @@ const showSubPage = (item) => {
     tinymce.activeEditor.setContent(item.data.description);
     thumbnail.loadbackground(item.data.listImage);
     thumbnail2.loadbackground(item.data.coverImage);
-    let obj = {
-      title: document.getElementById("title").value,
-      Subtitle: document.getElementById("subtitle").value,
-      description: tinymce.activeEditor.getContent(),
-      listImage: thumbnail.imageUrl,
-      coverImage: thumbnail2.imageUrl,
-    };
 
     document
       .getElementById("saveBtn")
-      .addEventListener("click", (e) => saveItem(item, obj));
+      .addEventListener("click", (e) => saveItem(item));
   }
 };
 const saveItem = (id) => {
