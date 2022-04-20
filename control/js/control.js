@@ -169,18 +169,44 @@ const showSubPage = (item) => {
     tinymce.activeEditor.setContent(item.data.description);
     thumbnail.loadbackground(item.data.listImage);
     thumbnail2.loadbackground(item.data.coverImage);
-    let obj={
-        title:document.getElementById("title").value,
-        Subtitle:document.getElementById("subtitle").value,
-
-    }
+    let obj = {
+      title: document.getElementById("title").value,
+      Subtitle: document.getElementById("subtitle").value,
+      description: tinymce.activeEditor.getContent(),
+      listImage: thumbnail.imageUrl,
+      coverImage: thumbnail2.imageUrl,
+    };
 
     document
-    .getElementById("saveBtn")
-    .addEventListener("click", (e) => saveItem(item,obj));
+      .getElementById("saveBtn")
+      .addEventListener("click", (e) => saveItem(item, obj));
   }
 };
+const saveItem = (id) => {
+  let newItem = {
+    title: title.value,
+    Subtitle: subtitle.value,
+    listImage: thumbnail.imageUrl,
+    coverImage: thumbnail2.imageUrl,
+    description: tinymce.activeEditor.getContent(),
+  };
+  console.log("new item", newItem);
+  if (id) {
+    Items.edit(id.id, { createdOn: new Date(), ...newItem }, (err, res) => {
+      if (err) console.error(err);
+      else console.log(res);
+    });
+  } else {
+    Items.insert(newItem, (err, res) => {
+      if (err) console.error(err);
+      else console.log(res);
+    });
+  }
 
+  document.getElementById("mainPage").style.display = "block";
+  document.getElementById("subPage").style.display = "none";
+  location.reload();
+};
 const hideSubPage = () => {
   document.getElementById("mainPage").style.display = "block";
   document.getElementById("subPage").style.display = "none";
