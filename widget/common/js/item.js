@@ -1,5 +1,6 @@
 class Item {
   constructor(data) {
+    this.id=data.id;
     this.title = data.title || "";
     this.Subtitle = data.Subtitle || 0;
     this.listImage = data.listImage || "";
@@ -127,14 +128,13 @@ const Items = {
       }
     );
   },
-  thumbnailEvents : (imageUrl)=>{
+  thumbnailEvents: (imageUrl) => {
     thumbnail.onChange = (imageUrl) => {
       console.log("Image was changed to", imageUrl);
-  };
-  thumbnail.onDelete = (imageUrl) => {
+    };
+    thumbnail.onDelete = (imageUrl) => {
       console.log("Image was delted", imageUrl);
-  };
-  thumbnail.loadbackground(imgUrl);
-  }
-  
+    };
+    thumbnail.loadbackground(imgUrl);
+  },
 };
