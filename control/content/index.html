@@ -8,6 +8,9 @@
   <link rel="stylesheet" href="../../../../styles/control/siteIcons-control.css" />
   <script src="../../widget/common/js/item.js"></script>
   <script src="../../../../scripts/buildfire.js"></script>
+
+  <!-- DELETE THIS SCRIPT IN PROD -->
+  <script src="dummyData.js"></script>
   <script src="../js/control.js" defer></script>
 </head>
 
@@ -36,12 +39,12 @@
         </button>
       </div>
     </div>
-    <div class="row items-table" >
+    <div class="row" >
       <table class="table table-bf" id="items-table">
         <thead>
           <td></td>
           <th>
-            <h5>Title <span class="icon icon-chevron-down"></span></h5>
+            <h5 id="titleSort">Title <span class="icon icon-chevron-down"></span></h5>
           </th>
           <th>
             <h5>Subtitle</h5>
@@ -83,7 +86,7 @@
     deeplinkData: { username: "John"}
   },
   (err) => {
-    if (err) return console.error(err); // `Content` tab was not found
+    if (err) return console.error(err);
 
     console.log("NAVIGATION FINISHED");
   }

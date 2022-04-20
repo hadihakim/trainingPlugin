@@ -20,3 +20,7 @@
 .search-btn {
   padding-right: 0 !important;
 }
+
+#titleSort:hover {
+  cursor: pointer;
+}
