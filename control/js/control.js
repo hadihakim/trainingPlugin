@@ -1,19 +1,6 @@
 let addItem = document.getElementById("addItem");
 addItem.addEventListener("click", (e) => {
-  Items.search(
-    {
-      filter: {
-        $or: [{ "$json.Subtitle": "test2" }],
-      },
-      // sort: { rank: 1, lastName: -1 },
-      // fields: ["rank", "lastName"],
-      // skip: 20,
-      // limit: 10,
-    },
-    (err, res) => {
-      err ? console.error(err) : console.log(res);
-    }
-  );
+  showSubPage();
 });
 
 Items.load((err, res) => {
@@ -36,8 +23,8 @@ Items.load((err, res) => {
           <td class="text-center">${el.data.createdOn}</td>
           <td>
                         <div class="pull-right">
-                            <button class="btn bf-btn-icon" id="${el.id}" onclick="showSubPage('${el.id}')"><span class="icon icon-pencil"></span></button>
-                            <button class="btn bf-btn-icon"><span class="icon icon-cross2"></span></button>
+                            <button class="btn bf-btn-icon" id="${el.id}" onclick="helpershowSubPage('${el.id}')"><span class="icon icon-pencil"></span></button>
+                            <button class="btn bf-btn-icon" onclick="deleteItem('${el.id}')"><span class="icon icon-cross2"></span></button>
                         </div>
                     </td>
           </tr>
@@ -78,8 +65,8 @@ searchButton.addEventListener("click", (e) => {
           <td class="text-center">${el.data.createdOn}</td>
           <td>
                         <div class="pull-right">
-                            <button class="btn bf-btn-icon"><span class="icon icon-pencil"></span></button>
-                            <button class="btn bf-btn-icon"><span class="icon icon-cross2"></span></button>
+                        <button class="btn bf-btn-icon" id="${el.id}" onclick="helpershowSubPage('${el.id}')"><span class="icon icon-pencil"></span></button>
+                        <button class="btn bf-btn-icon" onclick="deleteItem('${el.id}')"><span class="icon icon-cross2"></span></button>
                         </div>
                     </td>
           </tr>
@@ -129,8 +116,8 @@ titleSort.addEventListener("click", (e) => {
           <td class="text-center">${el.data.createdOn}</td>
           <td>
                         <div class="pull-right">
-                            <button class="btn bf-btn-icon"><span class="icon icon-pencil"></span></button>
-                            <button class="btn bf-btn-icon"><span class="icon icon-cross2"></span></button>
+                        <button class="btn bf-btn-icon" id="${el.id}" onclick="helpershowSubPage('${el.id}')"><span class="icon icon-pencil"></span></button>
+                        <button class="btn bf-btn-icon" onclick="deleteItem('${el.id}')"><span class="icon icon-cross2"></span></button>
                         </div>
                     </td>
           </tr>
@@ -152,22 +139,45 @@ const croppedImage = (imgUrl) => {
   console.log("Cropped image url", croppedImg);
   return croppedImg;
 };
-// document.getElementById("subPage").style.display = "none";
+document.getElementById("subPage").style.display = "none";
+
+function helpershowSubPage(id) {
+  console.log(id + " id");
+  Items.getById(id, (err, res) => {
+    if (err) console.log(err);
+    console.log(res.data + "inside showSub");
+    showSubPage(res);
+  });
+}
 
 const showSubPage = (item) => {
   console.log("from show", item);
-  document.getElementById("mainPage").style.display = "none";
-  document.getElementById("subPage").style.display = "block";
+  if (!item) {
+    document.getElementById("mainPage").style.display = "none";
+    document.getElementById("subPage").style.display = "block";
+    document
+      .getElementById("saveBtn")
+      .addEventListener("click", (e) => saveItem(null));
+  }
+
   if (item) {
-    Items.getById(item,(err,res)=>{
-      if(err) console.error(err);
-      else
-      console.log("the res",res);
-      document.getElementById("title").value = res.data.title;
-      document.getElementById("subtitle").value = res.data.Subtitle;
-      tinymce.tinymce.activeEditor.setContent(res.data.description);
-    })
-    console.log("from if");
+    document.getElementById("mainPage").style.display = "none";
+    document.getElementById("subPage").style.display = "block";
+
+    document.getElementById("title").value = item.data.title;
+    document.getElementById("subtitle").value = item.data.Subtitle;
+    tinymce.activeEditor.setContent(item.data.description);
+    thumbnail.loadbackground(item.data.listImage);
+    thumbnail2.loadbackground(item.data.coverImage);
+    let obj={
+        title:document.getElementById("title").value,
+        Subtitle:document.getElementById("subtitle").value,
+
+    }
+
+    document
+    .getElementById("saveBtn")
+    .addEventListener("click", (e) => saveItem(item,obj));
   }
 };
 
@@ -175,4 +185,29 @@ const hideSubPage = () => {
   document.getElementById("mainPage").style.display = "block";
   document.getElementById("subPage").style.display = "none";
   document.getElementById("title").value = "";
+};
+
+const deleteItem = (id) => {
+  buildfire.dialog.confirm(
+    {
+      message: "Are you sure you want to delete the item?",
+      confirmButton: {
+        type: "danger",
+        text: "Delete",
+      },
+    },
+    (err, isConfirmed) => {
+      if (err) console.error(err);
+
+      if (isConfirmed) {
+        Items.delete(id, (err, res) => {
+          if (err) console.error(err);
+          else console.log(res);
+          location.reload();
+        });
+      } else {
+        //Prevent action
+      }
+    }
+  );
 };
