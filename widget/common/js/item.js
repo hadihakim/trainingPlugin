@@ -1,5 +1,6 @@
 class Item {
   constructor(data) {
+    this.id=data.id;
     this.title = data.title || "";
     this.Subtitle = data.Subtitle || 0;
     this.listImage = data.listImage || "";
@@ -26,10 +27,15 @@ const Items = {
     //callback(null,true);
   },
   insert: (item, callback) => {
-    buildfire.publicData.insert(new Item(item), Items.TAG,false, (err, res) => {
-      if (err) return callback(err, null);
-      else return callback(null, res);
-    });
+    buildfire.publicData.insert(
+      new Item(item),
+      Items.TAG,
+      false,
+      (err, res) => {
+        if (err) return callback(err, null);
+        else return callback(null, res);
+      }
+    );
     //callback(null,true);
   },
   edit: (id, obj, callback) => {
@@ -74,58 +80,61 @@ const Items = {
 
   load: (callback) => {
     Items.search({}, (err, res) => {
-      if(err) return callback(err, null)
+      if (err) return callback(err, null);
       else {
-          return callback(null, res)
+        return callback(null, res);
       }
-    })
+    });
   },
-  searchFilter:(searchItem,callback)=>{
-    if(searchItem==="" || searchItem===null){
-      Items.search({
-      }, (err, res) => {
-        if(err) return callback(err, null)
+  searchFilter: (searchItem, callback) => {
+    if (searchItem === "" || searchItem === null) {
+      Items.search({}, (err, res) => {
+        if (err) return callback(err, null);
         else {
-            return callback(null, res)
+          return callback(null, res);
         }
-      })
+      });
       return;
     }
-    Items.search({
-      filter: {
-        $or: [
-          { "$json.title": searchItem },
-          { "$json.Subtitle": searchItem },
-        ],
+    Items.search(
+      {
+        filter: {
+          $or: [
+            { "$json.title": searchItem },
+            { "$json.Subtitle": searchItem },
+          ],
+        },
+      },
+      (err, res) => {
+        if (err) return callback(err, null);
+        else {
+          return callback(null, res);
+        }
       }
-    }, (err, res) => {
-      if(err) return callback(err, null)
-      else {
-          return callback(null, res)
-      }
-    })
+    );
   },
-  searchSort:(sort,callback)=>{
+  searchSort: (sort, callback) => {
     let sortB = null;
-    (sort > 0) ? sortB = -1 : sortB = 1;
-    Items.search({
-      sort: { title: sort, Subtitle: sortB},
-    }, (err, res) => {
-      if(err) return callback(err, null)
-      else {
-          return callback(null, res)
+    sort > 0 ? (sortB = -1) : (sortB = 1);
+    Items.search(
+      {
+        sort: { title: sort, Subtitle: sortB },
+      },
+      (err, res) => {
+        if (err) return callback(err, null);
+        else {
+          return callback(null, res);
+        }
       }
-    })
+    );
   },
-  thumbnailEvents : (imageUrl)=>{
+  thumbnailEvents: (imageUrl) => {
     thumbnail.onChange = (imageUrl) => {
       console.log("Image was changed to", imageUrl);
-  };
-  thumbnail.onDelete = (imageUrl) => {
+    };
+    thumbnail.onDelete = (imageUrl) => {
       console.log("Image was delted", imageUrl);
-  };
-  thumbnail.loadbackground(imgUrl);
-  }
-  
+    };
+    thumbnail.loadbackground(imgUrl);
+  },
 };
-
