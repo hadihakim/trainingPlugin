@@ -96,27 +96,6 @@
             });
 
 
-
-            function test() {
-                let newItem = {
-                    title: title.value,
-                    Subtitle: subtitle.value,
-                    listImage: thumbnail.imageUrl,
-                    coverImage: thumbnail2.imageUrl,
-                    description: tinymce.activeEditor.getContent()
-                }
-                console.log(newItem);
-
-                Items.insert(newItem,(err,res)=>{
-                    if(err) console.error(err);
-                    else console.log(res);
-                })
-            }
-
-
-
-
-
             // document.getElementById("save-btn").addEventListener("click", (e) => {
             //     let data = {
             //         title: tilte - text.value,

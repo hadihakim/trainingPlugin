@@ -17,8 +17,6 @@ addItem.addEventListener("click", (e) => {
 });
 
 Items.load((err, res) => {
-  //console.log("from load", res);
-
   if (err) console.error(err);
   else if (res && res.length > 0) {
     document.getElementById("empty-state").style.display = "none";
@@ -28,6 +26,7 @@ Items.load((err, res) => {
       `
         ${res
           .map((el) => {
+            const obj = el;
             return `
           <tr>
           <td><div class="img-holder aspect-1-1"><img src="${el.data.listImage}" alt=""></div></td>
@@ -36,7 +35,7 @@ Items.load((err, res) => {
           <td class="text-center">${el.data.createdOn}</td>
           <td>
                         <div class="pull-right">
-                            <button class="btn bf-btn-icon id="${el.id}" onclick="showSubPage(${el.id})"><span class="icon icon-pencil"></span></button>
+                            <button class="btn bf-btn-icon" id="${el.id}" onclick="showSubPage(${el})"><span class="icon icon-pencil"></span></button>
                             <button class="btn bf-btn-icon"><span class="icon icon-cross2"></span></button>
                         </div>
                     </td>
@@ -152,5 +151,27 @@ const croppedImage = (imgUrl) => {
   console.log("Cropped image url", croppedImg);
   return croppedImg;
 };
-// document.getElementById("subPage").style.display = "none";
+
+const saveItem = () => {
+  let newItem = {
+      title: document.getElementById('title').value, 
+      Subtitle: document.getElementById('subtitle').value,
+      listImage: thumbnail.imageUrl,
+      coverImage: thumbnail2.imageUrl,
+      description: tinymce.activeEditor.getContent()
+  }
+  console.log(newItem);
+
+  Items.insert(newItem,(err,res)=>{
+      if(err) console.error(err);
+      else console.log(res);
+  })
+}
+
+const showSubPage = (item) => {
+  console.log("show function",  item)
+  document.getElementById('mainPage').style.display = 'none';
+  document.getElementById('subPage').style.display = 'block';
+}
+
 
