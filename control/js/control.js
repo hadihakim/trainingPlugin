@@ -153,11 +153,10 @@ const showSubPage = (item, element) => {
   if (!item) {
     document.getElementById("mainPage").style.display = "none";
     document.getElementById("subPage").style.display = "block";
-    document.getElementById("saveBtn")
-      .addEventListener("click", (e) => saveItem(null, element));
+      document.getElementById('saveBtn').setAttribute('onclick',`saveItem(${null},${element})`)
   }
-
   if (item) {
+    let id = item['id'];
     document.getElementById("mainPage").style.display = "none";
     document.getElementById("subPage").style.display = "block";
     document.getElementById("title").value = item.data.title;
@@ -165,10 +164,7 @@ const showSubPage = (item, element) => {
     tinymce.activeEditor.setContent(item.data.description);
     thumbnail.loadbackground(item.data.listImage);
     thumbnail2.loadbackground(item.data.coverImage);
-
-    document
-      .getElementById("saveBtn")
-      .addEventListener("click", (e) => saveItem(item['id'], element));
+    document.getElementById('saveBtn').onclick = function() { saveItem(id, element) }
   }
 };
 
@@ -274,6 +270,7 @@ const updateNewRecord = (obj, element) => {
 }
 
 const saveItem = (id, element) => {
+  console.log(id, element, "save Item safsfdds");
   let newItem = {
     title: title.value,
     Subtitle: subtitle.value,
