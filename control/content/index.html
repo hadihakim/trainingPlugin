@@ -60,27 +60,26 @@
         </thead>
       </table>
     </div>
-  </div>
-  </div>
-  <!-- empty state container -->
-  <div class="well empty-state-lg" id="empty-state">
-    <div class="container">
-      <div class="row empty-row">
-        <h5 class="text-center">
-          You haven't added anything yet. <br />
-          Add sample data to preview this feature
-        </h5>
-      </div>
-      <div class="row empty-row">
-        <button class="btn btn-success">
-          <span class="icon icon-plus margin-right-ten"></span>
-          <span>Add Sample Data</span>
-        </button>
+    <!-- empty state container -->
+    <div class="well empty-state-lg" id="empty-state" style="display:none">
+      <div class="container">
+        <div class="row empty-row">
+          <h5 class="text-center">
+            You haven't added anything yet. <br />
+            Add sample data to preview this feature
+          </h5>
+        </div>
+        <div class="row empty-row">
+          <button class="btn btn-success">
+            <span class="icon icon-plus margin-right-ten"></span>
+            <span>Add Sample Data</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
   <!-- -----------------------sub page--------------------------- -->
-  <div class="sub-page" id="subPage">
+  <div class="sub-page" id="subPage" style="display: none;">
     <div class="container slide-in padding-bottom-twenty">
       <div class="row">
         <h1>Item Images</h1>
@@ -129,21 +128,13 @@
           <button class="btn btn-default" onclick="location.href = './index.html';">
             Cancel
           </button>
-          <button class="btn btn-success" id="saveBtn">Save</button>
+          <button class="btn btn-success" id="saveBtn" onclick="saveItem()">Save</button>
         </div>
       </div>
     </div>
   </div>
 
-
-
-
-
-
-
-
   <script>
-
     const thumbnail = new buildfire.components.images.thumbnail(
       ".thumbnail-picker", {
       imageUrl: "",
@@ -164,6 +155,7 @@
     tinymce.init({
       selector: "#wysiwygContent",
     });
+
  
 
 
@@ -181,10 +173,7 @@
           console.log("NAVIGATION FINISHED");
         }
       );
-    }
-
-    
-
+    }*/
   </script>
 </body>
 
