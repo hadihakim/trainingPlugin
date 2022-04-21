@@ -1,3 +1,7 @@
+.table tbody td .pull-right .bf-btn-icon {
+  width: 40px;
+  height: 40px;
+}
 .table tbody td .pull-right .bf-btn-icon:hover {
   background-color: #f2f2f2;
 }
@@ -8,7 +12,9 @@
 .table tbody td .pull-right .bf-btn-icon:hover .icon-cross2 {
   color: #ed4b4b;
 }
-
+.img-holder {
+  overflow: hidden;
+}
 .empty-row {
   display: flex;
   justify-content: center;
@@ -23,4 +29,37 @@
 
 #titleSort:hover {
   cursor: pointer;
+}
+
+.sub-page
+  > .container
+  > .row
+  > .col-md-4
+  > .thumbnail-picker
+  > .item
+  > .main
+  > .screens
+  > .screen {
+  width: 96px !important;
+  height: 96px !important;
+}
+.sub-page
+  > .container
+  > .row
+  > .col-md-4
+  > .thumbnail-picker2
+  > .item
+  > .main
+  > .screens
+  > .screen {
+  width: 15rem !important;
+  height: 96px !important;
+}
+
+.sub-page h1 {
+  font-family: "Apercu";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 18px;
 }

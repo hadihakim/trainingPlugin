@@ -1,166 +1,207 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="../../../../styles/control/bf-base.css" />
+    <link
+      rel="stylesheet"
+      href="../../../../styles/control/siteIcons-control.css"
+    />
+    <link rel="stylesheet" href="../../../../styles/helper.css" />
+    <link rel="stylesheet" href="../../../../styles/bootstrap.css" />
+    <link rel="stylesheet" href="../../../../styles/" />
+    <script src="../../widget/common/js/item.js"></script>
+    <script src="../../../../scripts/buildfire.js"></script>
+    <script src="../../../../scripts/tinymce/tinymce.min.js"></script>
+    <script src="../../../../scripts/buildfire/components/images/thumbnail.js"></script>
 
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="./style.css" />
-  <link rel="stylesheet" href="../../../../styles/control/bf-base.css" />
-  <link rel="stylesheet" href="../../../../styles/control/siteIcons-control.css" />
-  <script src="../../widget/common/js/item.js"></script>
-  <script src="../../../../scripts/buildfire.js"></script>
-  <script src="../../../../scripts/tinymce/tinymce.min.js"></script>
-  <script src="../../../../scripts/buildfire/components/images/thumbnail.js"></script>
+    <!-- DELETE THIS SCRIPT IN PROD -->
+    <script src="dummyData.js"></script>
+    <script src="../js/control.js" defer></script>
+  </head>
 
-  <!-- DELETE THIS SCRIPT IN PROD -->
-  <script src="dummyData.js"></script>
-  <script src="../js/control.js" defer></script>
-</head>
-
-<body>
-  <div class="container" id="mainPage">
-    <div class="row">
-      <p class="info-note col-12">
-        You can create a list of items with images, actions and other details.
-        Add an introduction section on the
-        <a class="link" href="javascript:navigateToTab();">Introduction</a> tab.
-
-      </p>
-    </div>
-    <div class="row">
-      <div class="col-md-9 search-input">
-        <div class="input-group margin-bottom-twenty">
-          <input type="text" placeholder="Search" class="form-control" id="searchInput" />
-          <span class="input-group-btn"><button class="btn btn-info stretch" id="searchButton">
-              <span class="icon icon-magnifier"></span></button></span>
-        </div>
+  <body>
+    <div class="container" id="mainPage">
+      <div class="row maring-bottom-twenty">
+        <p class="info-note col-12">
+          You can create a list of items with images, actions and other details.
+          Add an introduction section on the
+          <a class="link" href="javascript:navigateToTab();">Introduction</a>
+          tab.
+        </p>
       </div>
-      <div class="col-md-3 search-btn">
-        <button class="btn btn-success stretch" id="addItem">
-          <span class="icon icon-plus margin-right-ten"></span>
-          <span>Add Item</span>
-        </button>
-      </div>
-    </div>
-    <div class="row">
-      <table class="table table-bf" id="items-table">
-        <thead>
-          <td></td>
-          <th>
-            <h5 id="titleSort">Title <span class="icon icon-chevron-down"></span></h5>
-          </th>
-          <th>
-            <h5>Subtitle</h5>
-          </th>
-          <th>
-            <h5 class="text-center">Date of Creation</h5>
-          </th>
-          <th>
-            <h5></h5>
-          </th>
-        </thead>
-      </table>
-    </div>
-    <!-- empty state container -->
-    <div class="well empty-state-lg" id="empty-state" style="display:none">
-      <div class="container">
-        <div class="row empty-row">
-          <h5 class="text-center">
-            You haven't added anything yet. <br />
-            Add sample data to preview this feature
-          </h5>
+      <div class="row">
+        <div class="col-md-9 search-input">
+          <div class="input-group margin-bottom-twenty">
+            <input
+              type="text"
+              placeholder="Search"
+              class="form-control"
+              id="searchInput"
+            />
+            <span class="input-group-btn"
+              ><button class="btn btn-info stretch" id="searchButton">
+                <span class="icon icon-magnifier"></span></button
+            ></span>
+          </div>
         </div>
-        <div class="row empty-row">
-          <button class="btn btn-success">
+        <div class="col-md-3 search-btn">
+          <button class="btn btn-success stretch" id="addItem">
             <span class="icon icon-plus margin-right-ten"></span>
-            <span>Add Sample Data</span>
+            <span>Add Item</span>
           </button>
         </div>
       </div>
-    </div>
-  </div>
-  <!-- -----------------------sub page--------------------------- -->
-  <div class="sub-page" id="subPage" style="display: none;">
-    <div class="container slide-in padding-bottom-twenty">
-      <div class="row">
-        <h1>Item Images</h1>
+      <div class="row maring-bottom-twenty">
+        <table class="table table-bf" id="items-table">
+          <thead>
+            <td></td>
+            <th>
+              <h5 id="titleSort">
+                Title <span class="icon icon-chevron-down"></span>
+              </h5>
+            </th>
+            <th>
+              <h5>Subtitle</h5>
+            </th>
+            <th>
+              <h5 class="text-center">Date of Creation</h5>
+            </th>
+            <th>
+            </th>
+          </thead>
+        </table>
       </div>
-      <div class="row">
-        <div class="col-md-4">
-          <label for="text">List Image & Cover image <span class="text-danger">*</span>
-          </label>
-        </div>
-        <div class="col-md-4">
-          <div class="margin-bottom-twenty image-picker aspect-1-1 thumbnail-picker">
-            +</div>
-        </div>
-        <div class="col-md-4">
-          <div class="margin-bottom-twenty image-picker aspect-1-1 thumbnail-picker2">
-            +
+      <!-- empty state container -->
+      <div class="well empty-state-lg" id="empty-state" style="display: none">
+        <div class="container">
+          <div class="row empty-row">
+            <h5 class="text-center">
+              You haven't added anything yet. <br />
+              Add sample data to preview this feature
+            </h5>
+          </div>
+          <div class="row empty-row">
+            <button class="btn btn-success">
+              <span class="icon icon-plus margin-right-ten"></span>
+              <span>Add Sample Data</span>
+            </button>
           </div>
         </div>
       </div>
-
-
+    </div>
+    <!-- loading -->
+    <div class="well empty-state-lg" id="loading-state" style="display: none">
+      <div class="container">
+        <div
+          class="row"
+          style="
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          "
+        >
+          <h5 class="text-center">Loading</h5>
+        </div>
+      </div>
+    </div>
+    <!-- -----------------------sub page--------------------------- -->
+    <div class="sub-page" id="subPage" style="display: none">
       <div class="container slide-in padding-bottom-twenty">
-        <h1>Item Details</h1>
-        <div class="row margin-bottom-fifteen">
-          <div class="col-md-3">
-            <label for="tilte-text">Title<span class="text-danger">*</span>
+        <div class="row">
+          <h1>Item Images</h1>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <label for="text"
+              >List Image & Cover image <span class="text-danger">*</span>
             </label>
           </div>
-          <div class="col-md-9">
-            <input id="title" type="text" class="form-control" required />
+          <div class="col-md-4">
+            <div
+              class="margin-bottom-twenty image-picker aspect-1-1 thumbnail-picker"
+            >
+              +
+            </div>
           </div>
-        </div>
-        <div class="row margin-bottom-fifteen">
-          <div class="col-md-3">
-            <label for="subTitle">Subtitle</label>
+          <div class="col-md-4">
+            <div
+              class="margin-bottom-twenty image-picker aspect-1-1 thumbnail-picker2"
+            >
+              +
+            </div>
           </div>
-          <div class="col-md-9">
-            <input id="subtitle" type="text" class="form-control" />
-          </div>
-        </div>
-        <div class="row margin-bottom-fifteen">
-          <textarea id="wysiwygContent" name="content"></textarea>
-        </div>
-
-        <div class="bottom-actions margin-bottom-fifteen">
-          <button class="btn btn-default" onclick="location.href = './index.html';">
-            Cancel
-          </button>
-          <button class="btn btn-success" id="saveBtn" onclick="saveItem()">Save</button>
         </div>
       </div>
+
+        <div class="container slide-in padding-bottom-twenty">
+          <div class="row">
+            <h1>Item Details</h1>
+          </div>
+          <div class="row margin-bottom-twenty">
+            <div class="col-md-3">
+              <label for="tilte-text"
+                >Title<span class="text-danger">*</span>
+              </label>
+            </div>
+            <div class="col-md-9">
+              <input id="title" type="text" class="form-control" required />
+            </div>
+          </div>
+          <div class="row margin-bottom-twenty">
+            <div class="col-md-3">
+              <label for="subTitle">Subtitle</label>
+            </div>
+            <div class="col-md-9">
+              <input id="subtitle" type="text" class="form-control" />
+            </div>
+          </div>
+          <div class="row margin-bottom-thirty">
+            <textarea id="wysiwygContent" name="content"></textarea>
+          </div>
+          
+          <div class="row bottom-actions">
+            <button
+              class="btn btn-default"
+              onclick="location.href = './index.html';"
+            >
+              Cancel
+            </button>
+            <button class="btn btn-success" id="saveBtn" onclick="saveItem()">
+              Save
+            </button>
+          </div>
+        </div>
     </div>
-  </div>
+    </div>
 
-  <script>
-    const thumbnail = new buildfire.components.images.thumbnail(
-      ".thumbnail-picker", {
-      imageUrl: "",
-      title: " ",
-      dimensionsLabel: "Recommended: 600 x 600px",
-      multiSelection: false,
-    }
-    );
-    const thumbnail2 = new buildfire.components.images.thumbnail(
-      ".thumbnail-picker2", {
-      imageUrl: "",
-      title: " ",
-      dimensionsLabel: "Recommended: 1200x675px",
-      multiSelection: false,
-    }
-    );
+    <script>
+      const thumbnail = new buildfire.components.images.thumbnail(
+        ".thumbnail-picker",
+        {
+          imageUrl: "",
+          title: " ",
+          dimensionsLabel: "Recommended: 600 x 600px",
+          multiSelection: false,
+        }
+      );
+      const thumbnail2 = new buildfire.components.images.thumbnail(
+        ".thumbnail-picker2",
+        {
+          imageUrl: "",
+          title: " ",
+          dimensionsLabel: "Recommended: 1200x675px",
+          multiSelection: false,
+        }
+      );
 
-    tinymce.init({
-      selector: "#wysiwygContent",
-    });
+      tinymce.init({
+        selector: "#wysiwygContent",
+      });
 
- 
-
-
-
-    const navigateToTab = () => {
+      /*const navigateToTab = () => {
       console.log("hi");
       buildfire.navigation.navigateToTab(
         {
@@ -169,12 +210,10 @@
         },
         (err) => {
           if (err) return console.error(err);
-
           console.log("NAVIGATION FINISHED");
         }
       );
     }*/
-  </script>
-</body>
-
+    </script>
+  </body>
 </html>
