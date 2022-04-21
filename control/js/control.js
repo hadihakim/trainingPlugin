@@ -17,14 +17,22 @@ Items.load((err, res) => {
           .map((el) => {
             return `
           <tr>
-          <td><div class="img-holder aspect-1-1"><img src="${el.data.listImage}" alt=""></div></td>
+          <td><div class="img-holder aspect-1-1"><img src="${croppedImage(
+            el.data.listImage
+          )}" alt=""></div></td>
           <td>${el.data.title}</td>
           <td>${el.data.Subtitle}</td>
           <td class="text-center">${el.data.createdOn}</td>
           <td>
                         <div class="pull-right">
-                            <button class="btn bf-btn-icon" id="${el.id}" onclick="helpershowSubPage('${el.id}')"><span class="icon icon-pencil"></span></button>
-                            <button class="btn bf-btn-icon" onclick="deleteItem('${el.id}')"><span class="icon icon-cross2"></span></button>
+                            <button class="btn bf-btn-icon" id="${
+                              el.id
+                            }" onclick="helpershowSubPage('${
+              el.id
+            }')"><span class="icon icon-pencil"></span></button>
+                            <button class="btn bf-btn-icon" onclick="deleteItem('${
+                              el.id
+                            }')"><span class="icon icon-cross2"></span></button>
                         </div>
                     </td>
           </tr>
@@ -60,14 +68,22 @@ searchButton.addEventListener("click", (e) => {
           .map((el) => {
             return `
           <tr>
-          <td><div class="img-holder aspect-1-1"><img src="${el.data.listImage}" alt=""></div></td>
+          <td><div class="img-holder aspect-1-1"><img src="${croppedImage(
+            el.data.listImage
+          )}" alt=""></div></td>
           <td>${el.data.title}</td>
           <td>${el.data.Subtitle}</td>
           <td class="text-center">${el.data.createdOn}</td>
           <td>
                         <div class="pull-right">
-                        <button class="btn bf-btn-icon" id="${el.id}" onclick="helpershowSubPage('${el.id}')"><span class="icon icon-pencil"></span></button>
-                        <button class="btn bf-btn-icon" onclick="deleteItem('${el.id}')"><span class="icon icon-cross2"></span></button>
+                        <button class="btn bf-btn-icon" id="${
+                          el.id
+                        }" onclick="helpershowSubPage('${
+              el.id
+            }')"><span class="icon icon-pencil"></span></button>
+                        <button class="btn bf-btn-icon" onclick="deleteItem('${
+                          el.id
+                        }')"><span class="icon icon-cross2"></span></button>
                         </div>
                     </td>
           </tr>
@@ -111,14 +127,22 @@ titleSort.addEventListener("click", (e) => {
           .map((el) => {
             return `
           <tr>
-          <td><div class="img-holder aspect-1-1"><img src="${el.data.listImage}" alt=""></div></td>
+          <td><div class="img-holder aspect-1-1"><img src="${croppedImage(
+            el.data.listImage
+          )}" alt=""></div></td>
           <td>${el.data.title}</td>
           <td>${el.data.Subtitle}</td>
           <td class="text-center">${el.data.createdOn}</td>
           <td>
                         <div class="pull-right">
-                        <button class="btn bf-btn-icon" id="${el.id}" onclick="helpershowSubPage('${el.id}')"><span class="icon icon-pencil"></span></button>
-                        <button class="btn bf-btn-icon" onclick="deleteItem('${el.id}')"><span class="icon icon-cross2"></span></button>
+                        <button class="btn bf-btn-icon" id="${
+                          el.id
+                        }" onclick="helpershowSubPage('${
+              el.id
+            }')"><span class="icon icon-pencil"></span></button>
+                        <button class="btn bf-btn-icon" onclick="deleteItem('${
+                          el.id
+                        }')"><span class="icon icon-cross2"></span></button>
                         </div>
                     </td>
           </tr>
@@ -134,7 +158,7 @@ titleSort.addEventListener("click", (e) => {
 
 const croppedImage = (imgUrl) => {
   let croppedImg = buildfire.imageLib.cropImage(imgUrl, {
-    size: "600px",
+    size: "xs",
     aspect: "1:1",
   });
   console.log("Cropped image url", croppedImg);
@@ -249,7 +273,7 @@ const updateNewRecord = (obj, element) => {
     element.parentElement.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.innerHTML =
       obj.title;
     element.parentElement.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.firstChild.firstChild.src =
-      obj.listImage;
+      croppedImage(obj.listImage);
   } else {
     element.parentElement.parentElement.previousElementSibling.innerHTML =
       obj.createdOn;
@@ -267,7 +291,7 @@ const saveItem = (id, element) => {
   let newItem = {
     title: title.value,
     Subtitle: subtitle.value,
-    listImage: thumbnail.imageUrl,
+    listImage: croppedImage(thumbnail.imageUrl),
     coverImage: thumbnail2.imageUrl,
     description: tinymce.activeEditor.getContent(),
   };
@@ -285,13 +309,28 @@ const saveItem = (id, element) => {
       });
     });
   } else {
-    Items.insert(newItem, (err, res) => {
-      if (err) console.error(err);
-      else console.log(res);
-      addNewRow({ id: res.id, createdOn: res.data.createdOn, ...newItem });
-    });
+    if (
+      newItem.title !== "" &&
+      (newItem.listImage !== "") & (newItem.coverImage !== "")
+    ) {
+      Items.insert(newItem, (err, res) => {
+        document
+          .querySelectorAll(".error-message")
+          .forEach((el) => el.classList.add("hidden"));
+        if (err) console.error(err);
+        else console.log(res);
+        addNewRow({ id: res.id, createdOn: res.data.createdOn, ...newItem });
+      });
+    } else {
+        document
+          .querySelectorAll(".error-message")
+          .forEach((el) => el.classList.remove("hidden"));
+      document.getElementById("mainPage").style.display = "none";
+      document.getElementById("subPage").style.display = "block";
+      return;
+    }
   }
-  document.getElementById("title").value = "";
+  title.value = "";
   subtitle.value = "";
   thumbnail.clear();
   thumbnail2.clear();
@@ -300,5 +339,3 @@ const saveItem = (id, element) => {
   document.getElementById("mainPage").style.display = "block";
   document.getElementById("subPage").style.display = "none";
 };
-
-
