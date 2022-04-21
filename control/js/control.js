@@ -1,22 +1,11 @@
 let addItem = document.getElementById("addItem");
 addItem.addEventListener("click", (e) => {
-  Items.search(
-    {
-      filter: {
-        $or: [{ "$json.Subtitle": "test2" }],
-      },
-      // sort: { rank: 1, lastName: -1 },
-      // fields: ["rank", "lastName"],
-      // skip: 20,
-      // limit: 10,
-    },
-    (err, res) => {
-      err ? console.error(err) : console.log(res);
-    }
-  );
+  showSubPage();
 });
 
 Items.load((err, res) => {
+  //console.log("from load", res);
+
   if (err) console.error(err);
   else if (res && res.length > 0) {
     document.getElementById("empty-state").style.display = "none";
@@ -35,7 +24,7 @@ Items.load((err, res) => {
           <td>
                         <div class="pull-right">
                             <button class="btn bf-btn-icon" id="${el.id}" onclick="helpershowSubPage('${el.id}')"><span class="icon icon-pencil"></span></button>
-                            <button class="btn bf-btn-icon"><span class="icon icon-cross2"></span></button>
+                            <button class="btn bf-btn-icon" onclick="deleteItem('${el.id}')"><span class="icon icon-cross2"></span></button>
                         </div>
                     </td>
           </tr>
@@ -70,14 +59,14 @@ searchButton.addEventListener("click", (e) => {
           .map((el) => {
             return `
           <tr>
-          <td><div class="img-holder aspect-1-1"><img src="${el.listImage}" alt=""></div></td>
+          <td><div class="img-holder aspect-1-1"><img src="${el.data.listImage}" alt=""></div></td>
           <td>${el.data.title}</td>
           <td>${el.data.Subtitle}</td>
           <td class="text-center">${el.data.createdOn}</td>
           <td>
                         <div class="pull-right">
-                            <button class="btn bf-btn-icon"><span class="icon icon-pencil"></span></button>
-                            <button class="btn bf-btn-icon"><span class="icon icon-cross2"></span></button>
+                        <button class="btn bf-btn-icon" id="${el.id}" onclick="helpershowSubPage('${el.id}')"><span class="icon icon-pencil"></span></button>
+                        <button class="btn bf-btn-icon" onclick="deleteItem('${el.id}')"><span class="icon icon-cross2"></span></button>
                         </div>
                     </td>
           </tr>
@@ -121,14 +110,14 @@ titleSort.addEventListener("click", (e) => {
           .map((el) => {
             return `
           <tr>
-          <td><div class="img-holder aspect-1-1"><img src="${el.listImage}" alt=""></div></td>
+          <td><div class="img-holder aspect-1-1"><img src="${el.data.listImage}" alt=""></div></td>
           <td>${el.data.title}</td>
           <td>${el.data.Subtitle}</td>
           <td class="text-center">${el.data.createdOn}</td>
           <td>
                         <div class="pull-right">
-                            <button class="btn bf-btn-icon"><span class="icon icon-pencil"></span></button>
-                            <button class="btn bf-btn-icon"><span class="icon icon-cross2"></span></button>
+                        <button class="btn bf-btn-icon" id="${el.id}" onclick="helpershowSubPage('${el.id}')"><span class="icon icon-pencil"></span></button>
+                        <button class="btn bf-btn-icon" onclick="deleteItem('${el.id}')"><span class="icon icon-cross2"></span></button>
                         </div>
                     </td>
           </tr>
@@ -151,34 +140,160 @@ const croppedImage = (imgUrl) => {
   return croppedImg;
 };
 
-const saveItem = () => {
-  let newItem = {
-      title: document.getElementById('title').value, 
-      Subtitle: document.getElementById('subtitle').value,
-      listImage: thumbnail.imageUrl,
-      coverImage: thumbnail2.imageUrl,
-      description: tinymce.activeEditor.getContent()
-  }
-  console.log(newItem);
-
-  Items.insert(newItem,(err,res)=>{
-      if(err) console.error(err);
-      else console.log(res);
-  })
-}
-
-const showSubPage = (item) => {
-  console.log("show function",  item)
-  document.getElementById('mainPage').style.display = 'none';
-  document.getElementById('subPage').style.display = 'block';
-}
-
-
-function helpershowSubPage(id) {
-  console.log(id + " id");
+function helpershowSubPage(id, e) {
+  e = e || window.event;
+  let element = e.target || e.srcElement;
   Items.getById(id, (err, res) => {
-    if (err) console.log(err)
-    console.log(res.data + "inside showSub");
-    showSubPage(res);
-  })
+    if (err) return console.log(err);
+    showSubPage(res, element);
+  });
+}
+
+const showSubPage = (item, element) => {
+  if (!item) {
+    document.getElementById("mainPage").style.display = "none";
+    document.getElementById("subPage").style.display = "block";
+    document.getElementById("saveBtn")
+      .addEventListener("click", (e) => saveItem(null, element));
+  }
+
+  if (item) {
+    document.getElementById("mainPage").style.display = "none";
+    document.getElementById("subPage").style.display = "block";
+    document.getElementById("title").value = item.data.title;
+    document.getElementById("subtitle").value = item.data.Subtitle;
+    tinymce.activeEditor.setContent(item.data.description);
+    thumbnail.loadbackground(item.data.listImage);
+    thumbnail2.loadbackground(item.data.coverImage);
+
+    document
+      .getElementById("saveBtn")
+      .addEventListener("click", (e) => saveItem(item['id'], element));
+  }
+};
+
+const hideSubPage = () => {
+  document.getElementById("mainPage").style.display = "block";
+  document.getElementById("subPage").style.display = "none";
+  document.getElementById("title").value = "";
+};
+
+const removeRecord = (e) => {
+  if (e.classList.contains('icon-cross2')) {
+    e.parentElement.parentElement.parentElement.parentElement.remove();
+  } else e.parentElement.parentElement.parentElement.remove()
+}
+
+const deleteItem = (id, e) => {
+  e = e || window.event;
+  let elemenet = e.target || e.srcElement;
+  buildfire.dialog.confirm(
+    {
+      message: "Are you sure you want to delete the item?",
+      confirmButton: {
+        type: "danger",
+        text: "Delete",
+      },
+    },
+    (err, isConfirmed) => {
+      if (err) console.error(err);
+
+      if (isConfirmed) {
+        Items.delete(id, (err, res) => {
+          if (err) return console.error(err);
+          else removeRecord(elemenet);
+        });
+      } else {
+        //Prevent action
+      }
+    }
+  );
+};
+
+const addNewRow = (el) => {
+  let table = document.getElementById("items-table");
+  let tbody = null;
+  let tr = null;
+  if (table.tBodies.length > 0) {
+    tbody = table.tBodies[0];
+  }
+  if (tbody != null) {
+    Items.ui_create('tr', tbody, `<td><div class="img-holder aspect-1-1"><img src="${el.listImage}" alt=""></div></td>
+    <td>${el.title}</td>
+    <td>${el.Subtitle}</td>
+    <td class="text-center">${el.createdOn}</td>
+    <td>
+                  <div class="pull-right">
+                      <button class="btn bf-btn-icon" id="${el.id}" onclick="helpershowSubPage('${el.id}')"><span class="icon icon-pencil"></span></button>
+                      <button class="btn bf-btn-icon" onclick="deleteItem('${el.id}')"><span class="icon icon-cross2"></span></button>
+                  </div>
+              </td>`)
+  }
+}
+
+const updateNewRecord = (obj, element) => {
+  if (element.classList.contains('icon-pencil')) {
+    element.parentElement
+      .parentElement
+      .parentElement.previousElementSibling.innerHTML = obj.createdOn;
+    element.parentElement
+      .parentElement
+      .parentElement.previousElementSibling
+      .previousElementSibling
+      .innerHTML = obj.Subtitle;
+    element.parentElement
+      .parentElement
+      .parentElement.previousElementSibling
+      .previousElementSibling
+      .previousElementSibling
+      .innerHTML = obj.title;
+    element.parentElement
+      .parentElement
+      .parentElement.previousElementSibling
+      .previousElementSibling
+      .previousElementSibling
+      .previousElementSibling.firstChild.firstChild.src = obj.listImage
+  } else {
+    element.parentElement
+      .parentElement.previousElementSibling.innerHTML = obj.createdOn;
+    element.parentElement
+      .parentElement.previousElementSibling
+      .previousElementSibling
+      .innerHTML = obj.Subtitle;
+    element.parentElement
+      .parentElement.previousElementSibling
+      .previousElementSibling
+      .previousElementSibling
+      .innerHTML = obj.title;
+    element.parentElement
+      .parentElement.previousElementSibling
+      .previousElementSibling
+      .previousElementSibling
+      .previousElementSibling.firstChild.firstChild.src = obj.listImage
+  }
+}
+
+const saveItem = (id, element) => {
+  let newItem = {
+    title: title.value,
+    Subtitle: subtitle.value,
+    listImage: thumbnail.imageUrl,
+    coverImage: thumbnail2.imageUrl,
+    description: tinymce.activeEditor.getContent()
+  }
+  if (id != null) {
+    Items.edit(id, { createdOn: new Date(), ...newItem }, (err, res) => {
+      if (err) console.error(err);
+      else console.log(res);
+      updateNewRecord({ id: id, createdOn: res.data.createdOn, ...newItem }, element);
+    })
+  } else {
+    Items.insert(newItem, (err, res) => {
+      if (err) console.error(err);
+      else console.log(res);
+      addNewRow({ id: res.id, createdOn: res.data.createdOn, ...newItem });
+    })
+  }
+  document.getElementById("mainPage").style.display = "block";
+  document.getElementById("subPage").style.display = "none";
 }
