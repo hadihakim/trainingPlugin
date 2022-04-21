@@ -15,7 +15,6 @@
     },
     "customTabs": [
       { "title": "Tests", "url": "/tests/index.html" },
-      { "title": "Tests", "url": "/tests/base-cssExample.html" },
       { "title": "Introduction", "url":"/introduction/index.html"},
       { "title": "Analytics", "url":"/analytics/index.html" },
       { "title": "Language", "url":"/language/index.html" }

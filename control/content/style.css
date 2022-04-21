@@ -12,9 +12,6 @@
 .table tbody td .pull-right .bf-btn-icon:hover .icon-cross2 {
   color: #ed4b4b;
 }
-.img-holder {
-  overflow: hidden;
-}
 .empty-row {
   display: flex;
   justify-content: center;

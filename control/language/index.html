@@ -2,17 +2,145 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="../../../../styles/control/bf-base.css">
+    <!-- <link rel="stylesheet" href="style.css" /> -->
+    <style>
+      .subTitle {
+        margin-bottom: 25px;
+        font-style: italic;
+      }
+
+      textarea:invalid,
+      input:invalid {
+        background-color: lightpink;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      #deleteButton {
+        padding-right: 25px;
+        margin-top: 5px;
+      }
+    </style>
+    <link rel="stylesheet" href="../../../../styles/control/bf-base.css" />
+    <link
+      rel="stylesheet"
+      href="../../../../styles/control/siteIcons-control.css"
+    />
     <script src="../../../../scripts/buildfire.js"></script>
-    <script src="../js/language.js"></script>
+    <script src="../../widget/common/js/language.js"></script>
+
+    <script src="../../widget/common/js/shared/string.js"></script>
+    <script src="../../widget/common/js/shared/stringConfig.js"></script>
+    <script src="./language.js"></script>
   </head>
+
   <body>
+    <select id="langOptions" onchange="loadLanguage(this.value)">
+      <option value="en-us">English - US</option>
+      <option value="es-mx">Spanish - MX</option>
+    </select>
+    <a
+      id="createButton"
+      class="text-success hidden"
+      onclick="createLanguage(langOptions.value)"
+      >Click here to begin supporting this language</a
+    >
+
+    <div id="stringsContainer" class="hidden">loading...</div>
+    <a
+      id="saveButton"
+      class="btn btn-success pull-right hidden"
+      onclick="save()"
+      >Save</a
+    >
+    <a
+      id="deleteButton"
+      class="text-danger pull-right hidden"
+      onclick="deleteLanguage(strings.id)"
+      >Delete</a
+    >
     <div class="container">
-      <div class="row">
+      <div class="container slide-in padding-bottom-twenty">
+        <div class="row margin-bottom-fifteen">
+          <div class="col-md-3">
+            <label for="search">Search</label>
+          </div>
+          <div class="col-md-9">
+            <input
+              id="search"
+              type="text"
+              class="form-control languageInput"
+              value="search"
+            />
+          </div>
+        </div>
+        <br />
+        <div class="row margin-bottom-fifteen">
+          <div class="col-md-3">
+            <label for="sortAtoZ">Sort A - Z</label>
+          </div>
+          <div class="col-md-9">
+            <input
+              id="sortAtoZ"
+              type="text"
+              class="form-control languageInput"
+              value="Sort A - Z"
+            />
+          </div>
+        </div>
+        <br />
+        <div class="row margin-bottom-fifteen">
+          <div class="col-md-3">
+            <label for="sortZtoA">Sort Z - A</label>
+          </div>
+          <div class="col-md-9">
+            <input
+              id="sortZtoA"
+              type="text"
+              class="form-control languageInput"
+              value="Sort Z - A"
+            />
+          </div>
+        </div>
       </div>
-      <div class="row"></div>
-      <div class="row"></div>
     </div>
+    <script>
+      //     let obj={
+      //       search : "Search",
+      //       sortA: "Sort A -Z",
+      //       sortB: "Sort Z-A"
+      //     }
+      // Languages.save(obj , (err,res)=>{
+      //   if(err) console.error(err);
+      //   console.log(res , "language added seccess");
+      // })
+
+      // Languages.get((err, res) => {
+      //   if (err) console.error(err);
+      //   search.value = res.data.search;
+      //   sortAtoZ.value = res.data.sortA;
+      //   sortZtoA.value = res.data.sortB;
+      // })
+
+      // let inputs = document.querySelectorAll('.languageInput');
+      // inputs.forEach(input => {
+      //   input.addEventListener("input", (e) => {
+      //     if (search.value != "") {
+      //       let obj = {
+      //         search: search.value,
+      //         sortA: sortAtoZ.value,
+      //         sortB: sortZtoA.value
+      //       }
+      //       Languages.save(obj, (err, res) => {
+      //         if (err) console.error(err);
+      //         console.log(res, "language update seccess");
+      //       })
+      //     }
+      //   })
+      // })
+      
+    </script>
   </body>
 </html>
