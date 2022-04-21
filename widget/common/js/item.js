@@ -19,15 +19,15 @@ class Item {
 
 const Items = {
   TAG: "Items",
-  save: (item, callback) => {
-    buildfire.publicData.save(new Item(item), Items.TAG, (err, res) => {
+  save: async (item, callback) => {
+    await buildfire.publicData.save(new Item(item), Items.TAG, (err, res) => {
       if (err) return callback(err, null);
       else return callback(null, res);
     });
     //callback(null,true);
   },
-  insert: (item, callback) => {
-    buildfire.publicData.insert(
+  insert: async (item, callback) => {
+    await buildfire.publicData.insert(
       new Item(item),
       Items.TAG,
       false,
@@ -38,32 +38,32 @@ const Items = {
     );
     //callback(null,true);
   },
-  edit: (id, obj, callback) => {
-    buildfire.publicData.update(id, obj, Items.TAG, (err, res) => {
+  edit: async (id, obj, callback) => {
+    await buildfire.publicData.update(id, obj, Items.TAG, (err, res) => {
       if (err) return callback(err, null);
       else return callback(null, res);
     });
   },
-  get: (callback) => {
-    buildfire.publicData.get(Items.TAG, (err, res) => {
+  get: async (callback) => {
+    await buildfire.publicData.get(Items.TAG, (err, res) => {
       if (err) return callback(err, null);
       else return callback(null, res);
     });
   },
-  delete: (id, callback) => {
-    buildfire.publicData.delete(id, Items.TAG, (err, res) => {
+  delete: async (id, callback) => {
+    await buildfire.publicData.delete(id, Items.TAG, (err, res) => {
       if (err) return callback(err, null);
       else return callback(null, res);
     });
   },
-  getById: (id, callback) => {
-    buildfire.publicData.getById(id, Items.TAG, (err, res) => {
+  getById: async (id, callback) => {
+    await buildfire.publicData.getById(id, Items.TAG, (err, res) => {
       if (err) return callback(err, null);
       else return callback(null, res);
     });
   },
-  search: (options, callback) => {
-    buildfire.publicData.search(options, Items.TAG, (err, res) => {
+  search: async (options, callback) => {
+    await buildfire.publicData.search(options, Items.TAG, (err, res) => {
       if (err) return callback(err, null);
       else return callback(null, res);
     });
@@ -101,8 +101,8 @@ const Items = {
       {
         filter: {
           $or: [
-            { "$json.title": searchItem },
-            { "$json.Subtitle": searchItem },
+            { "$json.title":{ $regex: searchItem ,$options: 'i'}},
+            { "$json.Subtitle": {$regex:searchItem ,$options: 'i'}}
           ],
         },
       },

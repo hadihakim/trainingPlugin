@@ -14,8 +14,8 @@ Items.load((err, res) => {
       document.getElementById("items-table"),
       `
         ${res
-        .map((el) => {
-          return `
+          .map((el) => {
+            return `
           <tr>
           <td><div class="img-holder aspect-1-1"><img src="${el.data.listImage}" alt=""></div></td>
           <td>${el.data.title}</td>
@@ -29,8 +29,8 @@ Items.load((err, res) => {
                     </td>
           </tr>
           `;
-        })
-        .join("")}
+          })
+          .join("")}
         
         `,
       ["tableBody"]
@@ -45,10 +45,11 @@ searchButton.addEventListener("click", (e) => {
   Items.searchFilter(searchInput.value, (err, res) => {
     if (err) console.error(err);
     else if (res) {
+      document.getElementById("loading-state").style.display = "none";
       var tbl = document.getElementById("items-table"); // Get the table
 
       if (tbl.getElementsByTagName("tbody").length > 0) {
-        tbl.removeChild(tbl.getElementsByTagName("tbody")[0]); // Remove first instance of body‏
+        tbl.removeChild(tbl.getElementsByTagName("tbody")[0]); // Remove first instance of body ‏
       }
       if (res.length == 0) return;
       Items.ui_create(
@@ -153,10 +154,12 @@ const showSubPage = (item, element) => {
   if (!item) {
     document.getElementById("mainPage").style.display = "none";
     document.getElementById("subPage").style.display = "block";
-      document.getElementById('saveBtn').setAttribute('onclick',`saveItem(${null},${element})`)
+    document
+      .getElementById("saveBtn")
+      .setAttribute("onclick", `saveItem(${null},${element})`);
   }
   if (item) {
-    let id = item['id'];
+    let id = item["id"];
     document.getElementById("mainPage").style.display = "none";
     document.getElementById("subPage").style.display = "block";
     document.getElementById("title").value = item.data.title;
@@ -164,38 +167,12 @@ const showSubPage = (item, element) => {
     tinymce.activeEditor.setContent(item.data.description);
     thumbnail.loadbackground(item.data.listImage);
     thumbnail2.loadbackground(item.data.coverImage);
-
-
-    document
-      .getElementById("saveBtn")
-      .addEventListener("click", (e) => saveItem(item));
+    document.getElementById("saveBtn").onclick = function () {
+      saveItem(id, element);
+    };
   }
 };
-const saveItem = (id) => {
-  let newItem = {
-    title: title.value,
-    Subtitle: subtitle.value,
-    listImage: thumbnail.imageUrl,
-    coverImage: thumbnail2.imageUrl,
-    description: tinymce.activeEditor.getContent(),
-  };
-  console.log("new item", newItem);
-  if (id) {
-    Items.edit(id.id, { createdOn: new Date(), ...newItem }, (err, res) => {
-      if (err) console.error(err);
-      else console.log(res);
-    });
-  } else {
-    Items.insert(newItem, (err, res) => {
-      if (err) console.error(err);
-      else console.log(res);
-    });
-  }
 
-  document.getElementById("mainPage").style.display = "block";
-  document.getElementById("subPage").style.display = "none";
-  location.reload();
-};
 const hideSubPage = () => {
   document.getElementById("mainPage").style.display = "block";
   document.getElementById("subPage").style.display = "none";
@@ -203,10 +180,10 @@ const hideSubPage = () => {
 };
 
 const removeRecord = (e) => {
-  if (e.classList.contains('icon-cross2')) {
+  if (e.classList.contains("icon-cross2")) {
     e.parentElement.parentElement.parentElement.parentElement.remove();
-  } else e.parentElement.parentElement.parentElement.remove()
-}
+  } else e.parentElement.parentElement.parentElement.remove();
+};
 
 const deleteItem = (id, e) => {
   e = e || window.event;
@@ -226,6 +203,10 @@ const deleteItem = (id, e) => {
         Items.delete(id, (err, res) => {
           if (err) return console.error(err);
           else removeRecord(elemenet);
+          buildfire.dialog.toast({
+            message: "deleted",
+            type: "success",
+          });
         });
       } else {
         //Prevent action
@@ -242,7 +223,10 @@ const addNewRow = (el) => {
     tbody = table.tBodies[0];
   }
   if (tbody != null) {
-    Items.ui_create('tr', tbody, `<td><div class="img-holder aspect-1-1"><img src="${el.listImage}" alt=""></div></td>
+    Items.ui_create(
+      "tr",
+      tbody,
+      `<td><div class="img-holder aspect-1-1"><img src="${el.listImage}" alt=""></div></td>
     <td>${el.title}</td>
     <td>${el.Subtitle}</td>
     <td class="text-center">${el.createdOn}</td>
@@ -251,51 +235,32 @@ const addNewRow = (el) => {
                       <button class="btn bf-btn-icon" id="${el.id}" onclick="helpershowSubPage('${el.id}')"><span class="icon icon-pencil"></span></button>
                       <button class="btn bf-btn-icon" onclick="deleteItem('${el.id}')"><span class="icon icon-cross2"></span></button>
                   </div>
-              </td>`)
+              </td>`
+    );
   }
-}
+};
 
 const updateNewRecord = (obj, element) => {
-  if (element.classList.contains('icon-pencil')) {
-    element.parentElement
-      .parentElement
-      .parentElement.previousElementSibling.innerHTML = obj.createdOn;
-    element.parentElement
-      .parentElement
-      .parentElement.previousElementSibling
-      .previousElementSibling
-      .innerHTML = obj.Subtitle;
-    element.parentElement
-      .parentElement
-      .parentElement.previousElementSibling
-      .previousElementSibling
-      .previousElementSibling
-      .innerHTML = obj.title;
-    element.parentElement
-      .parentElement
-      .parentElement.previousElementSibling
-      .previousElementSibling
-      .previousElementSibling
-      .previousElementSibling.firstChild.firstChild.src = obj.listImage
+  if (element.classList.contains("icon-pencil")) {
+    element.parentElement.parentElement.parentElement.previousElementSibling.innerHTML =
+      obj.createdOn;
+    element.parentElement.parentElement.parentElement.previousElementSibling.previousElementSibling.innerHTML =
+      obj.Subtitle;
+    element.parentElement.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.innerHTML =
+      obj.title;
+    element.parentElement.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.firstChild.firstChild.src =
+      obj.listImage;
   } else {
-    element.parentElement
-      .parentElement.previousElementSibling.innerHTML = obj.createdOn;
-    element.parentElement
-      .parentElement.previousElementSibling
-      .previousElementSibling
-      .innerHTML = obj.Subtitle;
-    element.parentElement
-      .parentElement.previousElementSibling
-      .previousElementSibling
-      .previousElementSibling
-      .innerHTML = obj.title;
-    element.parentElement
-      .parentElement.previousElementSibling
-      .previousElementSibling
-      .previousElementSibling
-      .previousElementSibling.firstChild.firstChild.src = obj.listImage
+    element.parentElement.parentElement.previousElementSibling.innerHTML =
+      obj.createdOn;
+    element.parentElement.parentElement.previousElementSibling.previousElementSibling.innerHTML =
+      obj.Subtitle;
+    element.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.innerHTML =
+      obj.title;
+    element.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.firstChild.firstChild.src =
+      obj.listImage;
   }
-}
+};
 
 const saveItem = (id, element) => {
   console.log(id, element, "save Item safsfdds");
@@ -304,21 +269,36 @@ const saveItem = (id, element) => {
     Subtitle: subtitle.value,
     listImage: thumbnail.imageUrl,
     coverImage: thumbnail2.imageUrl,
-    description: tinymce.activeEditor.getContent()
-  }
+    description: tinymce.activeEditor.getContent(),
+  };
   if (id != null) {
     Items.edit(id, { createdOn: new Date(), ...newItem }, (err, res) => {
       if (err) console.error(err);
       else console.log(res);
-      updateNewRecord({ id: id, createdOn: res.data.createdOn, ...newItem }, element);
-    })
+      updateNewRecord(
+        { id: id, createdOn: res.data.createdOn, ...newItem },
+        element
+      );
+      buildfire.dialog.toast({
+        message: "updated",
+        type: "success",
+      });
+    });
   } else {
     Items.insert(newItem, (err, res) => {
       if (err) console.error(err);
       else console.log(res);
       addNewRow({ id: res.id, createdOn: res.data.createdOn, ...newItem });
-    })
+    });
   }
+  document.getElementById("title").value = "";
+  subtitle.value = "";
+  thumbnail.clear();
+  thumbnail2.clear();
+  tinymce.activeEditor.setContent("");
+
   document.getElementById("mainPage").style.display = "block";
   document.getElementById("subPage").style.display = "none";
-}
+};
+
+
