@@ -59,7 +59,9 @@ const Introductions = {
     loadItemsCP: (images, description) => {
         // create an instance and pass it the items if you don't have items yet just pass []
         editor.loadItems(images);
-        tinymce.activeEditor.setContent(`${description}`);
+        if (discription) tinymce.activeEditor.setContent(`${description}`);
+        else tinymce.activeEditor.setContent('');
+        
     },
     //save any changes in items
     _saveCP: (items) => {
