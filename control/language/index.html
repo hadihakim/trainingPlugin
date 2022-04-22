@@ -33,7 +33,9 @@
 
       input {
         margin-left: 20% !important;
+        margin-right: 5% !important;
         width: 60% !important;
+        color: rgb(0, 0, 0) !important;
       }
     </style>
     <link rel="stylesheet" href="../../../../styles/control/bf-base.css" />
@@ -60,21 +62,7 @@
     <a class="text-success hidden" onclick="createLanguage(langOptions.value)">
       Click here to begin supporting this language</a
     >
-
     <div id="stringsContainer" class="">loading...</div>
-    <a
-      id="saveButton"
-      class="btn btn-success pull-right hidden"
-      onclick="save()"
-      >Save</a
-    >
-    <a
-      id="deleteButton"
-      class="text-danger pull-right hidden"
-      onclick="deleteLanguage(strings.id)"
-      >Delete</a
-    >
-
     <script>
       initialState();
       checkInputs();
