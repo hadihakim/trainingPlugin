@@ -37,30 +37,7 @@
   </head>
 
   <body>
-    <select id="langOptions" onchange="loadLanguage(this.value)">
-      <option value="en-us">English - US</option>
-      <option value="es-mx">Spanish - MX</option>
-    </select>
-    <a
-      id="createButton"
-      class="text-success hidden"
-      onclick="createLanguage(langOptions.value)"
-      >Click here to begin supporting this language</a
-    >
-
     <div id="stringsContainer" class="hidden">loading...</div>
-    <a
-      id="saveButton"
-      class="btn btn-success pull-right hidden"
-      onclick="save()"
-      >Save</a
-    >
-    <a
-      id="deleteButton"
-      class="text-danger pull-right hidden"
-      onclick="deleteLanguage(strings.id)"
-      >Delete</a
-    >
     <div class="container">
       <div class="container slide-in padding-bottom-twenty">
         <div class="row margin-bottom-fifteen">
