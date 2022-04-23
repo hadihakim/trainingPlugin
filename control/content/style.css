@@ -2,6 +2,7 @@
   width: 40px;
   height: 40px;
 }
+
 .table tbody td .pull-right .bf-btn-icon:hover {
   background-color: #f2f2f2;
 }
@@ -12,14 +13,17 @@
 .table tbody td .pull-right .bf-btn-icon:hover .icon-cross2 {
   color: #ed4b4b;
 }
+
 .empty-row {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .search-input {
   padding: 0 !important;
 }
+
 .search-btn {
   padding-right: 0 !important;
 }
@@ -40,6 +44,7 @@
   width: 96px !important;
   height: 96px !important;
 }
+
 .sub-page
   > .container
   > .row
@@ -49,8 +54,8 @@
   > .main
   > .screens
   > .screen {
-  width: 15rem !important;
-  height: 96px !important;
+    width: 96px !important;
+    height: 96px !important;
 }
 
 .sub-page h1 {
@@ -74,4 +79,8 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.thumbnail-picker2 > .item {
+  margin-right: 30vw !important;
 }
