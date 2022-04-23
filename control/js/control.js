@@ -28,7 +28,9 @@ Items.load((err, res) => {
           <td><div class="img-holder aspect-1-1"><img src="${croppedImage(
             el.data.listImage
           )}" alt=""></div></td>
-          <td>${el.data.title}</td>
+          <td><a class="link" onclick="helpershowSubPage('${el.id}');">${
+              el.data.title
+            }</a></td>
           <td>${el.data.Subtitle}</td>
           <td class="text-center">${el.data.createdOn}</td>
           <td>
@@ -82,7 +84,9 @@ searchButton.addEventListener("click", (e) => {
           <td><div class="img-holder aspect-1-1"><img src="${croppedImage(
             el.data.listImage
           )}" alt=""></div></td>
-          <td>${el.data.title}</td>
+          <td><a class="link" onclick="helpershowSubPage('${el.id}');">${
+              el.data.title
+            }</a></td>
           <td>${el.data.Subtitle}</td>
           <td class="text-center">${el.data.createdOn}</td>
           <td>
@@ -141,7 +145,9 @@ titleSort.addEventListener("click", (e) => {
           <td><div class="img-holder aspect-1-1"><img src="${croppedImage(
             el.data.listImage
           )}" alt=""></div></td>
-          <td>${el.data.title}</td>
+          <td><a class="link" onclick="helpershowSubPage('${el.id}');">${
+              el.data.title
+            }</a></td>
           <td>${el.data.Subtitle}</td>
           <td class="text-center">${el.data.createdOn}</td>
           <td>
@@ -272,7 +278,7 @@ const addNewRow = (el) => {
       "tr",
       tbody,
       `<td><div class="img-holder aspect-1-1"><img src="${el.listImage}" alt=""></div></td>
-    <td>${el.title}</td>
+    <td><a class="link" onclick="helpershowSubPage('${el.id}');">${el.title}</a></td>
     <td>${el.Subtitle}</td>
     <td class="text-center">${el.createdOn}</td>
     <td>
@@ -289,7 +295,7 @@ const addNewRow = (el) => {
       `
       <tr>
       <td><div class="img-holder aspect-1-1"><img src="${el.listImage}" alt=""></div></td>
-    <td>${el.title}</td>
+    <td><a class="link" onclick="helpershowSubPage('${el.id}');">${el.title}</a></td>
     <td>${el.Subtitle}</td>
     <td class="text-center">${el.createdOn}</td>
     <td>
@@ -312,7 +318,7 @@ const updateNewRecord = (obj, element) => {
     element.parentElement.parentElement.parentElement.previousElementSibling.previousElementSibling.innerHTML =
       obj.Subtitle;
     element.parentElement.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.innerHTML =
-      obj.title;
+    `<a class="link" onclick="helpershowSubPage('${obj.id}');">${obj.title}</a>`;
     element.parentElement.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.firstChild.firstChild.src =
       croppedImage(obj.listImage);
   } else {
@@ -321,7 +327,7 @@ const updateNewRecord = (obj, element) => {
     element.parentElement.parentElement.previousElementSibling.previousElementSibling.innerHTML =
       obj.Subtitle;
     element.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.innerHTML =
-      obj.title;
+    `<a class="link" onclick="helpershowSubPage('${obj.id}');">${obj.title}</a>`;
     element.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.firstChild.firstChild.src =
       obj.listImage;
   }
