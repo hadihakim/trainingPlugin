@@ -3,12 +3,20 @@ addItem.addEventListener("click", (e) => {
   showSubPage();
 });
 
+let addItemEmptyState = document.getElementById("addItem-empty-state");
+addItemEmptyState.addEventListener("click", (e) => {
+  showSubPage();
+});
+
 Items.load((err, res) => {
+  document.getElementById("items-table").style.visibility = "hidden";
+  document.getElementById("empty-state").style.display = "none";
+  document.getElementById("loading-state").style.display = "block";
   //console.log("from load", res);
 
   if (err) console.error(err);
   else if (res && res.length > 0) {
-    document.getElementById("empty-state").style.display = "none";
+    //document.getElementById("empty-state").style.display = "none";
     Items.ui_create(
       "tbody",
       document.getElementById("items-table"),
@@ -43,8 +51,11 @@ Items.load((err, res) => {
         `,
       ["tableBody"]
     );
+    document.getElementById("loading-state").style.display = "none";
+    document.getElementById("items-table").style.visibility = "visible";
   } else {
-    document.getElementById("items-table").style.display = "none";
+    document.getElementById("loading-state").style.display = "none";
+    document.getElementById("empty-state").style.display = "block";
   }
 });
 
@@ -204,9 +215,17 @@ const hideSubPage = () => {
 };
 
 const removeRecord = (e) => {
+  var table = document.getElementById("items-table");
   if (e.classList.contains("icon-cross2")) {
     e.parentElement.parentElement.parentElement.parentElement.remove();
   } else e.parentElement.parentElement.parentElement.remove();
+  if (table.tBodies[0].rows.length == 0) {
+    table.removeChild(table.getElementsByTagName("tbody")[0]);
+    document.getElementById("items-table").style.visibility = "hidden";
+    document.getElementById("empty-state").style.display = "block";
+    return;
+  }
+  //var tbodyRowCount =;
 };
 
 const deleteItem = (id, e) => {
@@ -226,7 +245,9 @@ const deleteItem = (id, e) => {
       if (isConfirmed) {
         Items.delete(id, (err, res) => {
           if (err) return console.error(err);
-          else removeRecord(elemenet);
+          else {
+            removeRecord(elemenet);
+          }
           buildfire.dialog.toast({
             message: "deleted",
             type: "success",
@@ -261,7 +282,27 @@ const addNewRow = (el) => {
                   </div>
               </td>`
     );
+  } else {
+    Items.ui_create(
+      "tbody",
+      table,
+      `
+      <tr>
+      <td><div class="img-holder aspect-1-1"><img src="${el.listImage}" alt=""></div></td>
+    <td>${el.title}</td>
+    <td>${el.Subtitle}</td>
+    <td class="text-center">${el.createdOn}</td>
+    <td>
+                  <div class="pull-right">
+                      <button class="btn bf-btn-icon" id="${el.id}" onclick="helpershowSubPage('${el.id}')"><span class="icon icon-pencil"></span></button>
+                      <button class="btn bf-btn-icon" onclick="deleteItem('${el.id}')"><span class="icon icon-cross2"></span></button>
+                  </div>
+              </td>
+              </tr>`
+    );
   }
+  document.getElementById("loading-state").style.display = "none";
+  document.getElementById("items-table").style.visibility = "visible";
 };
 
 const updateNewRecord = (obj, element) => {
@@ -287,7 +328,7 @@ const updateNewRecord = (obj, element) => {
 };
 
 const saveItem = (id, element) => {
-  console.log(id, element, "save Item safsfdds");
+  var table = document.getElementById("items-table");
   let newItem = {
     title: title.value,
     Subtitle: subtitle.value,
@@ -313,18 +354,30 @@ const saveItem = (id, element) => {
       newItem.title !== "" &&
       (newItem.listImage !== "") & (newItem.coverImage !== "")
     ) {
+      document.getElementById("items-table").style.visibility = "hidden";
+      document.getElementById("empty-state").style.display = "none";
+      document.getElementById("loading-state").style.display = "block";
+      217;
       Items.insert(newItem, (err, res) => {
         document
           .querySelectorAll(".error-message")
           .forEach((el) => el.classList.add("hidden"));
-        if (err) console.error(err);
-        else console.log(res);
+        if (err) {
+          if (table.tBodies[0].rows.length == 0) {
+            document.getElementById("loading-state").style.display = "none";
+            document.getElementById("empty-state").style.display = "block";
+          } else {
+            document.getElementById("loading-state").style.display = "none";
+            document.getElementById("items-table").style.visibility = "visible";
+          }
+          return console.error(err);
+        }
         addNewRow({ id: res.id, createdOn: res.data.createdOn, ...newItem });
       });
     } else {
-        document
-          .querySelectorAll(".error-message")
-          .forEach((el) => el.classList.remove("hidden"));
+      document
+        .querySelectorAll(".error-message")
+        .forEach((el) => el.classList.remove("hidden"));
       document.getElementById("mainPage").style.display = "none";
       document.getElementById("subPage").style.display = "block";
       return;
