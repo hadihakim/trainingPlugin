@@ -23,6 +23,7 @@
 
   <body>
     <div class="container" id="mainPage">
+      <!-- top page info section -->
       <div class="row maring-bottom-twenty">
         <p class="info-note col-12">
           You can create a list of items with images, actions and other details.
@@ -31,6 +32,8 @@
           tab.
         </p>
       </div>
+
+      <!--Search and Add item section-->
       <div class="row">
         <div class="col-md-9 search-input">
           <div class="input-group margin-bottom-twenty">
@@ -53,7 +56,44 @@
           </button>
         </div>
       </div>
-      <div class="row maring-bottom-twenty">
+
+      <!-- loading -->
+      <div class="well empty-state-lg" id="loading-state">
+        <div class="container" style="width: 100%; height: 100%;">
+          <div
+            class="row"
+            style="
+              height: 100%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            "
+          >
+            <h5 class="text-center">Loading...</h5>
+          </div>
+        </div>
+      </div>
+
+      <!-- empty state container -->
+      <div class="well empty-state-lg" id="empty-state" style="display: none">
+        <div class="container">
+          <div class="row empty-row">
+            <h5 class="text-center">
+              You haven't added anything yet. <br />
+              Add sample data to preview this feature
+            </h5>
+          </div>
+          <div class="row empty-row">
+            <button class="btn btn-success" id="addItem-empty-state">
+              <span class="icon icon-plus margin-right-ten"></span>
+              <span>Add Sample Data</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Items table section-->
+      <div style="visibility: hidden;" class="row maring-bottom-twenty tt">
         <table class="table table-bf" id="items-table">
           <thead>
             <td></td>
@@ -68,45 +108,12 @@
             <th>
               <h5 class="text-center">Date of Creation</h5>
             </th>
-            <th>
-            </th>
+            <th></th>
           </thead>
         </table>
       </div>
-      <!-- empty state container -->
-      <div class="well empty-state-lg" id="empty-state" style="display: none">
-        <div class="container">
-          <div class="row empty-row">
-            <h5 class="text-center">
-              You haven't added anything yet. <br />
-              Add sample data to preview this feature
-            </h5>
-          </div>
-          <div class="row empty-row">
-            <button class="btn btn-success">
-              <span class="icon icon-plus margin-right-ten"></span>
-              <span>Add Sample Data</span>
-            </button>
-          </div>
-        </div>
-      </div>
     </div>
-    <!-- loading -->
-    <div class="well empty-state-lg" id="loading-state" style="display: none">
-      <div class="container">
-        <div
-          class="row"
-          style="
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-          "
-        >
-          <h5 class="text-center">Loading</h5>
-        </div>
-      </div>
-    </div>
+
     <!-- -----------------------sub page--------------------------- -->
     <div class="sub-page" id="subPage" style="display: none">
       <div class="container slide-in padding-bottom-twenty">
@@ -118,7 +125,9 @@
             <label for="text"
               >List Image & Cover image <span class="text-danger">*</span>
             </label>
-            <div  class="error-message invalid-feedback text-danger hidden">required</div>
+            <div class="error-message invalid-feedback text-danger hidden">
+              required
+            </div>
           </div>
           <div class="col-md-4">
             <div
@@ -137,46 +146,47 @@
         </div>
       </div>
 
-        <div class="container slide-in padding-bottom-twenty">
-          <div class="row">
-            <h1>Item Details</h1>
+      <div class="container slide-in padding-bottom-twenty">
+        <div class="row">
+          <h1>Item Details</h1>
+        </div>
+        <div class="row margin-bottom-twenty">
+          <div class="col-md-3">
+            <label for="tilte-text"
+              >Title<span class="text-danger">*</span>
+              <div class="error-message invalid-feedback text-danger hidden">
+                required
+              </div>
+            </label>
           </div>
-          <div class="row margin-bottom-twenty">
-            <div class="col-md-3">
-              <label for="tilte-text"
-                >Title<span class="text-danger">*</span>
-                <div  class="error-message invalid-feedback text-danger hidden">required</div>
-              </label>
-            </div>
-            <div class="col-md-9">
-              <input id="title" type="text" class="form-control" required />
-            </div>
-          </div>
-          <div class="row margin-bottom-twenty">
-            <div class="col-md-3">
-              <label for="subTitle">Subtitle</label>
-            </div>
-            <div class="col-md-9">
-              <input id="subtitle" type="text" class="form-control" />
-            </div>
-          </div>
-          <div class="row margin-bottom-thirty">
-            <textarea id="wysiwygContent" name="content"></textarea>
-          </div>
-          
-          <div class="row bottom-actions">
-            <button
-              class="btn btn-default"
-              onclick="location.href = './index.html';"
-            >
-              Cancel
-            </button>
-            <button  class="btn btn-success" id="saveBtn" onclick="saveItem()">
-              Save
-            </button>
+          <div class="col-md-9">
+            <input id="title" type="text" class="form-control" required />
           </div>
         </div>
-    </div>
+        <div class="row margin-bottom-twenty">
+          <div class="col-md-3">
+            <label for="subTitle">Subtitle</label>
+          </div>
+          <div class="col-md-9">
+            <input id="subtitle" type="text" class="form-control" />
+          </div>
+        </div>
+        <div class="row margin-bottom-thirty">
+          <textarea id="wysiwygContent" placeholder="WYSIWYG" name="content"></textarea>
+        </div>
+
+        <div class="row bottom-actions">
+          <button
+            class="btn btn-default"
+            onclick="location.href = './index.html';"
+          >
+            Cancel
+          </button>
+          <button class="btn btn-success" id="saveBtn" onclick="saveItem()">
+            Save
+          </button>
+        </div>
+      </div>
     </div>
 
     <script>
