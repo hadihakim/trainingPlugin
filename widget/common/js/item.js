@@ -150,3 +150,31 @@ const Items = {
     thumbnail.loadbackground(imgUrl);
   },
 };
+const searchSortHelper = (data, sort, callback) => {
+
+  let sortB = null;
+  sort > 0 ? (sortB = -1) : (sortB = 1);
+  console.log(data, "before sort");
+  Items.search(
+    {
+      sort: { title: sort, Subtitle: sortB },
+    },
+    (err, res) => {
+      if (err) return callback(err, null);
+      else {
+        console.log(res, "after sort");
+        similarObj = [];
+        res.forEach(el =>{
+          if(data.some(item=> item.id === el.id)){
+            similarObj.push(el);
+          }
+        })
+          return callback(null, similarObj)
+
+        
+      }
+    }
+  );
+
+
+}

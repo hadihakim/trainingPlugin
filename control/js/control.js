@@ -1,3 +1,4 @@
+let data=null;
 let addItem = document.getElementById("addItem");
 addItem.addEventListener("click", (e) => {
   showSubPage();
@@ -17,15 +18,16 @@ Items.load((err, res) => {
   if (err) console.error(err);
   else if (res && res.length > 0) {
     //document.getElementById("empty-state").style.display = "none";
+    data=res;
     Items.ui_create(
       "tbody",
       document.getElementById("items-table"),
       `
         ${res
-          .map((el) => {
-            return uiRow(el, "loadState");
-          })
-          .join("")}
+        .map((el) => {
+          return uiRow(el, "loadState");
+        })
+        .join("")}
         
         `,
       ["tableBody"]
@@ -43,6 +45,7 @@ searchButton.addEventListener("click", (e) => {
   Items.searchFilter(searchInput.value, (err, res) => {
     if (err) console.error(err);
     else if (res) {
+      data=res;
       console.log("res", res);
 
       document.getElementById("loading-state").style.display = "none";
@@ -86,7 +89,8 @@ titleSort.addEventListener("click", (e) => {
       sort = 1;
     }
   }
-  Items.searchSort(sort, (err, res) => {
+  // ------------------------------sort -------------------------// 
+  searchSortHelper (data, sort, (err, res) => {
     if (err) console.error(err);
     else if (res) {
       var tbl = document.getElementById("items-table"); // Get the table
@@ -106,6 +110,7 @@ titleSort.addEventListener("click", (e) => {
         `
       );
     }
+
   });
 });
 
@@ -197,9 +202,9 @@ const deleteItem = (id, e) => {
               else {
                 if (res.length > 0) {
                   document.getElementById("empty-state").style.display = "none";
-                  
+
                 } else {
-                  document.getElementById("empty-state").style.display ="block";
+                  document.getElementById("empty-state").style.display = "block";
                 }
               }
             });
@@ -361,23 +366,19 @@ const uiRow = (el, state) => {
   let row = `
           <tr class="${state}">
           <td><div class="img-holder aspect-1-1"><img src="${croppedImage(
-            el.data.listImage
-          )}" alt=""></div></td>
-          <td><a class="link" onclick="helpershowSubPage('${el.id}');">${
-    el.data.title
-  }</a></td>
+    el.data.listImage
+  )}" alt=""></div></td>
+          <td><a class="link" onclick="helpershowSubPage('${el.id}');">${el.data.title
+    }</a></td>
           <td>${el.data.Subtitle}</td>
           <td class="text-center">${el.data.createdOn}</td>
           <td>
                         <div class="pull-right">
-                            <button class="btn bf-btn-icon" id="${
-                              el.id
-                            }" onclick="helpershowSubPage('${
-    el.id
-  }')"><span class="icon icon-pencil"></span></button>
-                            <button class="btn bf-btn-icon" onclick="deleteItem('${
-                              el.id
-                            }')"><span class="icon icon-cross2"></span></button>
+                            <button class="btn bf-btn-icon" id="${el.id
+    }" onclick="helpershowSubPage('${el.id
+    }')"><span class="icon icon-pencil"></span></button>
+                            <button class="btn bf-btn-icon" onclick="deleteItem('${el.id
+    }')"><span class="icon icon-cross2"></span></button>
                         </div>
                     </td>
           </tr>
