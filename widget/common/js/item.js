@@ -7,16 +7,27 @@ class Item {
     this.coverImage = data.coverImage || "";
     this.description = data.description || "";
 
-    this.createdOn = data.createdOn || new Date();
+    this.createdOn =
+      data.createdOn ||
+      new Date().toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      });
     this.createdBy = data.createdBy || null;
-    this.lastUpdatedOn = data.lastUpdatedOn || new Date();
+    this.lastUpdatedOn =
+      data.lastUpdatedOn ||
+      new Date().toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      });
     this.lastUpdatedBy = data.lastUpdatedBy || null;
     this.deletedOn = data.deletedOn || null;
     this.deletedBy = data.deletedBy || null;
     this.isActive = [0, 1].includes(data.isActive) ? data.isActive : 1;
   }
 }
-
 const Items = {
   TAG: "Items",
   save: async (item, callback) => {
@@ -78,18 +89,18 @@ const Items = {
     return e;
   },
 
-  load: (callback) => {
-    Items.search({}, (err, res) => {
+  load: async (callback) => {
+    await Items.search({}, (err, res) => {
       if (err) return callback(err, null);
       else {
         return callback(null, res);
       }
     });
   },
-  searchFilter: (searchItem, callback) => {
+  searchFilter: async (searchItem, callback) => {
     console.log("from SF", searchItem);
     if (searchItem === "" || searchItem === null) {
-      Items.search({}, (err, res) => {
+      await Items.search({}, (err, res) => {
         if (err) return callback(err, null);
         else {
           return callback(null, res);
@@ -97,12 +108,12 @@ const Items = {
       });
       return;
     }
-    Items.search(
+    await Items.search(
       {
         filter: {
           $or: [
-            { "$json.title":{ $regex: searchItem ,$options: 'i'}},
-            { "$json.Subtitle": {$regex:searchItem ,$options: 'i'}}
+            { "$json.title": { $regex: searchItem, $options: "i" } },
+            { "$json.Subtitle": { $regex: searchItem, $options: "i" } },
           ],
         },
       },
