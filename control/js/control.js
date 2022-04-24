@@ -66,6 +66,7 @@ searchButton.addEventListener("click", (e) => {
           
           `
         );
+        Analytics.trackAction("ITEM_SEARCHED");
       }
     }
   });
@@ -124,6 +125,7 @@ function helpershowSubPage(id, e) {
   Items.getById(id, (err, res) => {
     if (err) return console.log(err);
     showSubPage(res, element);
+    Analytics.trackAction("ITEM_CLICKED");
   });
 }
 
@@ -197,9 +199,9 @@ const deleteItem = (id, e) => {
               else {
                 if (res.length > 0) {
                   document.getElementById("empty-state").style.display = "none";
-                  
                 } else {
-                  document.getElementById("empty-state").style.display ="block";
+                  document.getElementById("empty-state").style.display =
+                    "block";
                 }
               }
             });
@@ -209,6 +211,7 @@ const deleteItem = (id, e) => {
             type: "success",
           });
         });
+        Analytics.trackAction("ITEM_DELETED");
       } else {
         //Prevent action
       }
@@ -338,6 +341,7 @@ const saveItem = (id, element) => {
         }
         addNewRow({ id: res.id, createdOn: res.data.createdOn, ...newItem });
       });
+      Analytics.trackAction("ITEM_CREATED");
     } else {
       document
         .querySelectorAll(".error-message")
