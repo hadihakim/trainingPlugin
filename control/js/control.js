@@ -23,30 +23,7 @@ Items.load((err, res) => {
       `
         ${res
           .map((el) => {
-            return `
-          <tr>
-          <td><div class="img-holder aspect-1-1"><img src="${croppedImage(
-            el.data.listImage
-          )}" alt=""></div></td>
-          <td><a class="link" onclick="helpershowSubPage('${el.id}');">${
-              el.data.title
-            }</a></td>
-          <td>${el.data.Subtitle}</td>
-          <td class="text-center">${el.data.createdOn}</td>
-          <td>
-                        <div class="pull-right">
-                            <button class="btn bf-btn-icon" id="${
-                              el.id
-                            }" onclick="helpershowSubPage('${
-              el.id
-            }')"><span class="icon icon-pencil"></span></button>
-                            <button class="btn bf-btn-icon" onclick="deleteItem('${
-                              el.id
-                            }')"><span class="icon icon-cross2"></span></button>
-                        </div>
-                    </td>
-          </tr>
-          `;
+            return uiRow(el, "loadState");
           })
           .join("")}
         
@@ -66,48 +43,30 @@ searchButton.addEventListener("click", (e) => {
   Items.searchFilter(searchInput.value, (err, res) => {
     if (err) console.error(err);
     else if (res) {
+      console.log("res", res);
+
       document.getElementById("loading-state").style.display = "none";
       var tbl = document.getElementById("items-table"); // Get the table
-
       if (tbl.getElementsByTagName("tbody").length > 0) {
         tbl.removeChild(tbl.getElementsByTagName("tbody")[0]); // Remove first instance of body ‏
       }
-      if (res.length == 0) return;
-      Items.ui_create(
-        "tbody",
-        document.getElementById("items-table"),
-        `
-        ${res
-          .map((el) => {
-            return `
-          <tr>
-          <td><div class="img-holder aspect-1-1"><img src="${croppedImage(
-            el.data.listImage
-          )}" alt=""></div></td>
-          <td><a class="link" onclick="helpershowSubPage('${el.id}');">${
-              el.data.title
-            }</a></td>
-          <td>${el.data.Subtitle}</td>
-          <td class="text-center">${el.data.createdOn}</td>
-          <td>
-                        <div class="pull-right">
-                        <button class="btn bf-btn-icon" id="${
-                          el.id
-                        }" onclick="helpershowSubPage('${
-              el.id
-            }')"><span class="icon icon-pencil"></span></button>
-                        <button class="btn bf-btn-icon" onclick="deleteItem('${
-                          el.id
-                        }')"><span class="icon icon-cross2"></span></button>
-                        </div>
-                    </td>
-          </tr>
-          `;
-          })
-          .join("")}
-        
-        `
-      );
+      if (res.length == 0)
+        document.getElementById("items-table").style.display = "none";
+      else if (res.length > 0) {
+        document.getElementById("items-table").style.display = "table";
+        Items.ui_create(
+          "tbody",
+          document.getElementById("items-table"),
+          `
+          ${res
+            .map((el) => {
+              return uiRow(el, "searchState");
+            })
+            .join("")}
+          
+          `
+        );
+      }
     }
   });
 });
@@ -140,30 +99,7 @@ titleSort.addEventListener("click", (e) => {
         `
         ${res
           .map((el) => {
-            return `
-          <tr>
-          <td><div class="img-holder aspect-1-1"><img src="${croppedImage(
-            el.data.listImage
-          )}" alt=""></div></td>
-          <td><a class="link" onclick="helpershowSubPage('${el.id}');">${
-              el.data.title
-            }</a></td>
-          <td>${el.data.Subtitle}</td>
-          <td class="text-center">${el.data.createdOn}</td>
-          <td>
-                        <div class="pull-right">
-                        <button class="btn bf-btn-icon" id="${
-                          el.id
-                        }" onclick="helpershowSubPage('${
-              el.id
-            }')"><span class="icon icon-pencil"></span></button>
-                        <button class="btn bf-btn-icon" onclick="deleteItem('${
-                          el.id
-                        }')"><span class="icon icon-cross2"></span></button>
-                        </div>
-                    </td>
-          </tr>
-          `;
+            return uiRow(el);
           })
           .join("")}
         
@@ -253,6 +189,20 @@ const deleteItem = (id, e) => {
           if (err) return console.error(err);
           else {
             removeRecord(elemenet);
+            if (document.querySelectorAll(".searchState").length === 0) {
+              document.getElementById("empty-state").style.display = "none";
+            }
+            Items.load((err, res) => {
+              if (err) return console.error(err);
+              else {
+                if (res.length > 0) {
+                  document.getElementById("empty-state").style.display = "none";
+                  
+                } else {
+                  document.getElementById("empty-state").style.display ="block";
+                }
+              }
+            });
           }
           buildfire.dialog.toast({
             message: "deleted",
@@ -317,8 +267,7 @@ const updateNewRecord = (obj, element) => {
       obj.createdOn;
     element.parentElement.parentElement.parentElement.previousElementSibling.previousElementSibling.innerHTML =
       obj.Subtitle;
-    element.parentElement.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.innerHTML =
-    `<a class="link" onclick="helpershowSubPage('${obj.id}');">${obj.title}</a>`;
+    element.parentElement.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.innerHTML = `<a class="link" onclick="helpershowSubPage('${obj.id}');">${obj.title}</a>`;
     element.parentElement.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.firstChild.firstChild.src =
       croppedImage(obj.listImage);
   } else {
@@ -326,8 +275,7 @@ const updateNewRecord = (obj, element) => {
       obj.createdOn;
     element.parentElement.parentElement.previousElementSibling.previousElementSibling.innerHTML =
       obj.Subtitle;
-    element.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.innerHTML =
-    `<a class="link" onclick="helpershowSubPage('${obj.id}');">${obj.title}</a>`;
+    element.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.innerHTML = `<a class="link" onclick="helpershowSubPage('${obj.id}');">${obj.title}</a>`;
     element.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.firstChild.firstChild.src =
       obj.listImage;
   }
@@ -343,18 +291,29 @@ const saveItem = (id, element) => {
     description: tinymce.activeEditor.getContent(),
   };
   if (id != null) {
-    Items.edit(id, { createdOn: new Date(), ...newItem }, (err, res) => {
-      if (err) console.error(err);
-      else console.log(res);
-      updateNewRecord(
-        { id: id, createdOn: res.data.createdOn, ...newItem },
-        element
-      );
-      buildfire.dialog.toast({
-        message: "updated",
-        type: "success",
-      });
-    });
+    Items.edit(
+      id,
+      {
+        createdOn: new Date().toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        }),
+        ...newItem,
+      },
+      (err, res) => {
+        if (err) console.error(err);
+        else console.log(res);
+        updateNewRecord(
+          { id: id, createdOn: res.data.createdOn, ...newItem },
+          element
+        );
+        buildfire.dialog.toast({
+          message: "updated",
+          type: "success",
+        });
+      }
+    );
   } else {
     if (
       newItem.title !== "" &&
@@ -363,7 +322,6 @@ const saveItem = (id, element) => {
       document.getElementById("items-table").style.visibility = "hidden";
       document.getElementById("empty-state").style.display = "none";
       document.getElementById("loading-state").style.display = "block";
-      217;
       Items.insert(newItem, (err, res) => {
         document
           .querySelectorAll(".error-message")
@@ -397,4 +355,32 @@ const saveItem = (id, element) => {
 
   document.getElementById("mainPage").style.display = "block";
   document.getElementById("subPage").style.display = "none";
+};
+
+const uiRow = (el, state) => {
+  let row = `
+          <tr class="${state}">
+          <td><div class="img-holder aspect-1-1"><img src="${croppedImage(
+            el.data.listImage
+          )}" alt=""></div></td>
+          <td><a class="link" onclick="helpershowSubPage('${el.id}');">${
+    el.data.title
+  }</a></td>
+          <td>${el.data.Subtitle}</td>
+          <td class="text-center">${el.data.createdOn}</td>
+          <td>
+                        <div class="pull-right">
+                            <button class="btn bf-btn-icon" id="${
+                              el.id
+                            }" onclick="helpershowSubPage('${
+    el.id
+  }')"><span class="icon icon-pencil"></span></button>
+                            <button class="btn bf-btn-icon" onclick="deleteItem('${
+                              el.id
+                            }')"><span class="icon icon-cross2"></span></button>
+                        </div>
+                    </td>
+          </tr>
+          `;
+  return row;
 };

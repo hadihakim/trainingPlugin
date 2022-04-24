@@ -12,12 +12,11 @@
     <link rel="stylesheet" href="../../../../styles/bootstrap.css" />
     <link rel="stylesheet" href="../../../../styles/" />
     <script src="../../widget/common/js/item.js"></script>
+    <script src="../../widget/common/js/analytics.js"></script>
     <script src="../../../../scripts/buildfire.js"></script>
     <script src="../../../../scripts/tinymce/tinymce.min.js"></script>
     <script src="../../../../scripts/buildfire/components/images/thumbnail.js"></script>
 
-    <!-- DELETE THIS SCRIPT IN PROD -->
-    <script src="dummyData.js"></script>
     <script src="../js/control.js" defer></script>
   </head>
 
@@ -59,7 +58,7 @@
 
       <!-- loading -->
       <div class="well empty-state-lg" id="loading-state">
-        <div class="container" style="width: 100%; height: 100%;">
+        <div class="container" style="width: 100%; height: 100%">
           <div
             class="row"
             style="
@@ -73,7 +72,6 @@
           </div>
         </div>
       </div>
-
       <!-- empty state container -->
       <div class="well empty-state-lg" id="empty-state" style="display: none">
         <div class="container">
@@ -93,7 +91,7 @@
       </div>
 
       <!-- Items table section-->
-      <div style="visibility: hidden;" class="row maring-bottom-twenty tt">
+      <div style="visibility: hidden" class="row maring-bottom-twenty tt">
         <table class="table table-bf" id="items-table">
           <thead>
             <td></td>
@@ -172,7 +170,11 @@
           </div>
         </div>
         <div class="row margin-bottom-thirty">
-          <textarea id="wysiwygContent" placeholder="WYSIWYG" name="content"></textarea>
+          <textarea
+            id="wysiwygContent"
+            placeholder="WYSIWYG"
+            name="content"
+          ></textarea>
         </div>
 
         <div class="row bottom-actions">
@@ -213,19 +215,19 @@
         selector: "#wysiwygContent",
       });
 
-      /*const navigateToTab = () => {
-      console.log("hi");
-      buildfire.navigation.navigateToTab(
-        {
-          tabTitle: "Introduction",
-          deeplinkData: { username: "John" }
-        },
-        (err) => {
-          if (err) return console.error(err);
-          console.log("NAVIGATION FINISHED");
-        }
-      );
-    }*/
+      const navigateToTab = () => {
+        console.log("hi");
+        buildfire.navigation.navigateToTab(
+          {
+            tabTitle: "Introduction",
+            deeplinkData: { username: "John" },
+          },
+          (err) => {
+            if (err) return console.error(err);
+            console.log("NAVIGATION FINISHED");
+          }
+        );
+      };
     </script>
   </body>
 </html>
