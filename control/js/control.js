@@ -57,6 +57,7 @@ searchButton.addEventListener("click", (e) => {
         document.getElementById("items-table").style.display = "none";
       else if (res.length > 0) {
         document.getElementById("items-table").style.display = "table";
+        document.getElementById("items-table").style.visibility = "visible";
         Items.ui_create(
           "tbody",
           document.getElementById("items-table"),
