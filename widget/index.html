@@ -1,30 +1,117 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="../../../scripts/buildfire.js"></script>
+    <script src="../../../scripts/buildfire/services/notifications/pushNotifications.js"></script>
+    <script src="../../../scripts/buildfire/services/notifications/localNotifications.js"></script>
+    <script src="../../../../scripts/tinymce/tinymce.min.js"></script>
+    <script src="./common/js/introduction.js"></script>
 
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./common/css/style.css" />
-  <script src="../../../scripts/buildfire.js"></script>
-  <script src="../../../scripts/buildfire/services/notifications/pushNotifications.js"></script>
-  <script src="../../../scripts/buildfire/services/notifications/localNotifications.js"></script>
-  <script src="../../../../scripts/tinymce/tinymce.min.js"></script>
+    <!-- CSS -->
+    <link
+      href="../../../scripts/owlCarousel/owlCarousel.css"
+      rel="stylesheet"
+    />
 
-  <!-- CSS -->
-  <link href="../../../scripts/owlCarousel/owlCarousel.css" rel="stylesheet" />
+    <!-- JS -->
+    <script src="../../../scripts/buildfire.js"></script>
+    <script src="../../../scripts/jquery/jquery-1.11.2.min.js"></script>
+    <script src="../../../scripts/owlCarousel/owlCarousel.js"></script>
+    <script src="../../../scripts/buildfire/components/carousel/carousel.js"></script>
+    <link rel="stylesheet" href="./common/css/style.css">
+    <style>
+      .carousel-items:empty {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <div class="searchContainer" ng-click="navigateToSearch()">
+        <span class="material-icons">search </span
+        ><input
+          type="text"
+          placeholder="Search"
+          id="searchInput"
+          autocomplete="off"
+        />
+      </div>
+    </div>
+    <p>sdsdDDDDds</p>
+    <div id="carousel"></div>
+    <script>
+      /// create a new instance of the buildfire carousel editor
+      var editor = new buildfire.components.carousel.editor(
+        "#carousel",
+        [
+          {
+            title: "build fire",
+            url: "https://www.facebook.com/buildfireapps",
+            action: "linkToWeb",
+            openIn: "_blank",
+            iconUrl: "https://placekitten.com/800/400",
+          },
+          {
+            title: "build fire",
+            url: "https://www.facebook.com/buildfireapps",
+            action: "linkToWeb",
+            openIn: "_blank",
+            iconUrl: "https://placekitten.com/600/300",
+          },
+        ],
+        "WideScreen"
+      );
 
-  <!-- JS -->
-  <script src="../../../scripts/buildfire.js"></script>
-  <script src="../../../scripts/jquery/jquery-1.11.2.min.js"></script>
-  <script src="../../../scripts/owlCarousel/owlCarousel.js"></script>
-  <script src="../../../scripts/buildfire/components/carousel/carousel.js"></script>
-</head>
+      /// handle the loading
+      function loadItems(carouselItems) {
+        // create an instance and pass it the items if you don't have items yet just pass []
+        editor.loadItems(carouselItems);
+      }
 
-<body>
-  <div id="my_container_div"></div>
-  <script>
-    document.getElementById("my_container_div").innerHTML =
-      data.content.description;
-  </script>
-</body>
+      /// call buildfire datastore to see if there are any previously saved items
+      buildfire.datastore.get(Introduction.TAG, function (err, obj) {
+        if (err) alert("error");
+        else loadItems(obj.data.images);
+      });
 
+      /// save any changes in items
+      function save(items) {
+        console.log("saving...");
+        buildfire.datastore.save({ carouselItems: items }, function (e) {
+          if (e) alert("error");
+          else console.log("saved.");
+        });
+      }
+
+      // this method will be called when a new item added to the list
+      editor.onAddItems = function (items) {
+        save(editor.items);
+      };
+      // this method will be called when an item deleted from the list
+      editor.onDeleteItem = function (item, index) {
+        save(editor.items);
+      };
+      // this method will be called when you edit item details
+      editor.onItemChange = function (item) {
+        save(editor.items);
+      };
+      // this method will be called when you change the order of items
+      editor.onOrderChange = function (item, oldIndex, newIndex) {
+        save(editor.items);
+      };
+
+      let viewer = new buildfire.components.carousel.view("#carousel");
+
+      viewer.append([
+        {
+          title: "build fire",
+          url: "https://www.facebook.com/buildfireapps",
+          action: "linkToWeb",
+          openIn: "_blank",
+          iconUrl: "https://placekitten.com/800/400",
+        },
+      ]);
+    </script>
+  </body>
 </html>
