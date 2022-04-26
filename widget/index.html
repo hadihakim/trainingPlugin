@@ -39,8 +39,8 @@
     <script src="./common/js/app.js" defer></script>
   </head>
 
-  <body>
-    <div id="main">
+  <body id="d">
+    <div id="mainPage">
       <div class="mdc-card search-card">
         <div class="inner-search-container">
           <span class="material-icons icon" id="searchIcon">search</span>
@@ -48,9 +48,25 @@
           <span class="material-icons icon cursor" id="sortIcon">sort</span>
         </div>
       </div>
-    </div>
-    <div id="carousel"></div>
+      <div id="carousel"></div>
     <div id="my_container_div"></div>
-    <div id="listViewContainer"></div>
+    <div id="listViewContainer" style="height: 400px; overflow: scroll;"></div>
+    </div>
+    
+
+    <div id="subPage" class="hidden slide-in">
+      <img id="coverImage"></img>
+      <img id="listImage" onclick="imagePreviewer(this.src)"></img>
+      <h3 id="title"></h3>
+      <p id="subtitle"></p>
+      <div id="my_sub_container_div"></div>
+    </div>
+
+    <script>
+      document.getElementById("listViewContainer").onscroll = function(e) {
+      console.log("Hello");
+
+      };
+    </script>
   </body>
 </html>
