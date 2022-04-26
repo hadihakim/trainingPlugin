@@ -1,65 +1,73 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- <link rel="stylesheet" href="./common/css/style.css" /> -->
-    <script src="../../../scripts/buildfire.js"></script>
-    <script src="../../../scripts/buildfire/services/notifications/pushNotifications.js"></script>
-    <script src="../../../scripts/buildfire/services/notifications/localNotifications.js"></script>
-    <script src="../../../../scripts/tinymce/tinymce.min.js"></script>
-    <style>
-      .listViewContainer .listViewItem .listViewItemImgContainer img{
-        border-radius: 0 !important;
-        width: 40px !important;
-        height: 40px !important;
-      }
-    </style>
-    <!-- CSS -->
-    <link
-      href="../../../scripts/owlCarousel/owlCarousel.css"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="../../../styles/components/listView.css" />
-    <link href="../../../styles/control/bf-base.css" rel="stylesheet" />
-    <link href="../../../styles/control/siteIcons-control.css" rel="stylesheet" />
-    <link href="../../../styles/siteStyle.css" rel="stylesheet" />
-    <link href="../../../styles/helper.css" rel="stylesheet" />
-    <link href="../../../styles/material-icons.css" rel="stylesheet" />
-    <link href="../../../styles/materialDesign/material-components-web@4.0.0.min.css" rel="stylesheet" />
-    <!-- JS -->
-    <script src="../../../scripts/buildfire.js"></script>
-    <script src="../../../scripts/jquery/jquery-1.11.2.min.js"></script>
-    <script src="../../../scripts/owlCarousel/owlCarousel.js"></script>
-    <script src="../../../scripts/buildfire/components/carousel/carousel.js"></script>
-    <script src="../../../scripts/buildfire/components/listView/listView.js"></script>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- <link rel="stylesheet" href="./common/css/style.css" /> -->
+  <script src="../../../scripts/buildfire.js"></script>
+  <script src="../../../scripts/buildfire/services/notifications/pushNotifications.js"></script>
+  <script src="../../../scripts/buildfire/services/notifications/localNotifications.js"></script>
+  <script src="../../../../scripts/tinymce/tinymce.min.js"></script>
+  <style>
+    .listViewContainer .listViewItem .listViewItemImgContainer img {
+      border-radius: 0 !important;
+      width: 40px !important;
+      height: 40px !important;
+    }
+  </style>
+  <!-- CSS -->
+  <link href="../../../scripts/owlCarousel/owlCarousel.css" rel="stylesheet" />
+  <!-- custom styles -->
+  <link rel="stylesheet" href="./common/css/style.css">
+
+
+  <link rel="stylesheet" href="../../../styles/components/listView.css" />
+  <link href="../../../styles/control/bf-base.css" rel="stylesheet" />
+  <link href="../../../styles/control/siteIcons-control.css" rel="stylesheet" />
+  <link href="../../../styles/siteStyle.css" rel="stylesheet" />
+  <link href="../../../styles/helper.css" rel="stylesheet" />
+  <link href="../../../styles/material-icons.css" rel="stylesheet" />
+  <link href="../../../styles/materialDesign/material-components-web@4.0.0.min.css" rel="stylesheet" />
+  <meta name="buildfire" content="disableBootstrap" />
+  <!-- JS -->
+  <script src="../../../scripts/buildfire.js"></script>
+  <script src="../../../scripts/jquery/jquery-1.11.2.min.js"></script>
+  <script src="../../../scripts/owlCarousel/owlCarousel.js"></script>
+  <script src="../../../scripts/buildfire/components/carousel/carousel.js"></script>
+  <script src="../../../scripts/buildfire/components/listView/listView.js"></script>
   <script src="../../../scripts/buildfire/components/drawer/drawer.js"></script>
-    <!-- Custom JS -->
-    <script src="./common/js/introduction.js"></script>
-    <script src="./common/js/item.js"></script>
-    <script src="./common/js/app.js" defer></script>
-  </head>
+  <!-- Custom JS -->
+  <script src="./common/js/introduction.js"></script>
+  <script src="./common/js/item.js"></script>
+  <script src="./common/js/app.js" defer></script>
+</head>
 
-  <body>
-    <div id="mainPage">
-      <div class="mdc-card search-card">
-        <div class="inner-search-container">
-          <span class="material-icons icon" id="searchIcon">search</span>
-          <input type="text" name="search" id="searchInput" placeholder="Search..." autocomplete="off" />
-          <span class="material-icons icon cursor" id="sortIcon">sort</span>
-        </div>
+<body>
+  <div id="mainPage">
+    <div class="mdc-card">
+      <div class="search-container">
+        <label for="searchInput" class="material-icons icon iconTheme" id="searchIcon">search</label>
+        <input class="bodyTextTheme " type="text" name="search" id="searchInput" placeholder="Search"
+          autocomplete="off" />
+        <label class="material-icons icon " id="sortIcon">sort</label>
       </div>
-      <div id="carousel"></div>
-    <div id="my_container_div"></div>
-    <div id="listViewContainer"></div>
     </div>
-    
+    <div id="carousel"></div>
+    <div id="my_container_div" class="wysiwygContainer"></div>
+    <div id="listViewContainer" style="height: 500px; overflow: scroll;"></div>
+  </div>
 
-    <div id="subPage" class="hidden slide-in">
-      <img id="coverImage"></img>
-      <img id="listImage" onclick="imagePreviewer(this.src)"></img>
+
+  <div id="subPage" class="hidden slide-in">
+    <img id="coverImage"></img>
+    <img id="listImage" onclick="imagePreviewer(this.src)"></img>
+    <div class="info-container">
       <h3 id="title"></h3>
       <p id="subtitle"></p>
-      <div id="my_sub_container_div"></div>
     </div>
-  </body>
+    <div id="my_sub_container_div"></div>
+
+  </div>
+</body>
+
 </html>
