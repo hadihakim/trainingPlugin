@@ -34,13 +34,13 @@ const init = () => {
       listView.loadListViewItems(items);
     }, 1000);
   };
-
+  getListViewData();
   // load the carousel items
   const loadItems = (carouselItems) => {
     console.log("loadItems", carouselItems);
     // create an instance and pass it the items if you don'itemList have items yet just pass []
     view.loadItems(carouselItems);
-    getListViewData();
+    
   };
 
   //   get carousel items
@@ -167,8 +167,33 @@ const drawer = () => {
   );
 };
 
-// buildfire.navigation.onBackButtonClick = () => {
-//   console.log("BACK BUTTON CLICKED");
-// };
+const supPageHandler = () => {
+  listView.onItemClicked = (item) => {
+    subItemInfoHandler(item);
+  };
 
+  
+};
+
+// show item data in sub page
+const subItemInfoHandler = (item) => {
+  title.innerHTML = item.data.title;
+  subtitle.innerHTML = item.data.Subtitle;
+  coverImage.src = item.data.coverImage;
+  listImage.src = item.data.listImage;
+  my_sub_container_div.innerHTML = item.data.description;
+  mainPage.classList.add("hidden");
+  subPage.classList.remove("hidden");
+};
+
+const imagePreviewer=(imgUrl)=>{
+  buildfire.imagePreviewer.show({
+    images:[imgUrl]
+  });
+}
+
+
+
+
+supPageHandler();
 init();
