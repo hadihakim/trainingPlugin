@@ -1,7 +1,7 @@
 let view = new buildfire.components.carousel.view("#carousel", []);
 let description = document.getElementById("my_container_div");
 const listView = new buildfire.components.listView("listViewContainer", {
-  enableAddButton: true,
+  enableAddButton: false,
 });
 const init = () => {
   // load list view
@@ -46,7 +46,10 @@ const init = () => {
   //   get carousel items
   Introductions.get((err, res) => {
     if (err) console.error(err);
-    else loadItems(res.data.images);
+    else {
+      loadItems(res.data.images);
+      description.innerHTML=res.data.description;
+    }
   });
 
   Introductions.onUpdate((e) => {

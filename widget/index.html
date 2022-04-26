@@ -39,30 +39,18 @@
     <script src="./common/js/app.js" defer></script>
   </head>
 
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./common/css/style.css" />
-  <script src="../../../scripts/buildfire.js"></script>
-  <script src="../../../scripts/buildfire/services/notifications/pushNotifications.js"></script>
-  <script src="../../../scripts/buildfire/services/notifications/localNotifications.js"></script>
-  <script src="../../../../scripts/tinymce/tinymce.min.js"></script>
-
-  <!-- CSS -->
-  <link href="../../../scripts/owlCarousel/owlCarousel.css" rel="stylesheet" />
-
-  <!-- JS -->
-  <script src="../../../scripts/buildfire.js"></script>
-  <script src="../../../scripts/jquery/jquery-1.11.2.min.js"></script>
-  <script src="../../../scripts/owlCarousel/owlCarousel.js"></script>
-  <script src="../../../scripts/buildfire/components/carousel/carousel.js"></script>
-</head>
-
-<body>
-  <div id="my_container_div"></div>
-  <script>
-    document.getElementById("my_container_div").innerHTML =
-      data.content.description;
-  </script>
-</body>
-
+  <body>
+    <div id="main">
+      <div class="mdc-card search-card">
+        <div class="inner-search-container">
+          <span class="material-icons icon" id="searchIcon">search</span>
+          <input type="text" name="search" id="searchInput" placeholder="Search..." autocomplete="off" />
+          <span class="material-icons icon cursor" id="sortIcon">sort</span>
+        </div>
+      </div>
+    </div>
+    <div id="carousel"></div>
+    <div id="my_container_div"></div>
+    <div id="listViewContainer"></div>
+  </body>
 </html>
