@@ -20,12 +20,19 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../../../styles/components/listView.css" />
+    <link href="../../../styles/control/bf-base.css" rel="stylesheet" />
+    <link href="../../../styles/control/siteIcons-control.css" rel="stylesheet" />
+    <link href="../../../styles/siteStyle.css" rel="stylesheet" />
+    <link href="../../../styles/helper.css" rel="stylesheet" />
+    <link href="../../../styles/material-icons.css" rel="stylesheet" />
+    <link href="../../../styles/materialDesign/material-components-web@4.0.0.min.css" rel="stylesheet" />
     <!-- JS -->
     <script src="../../../scripts/buildfire.js"></script>
     <script src="../../../scripts/jquery/jquery-1.11.2.min.js"></script>
     <script src="../../../scripts/owlCarousel/owlCarousel.js"></script>
     <script src="../../../scripts/buildfire/components/carousel/carousel.js"></script>
     <script src="../../../scripts/buildfire/components/listView/listView.js"></script>
+  <script src="../../../scripts/buildfire/components/drawer/drawer.js"></script>
     <!-- Custom JS -->
     <script src="./common/js/introduction.js"></script>
     <script src="./common/js/item.js"></script>
@@ -33,6 +40,15 @@
   </head>
 
   <body>
+    <div id="main">
+      <div class="mdc-card search-card">
+        <div class="inner-search-container">
+          <span class="material-icons icon" id="searchIcon">search</span>
+          <input type="text" name="search" id="searchInput" placeholder="Search..." autocomplete="off" />
+          <span class="material-icons icon cursor" id="sortIcon">sort</span>
+        </div>
+      </div>
+    </div>
     <div id="carousel"></div>
     <div id="my_container_div"></div>
     <div id="listViewContainer"></div>
