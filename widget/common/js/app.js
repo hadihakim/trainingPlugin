@@ -1,7 +1,7 @@
 let view = new buildfire.components.carousel.view("#carousel", []);
 let description = document.getElementById("my_container_div");
 const listView = new buildfire.components.listView("listViewContainer", {
-  enableAddButton: true,
+  enableAddButton: false,
 });
 const init = () => {
   // load list view
@@ -46,7 +46,10 @@ const init = () => {
   //   get carousel items
   Introductions.get((err, res) => {
     if (err) console.error(err);
-    else loadItems(res.data.images);
+    else {
+      loadItems(res.data.images);
+      description.innerHTML = res.data.description;
+    }
   });
 
   Introductions.onUpdate((e) => {
@@ -107,15 +110,52 @@ const renderListView = (data) => {
   listView.loadListViewItems(items);
 };
 
+// add onClick handler for the items in the list view
+listView.onItemClicked = (item) => {
+  console.log(item.data, "item in list ");
+  viewDetails(item.data);
+};
+
+//view details about item in list
+const viewDetails = (item) => {
+  if (item) {
+    carousel.classList.add("hidden");
+    my_container_div.classList.add("hidden");
+    listViewContainer.classList.add("hidden");
+    main.classList.add("hidden");
+    // itemDetails_div.innerHTML=item.title;
+    ui("img", itemDetails_div, item.coverImage, []);
+    ui("img", itemDetails_div, item.listImage, []);
+    ui("h3", itemDetails_div, item.title, []);
+    ui("p", itemDetails_div, item.Subtitle, []);
+    ui("div", itemDetails_div, description.innerHTML, []);
+  }
+};
+
+function ui(elementType, appendTo, innerHTML, classNameArray) {
+  let e = document.createElement(elementType);
+
+  if (innerHTML) {
+    if (elementType == "img") e.src = innerHTML;
+    e.innerHTML = innerHTML;
+  }
+  if (Array.isArray(classNameArray))
+    classNameArray.forEach((c) => e.classList.add(c));
+  if (appendTo) appendTo.appendChild(e);
+  return e;
+}
+
 const drawer = () => {
   console.log("drawer");
   buildfire.components.drawer.open(
     {
       listItems: [
         {
+          id: "AtoZ",
           text: "Sort A - Z",
         },
         {
+          id: "ZtoA",
           text: "Sort Z - A",
         },
       ],
@@ -126,5 +166,9 @@ const drawer = () => {
     }
   );
 };
+
+// buildfire.navigation.onBackButtonClick = () => {
+//   console.log("BACK BUTTON CLICKED");
+// };
 
 init();
