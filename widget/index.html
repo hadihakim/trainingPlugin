@@ -40,7 +40,7 @@
   </head>
 
   <body>
-    <div id="main">
+    <div id="mainPage">
       <div class="mdc-card search-card">
         <div class="inner-search-container">
           <span class="material-icons icon" id="searchIcon">search</span>
@@ -48,9 +48,18 @@
           <span class="material-icons icon cursor" id="sortIcon">sort</span>
         </div>
       </div>
-    </div>
-    <div id="carousel"></div>
+      <div id="carousel"></div>
     <div id="my_container_div"></div>
     <div id="listViewContainer"></div>
+    </div>
+    
+
+    <div id="subPage" class="hidden slide-in">
+      <img id="coverImage"></img>
+      <img id="listImage" onclick="imagePreviewer(this.src)"></img>
+      <h3 id="title"></h3>
+      <p id="subtitle"></p>
+      <div id="my_sub_container_div"></div>
+    </div>
   </body>
 </html>
