@@ -32,7 +32,6 @@ const init = () => {
       }
     });
   };
-
   getListViewData();
   // load the list view
   const createList = (list) => {
@@ -45,7 +44,6 @@ const init = () => {
     getListViewData();
   });
 
- 
   // load the carousel items
   const loadItems = (carouselItems) => {
     console.log("loadItems", carouselItems);
@@ -84,7 +82,7 @@ const init = () => {
         my_container_div.classList.remove("hidden");
       }
       search(searchInput.value);
-    }, 100);
+    }, 500);
   });
 
   //  handle open drawer button click
@@ -199,6 +197,17 @@ const imagePreviewer = (imgUrl) => {
     images: [imgUrl],
   });
 };
+
+
+// croped image
+const cropImageHandler =(imgUrl)=>{
+  let croppedImage = buildfire.imageLib.cropImage(
+    imgUrl,
+    { size: "half_width", aspect: "16:9" }
+  );
+  return croppedImage;
+}
+
 
 supPageHandler();
 init();
