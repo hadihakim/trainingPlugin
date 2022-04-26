@@ -2,116 +2,55 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <link rel="stylesheet" href="./common/css/style.css" /> -->
     <script src="../../../scripts/buildfire.js"></script>
     <script src="../../../scripts/buildfire/services/notifications/pushNotifications.js"></script>
     <script src="../../../scripts/buildfire/services/notifications/localNotifications.js"></script>
     <script src="../../../../scripts/tinymce/tinymce.min.js"></script>
-    <script src="./common/js/introduction.js"></script>
-
+    <style>
+      .listViewContainer .listViewItem .listViewItemImgContainer img{
+        border-radius: 0 !important;
+        width: 40px !important;
+        height: 40px !important;
+      }
+    </style>
     <!-- CSS -->
     <link
       href="../../../scripts/owlCarousel/owlCarousel.css"
       rel="stylesheet"
     />
-
+    <link rel="stylesheet" href="../../../styles/components/listView.css" />
+    <link href="../../../styles/control/bf-base.css" rel="stylesheet" />
+    <link href="../../../styles/control/siteIcons-control.css" rel="stylesheet" />
+    <link href="../../../styles/siteStyle.css" rel="stylesheet" />
+    <link href="../../../styles/helper.css" rel="stylesheet" />
+    <link href="../../../styles/material-icons.css" rel="stylesheet" />
+    <link href="../../../styles/materialDesign/material-components-web@4.0.0.min.css" rel="stylesheet" />
     <!-- JS -->
     <script src="../../../scripts/buildfire.js"></script>
     <script src="../../../scripts/jquery/jquery-1.11.2.min.js"></script>
     <script src="../../../scripts/owlCarousel/owlCarousel.js"></script>
     <script src="../../../scripts/buildfire/components/carousel/carousel.js"></script>
-    <link rel="stylesheet" href="./common/css/style.css">
-    <style>
-      .carousel-items:empty {
-        display: none;
-      }
-    </style>
+    <script src="../../../scripts/buildfire/components/listView/listView.js"></script>
+  <script src="../../../scripts/buildfire/components/drawer/drawer.js"></script>
+    <!-- Custom JS -->
+    <script src="./common/js/introduction.js"></script>
+    <script src="./common/js/item.js"></script>
+    <script src="./common/js/app.js" defer></script>
   </head>
+
   <body>
-    <div class="header">
-      <div class="searchContainer" ng-click="navigateToSearch()">
-        <span class="material-icons">search </span
-        ><input
-          type="text"
-          placeholder="Search"
-          id="searchInput"
-          autocomplete="off"
-        />
+    <div id="main">
+      <div class="mdc-card search-card">
+        <div class="inner-search-container">
+          <span class="material-icons icon" id="searchIcon">search</span>
+          <input type="text" name="search" id="searchInput" placeholder="Search..." autocomplete="off" />
+          <span class="material-icons icon cursor" id="sortIcon">sort</span>
+        </div>
       </div>
     </div>
-    <p>sdsdDDDDds</p>
     <div id="carousel"></div>
-    <script>
-      /// create a new instance of the buildfire carousel editor
-      var editor = new buildfire.components.carousel.editor(
-        "#carousel",
-        [
-          {
-            title: "build fire",
-            url: "https://www.facebook.com/buildfireapps",
-            action: "linkToWeb",
-            openIn: "_blank",
-            iconUrl: "https://placekitten.com/800/400",
-          },
-          {
-            title: "build fire",
-            url: "https://www.facebook.com/buildfireapps",
-            action: "linkToWeb",
-            openIn: "_blank",
-            iconUrl: "https://placekitten.com/600/300",
-          },
-        ],
-        "WideScreen"
-      );
-
-      /// handle the loading
-      function loadItems(carouselItems) {
-        // create an instance and pass it the items if you don't have items yet just pass []
-        editor.loadItems(carouselItems);
-      }
-
-      /// call buildfire datastore to see if there are any previously saved items
-      buildfire.datastore.get(Introduction.TAG, function (err, obj) {
-        if (err) alert("error");
-        else loadItems(obj.data.images);
-      });
-
-      /// save any changes in items
-      function save(items) {
-        console.log("saving...");
-        buildfire.datastore.save({ carouselItems: items }, function (e) {
-          if (e) alert("error");
-          else console.log("saved.");
-        });
-      }
-
-      // this method will be called when a new item added to the list
-      editor.onAddItems = function (items) {
-        save(editor.items);
-      };
-      // this method will be called when an item deleted from the list
-      editor.onDeleteItem = function (item, index) {
-        save(editor.items);
-      };
-      // this method will be called when you edit item details
-      editor.onItemChange = function (item) {
-        save(editor.items);
-      };
-      // this method will be called when you change the order of items
-      editor.onOrderChange = function (item, oldIndex, newIndex) {
-        save(editor.items);
-      };
-
-      let viewer = new buildfire.components.carousel.view("#carousel");
-
-      viewer.append([
-        {
-          title: "build fire",
-          url: "https://www.facebook.com/buildfireapps",
-          action: "linkToWeb",
-          openIn: "_blank",
-          iconUrl: "https://placekitten.com/800/400",
-        },
-      ]);
-    </script>
+    <div id="my_container_div"></div>
+    <div id="listViewContainer"></div>
   </body>
 </html>
