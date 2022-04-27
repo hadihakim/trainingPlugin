@@ -3,10 +3,14 @@ let description = document.getElementById("my_container_div");
 const listView = new buildfire.components.listView("listViewContainer", {
   enableAddButton: false,
 });
+let items = [];
+let sortA = "";
+let sortB = "";
 const init = () => {
   // load list view
+
   const getListViewData = async () => {
-    let items = [];
+    items = [];
     let options = {
       filter: {},
       sort: {},
@@ -45,7 +49,6 @@ const init = () => {
     getListViewData();
   });
 
- 
   // load the carousel items
   const loadItems = (carouselItems) => {
     console.log("loadItems", carouselItems);
@@ -62,11 +65,33 @@ const init = () => {
     }
   });
 
-  Introductions.onUpdate((e) => {
-    console.log("event", e);
+  // get language data
+  Languages.get((err, res) => {
+    if (err) console.error(err);
+    searchInput.placeholder = res.data.screenOne.search.value;
+    sortA = res.data.screenOne.sortAsc.value;
+    sortB = res.data.screenOne.sortDesc.value;
+    console.log(res.data.screenOne, "language get data");
+  });
+  
+
+  buildfire.datastore.onUpdate((e) => {
+    if(e.tag == 'Introduction'){
+    console.log("event intro", e);
     loadItems(e.data.images);
     description.innerHTML = e.data.description;
+  }
+  if(e.tag =='$bfLanguageSettings_en-us'){
+    console.log("event lang", e);
+    searchInput.placeholder = e.data.screenOne.search.value;
+    sortA = e.data.screenOne.sortAsc.value;
+    sortB = e.data.screenOne.sortDesc.value;
+  }
   });
+
+  // buildfire.datastore.onUpdate((e)=>{
+    
+  // })
 
   // search text filed
   let timer;
@@ -102,7 +127,7 @@ const search = async (input) => {
 
 const renderListView = (data) => {
   listView.clear();
-  let items = [];
+  items = [];
   data.forEach((element) => {
     console.log(element);
     let itemObj = {
@@ -161,18 +186,36 @@ const drawer = () => {
     {
       listItems: [
         {
-          id: "AtoZ",
-          text: "Sort A - Z",
+          id: 1,
+          text: sortA,
         },
         {
-          id: "ZtoA",
-          text: "Sort Z - A",
+          id: -1,
+          text: sortB,
         },
       ],
     },
     (err, res) => {
       if (err) console.error(err);
       buildfire.components.drawer.closeDrawer();
+      searchSortHelper(items, res.id, (err, res) => {
+        if (err) console.log(err);
+        items = [];
+        listView.clear();
+        res.forEach((element) => {
+          console.log(element);
+          let itemObj = {
+            id: element.id,
+            title: element.data.title,
+            description: element.data.description,
+            imageUrl: element.data.coverImage,
+            subTitle: element.data.Subtitle,
+            data: element.data,
+          };
+          items.push(itemObj);
+        });
+        listView.loadListViewItems(items);
+      });
     }
   );
 };
