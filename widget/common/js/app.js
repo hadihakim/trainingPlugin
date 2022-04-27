@@ -42,7 +42,7 @@ const init = () => {
       buildfire.publicData.search(
         {
           skip: listViewSize,
-          limit: 1,
+          limit: 3,
         },
         "Items",
         (err, res) => {
