@@ -9,8 +9,8 @@ const init = () => {
   const getListViewData = async () => {
     let items = [];
     let options = {
-      filter: {},
-      sort: {},
+      skip: 0,
+      limit: 5,
     };
 
     await Items.search(options, (err, res) => {
@@ -34,7 +34,46 @@ const init = () => {
     });
   };
 
-  
+  const onscrollHelper = () => {
+    let list = document.getElementById("listViewContainer");
+    let listViewSize = list.childNodes.length;
+    let items = [];
+    if ((list.scrollTop + list.clientHeight) / list.scrollHeight > 0.99) {
+      buildfire.publicData.search(
+        {
+          skip: listViewSize,
+          limit: 1,
+        },
+        "Items",
+        (err, res) => {
+          if (err)
+            return console.error("there was a problem retrieving your data");
+          res.forEach((element) => {
+            let itemObj = {
+              id: element.id,
+              title: element.data.title,
+              description: element.data.description,
+              imageUrl: element.data.listImage,
+              subTitle: element.data.Subtitle,
+              data: element.data,
+            };
+            items.push(itemObj);
+          });
+          createList(items);
+        }
+      );
+    }
+  };
+
+  let scrollTimer;
+  document.getElementById("listViewContainer").onscroll = function (e) {
+    if (scrollTimer) {
+      clearTimeout(scrollTimer);
+    }
+    scrollTimer = setTimeout(() => {
+      onscrollHelper();
+    }, 100);
+  };
 
   getListViewData();
   // load the list view
@@ -43,14 +82,14 @@ const init = () => {
   };
   // on update the public data
   buildfire.publicData.onUpdate((event) => {
-    console.log(event);
-    console.log("do it");
+    //console.log(event);
+    //console.log("do it");
     getListViewData();
   });
 
   // load the carousel items
   const loadItems = (carouselItems) => {
-    console.log("loadItems", carouselItems);
+    //console.log("loadItems", carouselItems);
     // create an instance and pass it the items if you don'itemList have items yet just pass []
     view.loadItems(carouselItems);
   };
@@ -65,7 +104,7 @@ const init = () => {
   });
 
   Introductions.onUpdate((e) => {
-    console.log("event", e);
+    //console.log("event", e);
     loadItems(e.data.images);
     description.innerHTML = e.data.description;
   });
@@ -86,7 +125,7 @@ const init = () => {
         my_container_div.classList.remove("hidden");
       }
       search(searchInput.value);
-    }, 100);
+    }, 500);
   });
 
   //  handle open drawer button click
@@ -95,7 +134,7 @@ const init = () => {
   });
 
   buildfire.publicData.onUpdate((event) => {
-    console.log("Data has been updated ", event);
+    //console.log("Data has been updated ", event);
     getListViewData(event);
   });
 };
@@ -111,7 +150,7 @@ const renderListView = (data) => {
   listView.clear();
   let items = [];
   data.forEach((element) => {
-    console.log(element);
+    //console.log(element);
     let itemObj = {
       id: element.id,
       title: element.data.title,
@@ -123,16 +162,15 @@ const renderListView = (data) => {
     items.push(itemObj);
   });
 
-  console.log("items: >>>>", items);
+  //console.log("items: >>>>", items);
   listView.loadListViewItems(items);
 };
 
 // add onClick handler for the items in the list view
 listView.onItemClicked = (item) => {
-  console.log(item.data, "item in list ");
+  //console.log(item.data, "item in list ");
   viewDetails(item.data);
 };
-
 
 //view details about item in list
 const viewDetails = (item) => {
@@ -206,6 +244,15 @@ const imagePreviewer = (imgUrl) => {
   buildfire.imagePreviewer.show({
     images: [imgUrl],
   });
+};
+
+// croped image
+const cropImageHandler = (imgUrl) => {
+  let croppedImage = buildfire.imageLib.cropImage(imgUrl, {
+    size: "half_width",
+    aspect: "16:9",
+  });
+  return croppedImage;
 };
 
 supPageHandler();
