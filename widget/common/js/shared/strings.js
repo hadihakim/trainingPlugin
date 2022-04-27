@@ -77,6 +77,7 @@ buildfire.services.Strings = class{
 
 		/// get has edge case bug https://app.asana.com/0/503101155812087/1130049011248026
 		buildfire.datastore.search({limit:1},this.collectionName, (e, objs) => {
+			console.log(this.collectionName, "Collection name");
 			if(e) {
 				if (callback) callback(e);
 			}
