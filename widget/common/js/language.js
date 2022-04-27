@@ -15,7 +15,7 @@ class Language {
 }
 
 const Languages = {
-  TAG: "Language",
+  TAG: "$bfLanguageSettings_en-us",
   get: async (callback) => {
     await buildfire.datastore.get(Languages.TAG, (err, res) => {
       if (err) return callback(err, null);
@@ -36,6 +36,11 @@ const Languages = {
     await buildfire.datastore.update(id, obj, Languages.TAG, (err, res) => {
       if (err) return callback(err, null);
       else return callback(null, res);
+    });
+  },
+  onUpdate: async (callback) => {
+    await buildfire.datastore.onUpdate((e) => {
+      return callback(e);
     });
   },
 };
