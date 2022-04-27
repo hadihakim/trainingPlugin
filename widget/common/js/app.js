@@ -22,7 +22,7 @@ const init = () => {
             id: element.id,
             title: element.data.title,
             description: element.data.description,
-            imageUrl: element.data.coverImage,
+            imageUrl: element.data.listImage,
             subTitle: element.data.Subtitle,
             data: element.data,
           };
@@ -33,6 +33,8 @@ const init = () => {
       }
     });
   };
+
+  
 
   getListViewData();
   // load the list view
@@ -46,7 +48,6 @@ const init = () => {
     getListViewData();
   });
 
- 
   // load the carousel items
   const loadItems = (carouselItems) => {
     console.log("loadItems", carouselItems);
@@ -99,8 +100,6 @@ const init = () => {
   });
 };
 
-
-
 const search = async (input) => {
   await Items.searchFilter(input, (err, res) => {
     if (err) console.error(err);
@@ -133,6 +132,7 @@ listView.onItemClicked = (item) => {
   console.log(item.data, "item in list ");
   viewDetails(item.data);
 };
+
 
 //view details about item in list
 const viewDetails = (item) => {
