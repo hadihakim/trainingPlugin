@@ -160,8 +160,6 @@ const init = () => {
   });
 
   buildfire.publicData.onUpdate((event) => {
-    //console.log("Data has been updated ", event);
-    
     getListViewData(event);
   });
 
@@ -253,7 +251,7 @@ const drawer = () => {
       buildfire.components.drawer.closeDrawer();
       searchSortHelper(items, res.id, (err, res) => {
         if (err) console.log(err);
-        
+
         items = [];
         listView.clear();
         res.forEach((element) => {
@@ -280,7 +278,7 @@ const supPageHandler = () => {
     console.log("item selected", item);
     buildfire.messaging.sendMessageToControl({
       show: true,
-      data:item.data
+      data: item.data,
     });
   };
 };
@@ -318,9 +316,9 @@ const massaging = () => {
     if (!message.show) {
       mainPage.classList.remove("hidden");
       subPage.classList.add("hidden");
-    } 
-    
-    if(message.data && message.show){
+    }
+
+    if (message.data && message.show) {
       subItemInfoHandler(message);
     }
   };
