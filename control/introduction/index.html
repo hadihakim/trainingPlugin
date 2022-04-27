@@ -28,6 +28,9 @@
   </div>
   
   <script>
+    buildfire.messaging.sendMessageToWidget({
+  show: false,
+});
     tinymce.init({
       selector: "#wysiwygContent",
       setup:(editor)=>{

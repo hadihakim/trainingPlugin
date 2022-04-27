@@ -11,6 +11,7 @@ const init = () => {
   // load list view
 
   const getListViewData = async () => {
+    console.log("anything>>>>>>>>>>>>>>>>>>>>>>>>");
     items = [];
     let options = {
       skip: 0,
@@ -86,8 +87,14 @@ const init = () => {
   };
   // on update the public data
   buildfire.publicData.onUpdate((event) => {
+    console.log(event.tag, event.data.title, title.value, " ONUPDATE");
+    if(event.tag == "Items") {
+      document.getElementById('title').innerHTML = "asdas";
+      document.getElementById('subtitle').value = event.data.Subtitle;
+
+    }
     //console.log(event);
-    //console.log("do it");
+    console.log("do it");
     getListViewData();
   });
 
@@ -115,37 +122,23 @@ const init = () => {
     sortB = res.data.screenOne.sortDesc.value;
     console.log(res.data.screenOne, "language get data");
   });
-  
 
   buildfire.datastore.onUpdate((e) => {
-    if(e.tag == 'Introduction'){
-    console.log("event intro", e);
-    loadItems(e.data.images);
-    description.innerHTML = e.data.description;
-  }
-  if(e.tag =='$bfLanguageSettings_en-us'){
-    console.log("event lang", e);
-    searchInput.placeholder = e.data.screenOne.search.value;
-    sortA = e.data.screenOne.sortAsc.value;
-    sortB = e.data.screenOne.sortDesc.value;
-    console.log("DRAWER", document.getElementsByClassName("bottom-drawer").length);
-    if(document.getElementsByClassName('bottom-drawer').length) {
-      
-      let drawer = document.getElementsByClassName('bottom-drawer')[0];
-      let ul = drawer.firstChild;
-      let li = ul.firstChild;
-      let firstDiv = li.childNodes[1];
-      let secondDiv = firstDiv.firstChild.innerHTML = sortA;
-
-      let sLi = ul.lastChild;
-      let sFirstDiv = sLi.childNodes[1];
-      let sSecondDiv = sFirstDiv.firstChild.innerHTML = sortB;
+    if (e.tag == "Introduction") {
+      console.log("event intro", e);
+      loadItems(e.data.images);
+      description.innerHTML = e.data.description;
     }
-  }
+    if (e.tag == "$bfLanguageSettings_en-us") {
+      console.log("event lang", e);
+      searchInput.placeholder = e.data.screenOne.search.value;
+      sortA = e.data.screenOne.sortAsc.value;
+      sortB = e.data.screenOne.sortDesc.value;
+    }
   });
 
   // buildfire.datastore.onUpdate((e)=>{
-    
+
   // })
 
   // search text filed
@@ -172,10 +165,17 @@ const init = () => {
     drawer();
   });
 
-  buildfire.publicData.onUpdate((event) => {
+ /* buildfire.publicData.onUpdate((event) => {
     //console.log("Data has been updated ", event);
+    
     getListViewData(event);
-  });
+  });*/
+
+  // on back Button Click
+  buildfire.navigation.onBackButtonClick = () => {
+    console.log("from back button");
+    sendMassageToControl("");
+  };
 };
 
 const search = async (input) => {
@@ -194,7 +194,7 @@ const renderListView = (data) => {
       id: element.id,
       title: element.data.title,
       description: element.data.description,
-      imageUrl: element.data.coverImage,
+      imageUrl: element.data.listImage,
       subTitle: element.data.Subtitle,
       data: element.data,
     };
@@ -259,6 +259,7 @@ const drawer = () => {
       buildfire.components.drawer.closeDrawer();
       searchSortHelper(items, res.id, (err, res) => {
         if (err) console.log(err);
+        
         items = [];
         listView.clear();
         res.forEach((element) => {
@@ -267,7 +268,7 @@ const drawer = () => {
             id: element.id,
             title: element.data.title,
             description: element.data.description,
-            imageUrl: element.data.coverImage,
+            imageUrl: element.data.listImage,
             subTitle: element.data.Subtitle,
             data: element.data,
           };
@@ -282,6 +283,11 @@ const drawer = () => {
 const supPageHandler = () => {
   listView.onItemClicked = (item) => {
     subItemInfoHandler(item);
+    console.log("item selected", item);
+    buildfire.messaging.sendMessageToControl({
+      show: true,
+      data:item.data
+    });
   };
 };
 
@@ -311,5 +317,20 @@ const cropImageHandler = (imgUrl) => {
   return croppedImage;
 };
 
+// massaging
+
+const massaging = () => {
+  buildfire.messaging.onReceivedMessage = (message) => {
+    if (!message.show) {
+      mainPage.classList.remove("hidden");
+      subPage.classList.add("hidden");
+    } 
+    
+    if(message.data && message.show){
+      subItemInfoHandler(message);
+    }
+  };
+};
+massaging();
 supPageHandler();
 init();
