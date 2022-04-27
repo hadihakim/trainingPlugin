@@ -1,3 +1,6 @@
+buildfire.messaging.sendMessageToWidget({
+  show: false,
+});
 let data = null;
 let addItem = document.getElementById("addItem");
 addItem.addEventListener("click", (e) => {
@@ -159,6 +162,12 @@ const showSubPage = (item, element) => {
     tinymce.activeEditor.setContent(item.data.description);
     thumbnail.loadbackground(item.data.listImage);
     thumbnail2.loadbackground(item.data.coverImage);
+    // send message to widget
+    buildfire.messaging.sendMessageToWidget({
+      show: true,
+      id: item.id,
+      data: item.data,
+    });
     document.getElementById("saveBtn").onclick = function () {
       saveItem(id, element);
     };
@@ -168,7 +177,14 @@ const showSubPage = (item, element) => {
 const hideSubPage = () => {
   document.getElementById("mainPage").style.display = "block";
   document.getElementById("subPage").style.display = "none";
-  document.getElementById("title").value = "";
+  title.value = "";
+  subtitle.value = "";
+  tinymce.activeEditor.setContent("");
+  thumbnail.clear();
+  thumbnail2.clear();
+  buildfire.messaging.sendMessageToWidget({
+    show: false,
+  });
 };
 
 const removeRecord = (e) => {
@@ -372,6 +388,9 @@ const saveItem = (id, element) => {
 
   document.getElementById("mainPage").style.display = "block";
   document.getElementById("subPage").style.display = "none";
+  buildfire.messaging.sendMessageToWidget({
+    show: false,
+  });
 };
 
 const uiRow = (el, state) => {
@@ -401,3 +420,14 @@ const uiRow = (el, state) => {
           `;
   return row;
 };
+
+const massaging = () => {
+  buildfire.messaging.onReceivedMessage = (message) => {
+    console.log("Message received in control", message);
+    if (message.show && message.data) {
+      showSubPage(message, null);
+    }
+  };
+};
+
+massaging();
