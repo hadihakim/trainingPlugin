@@ -128,6 +128,19 @@ const init = () => {
     searchInput.placeholder = e.data.screenOne.search.value;
     sortA = e.data.screenOne.sortAsc.value;
     sortB = e.data.screenOne.sortDesc.value;
+    console.log("DRAWER", document.getElementsByClassName("bottom-drawer").length);
+    if(document.getElementsByClassName('bottom-drawer').length) {
+      
+      let drawer = document.getElementsByClassName('bottom-drawer')[0];
+      let ul = drawer.firstChild;
+      let li = ul.firstChild;
+      let firstDiv = li.childNodes[1];
+      let secondDiv = firstDiv.firstChild.innerHTML = sortA;
+
+      let sLi = ul.lastChild;
+      let sFirstDiv = sLi.childNodes[1];
+      let sSecondDiv = sFirstDiv.firstChild.innerHTML = sortB;
+    }
   }
   });
 
@@ -228,7 +241,6 @@ function ui(elementType, appendTo, innerHTML, classNameArray) {
 }
 
 const drawer = () => {
-  //console.log("drawer");
   buildfire.components.drawer.open(
     {
       listItems: [
