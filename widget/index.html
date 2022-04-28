@@ -3,6 +3,8 @@
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="buildfire" content="disableBootstrap" />
+  <meta name="buildfire" content="enableMDTheme" />
   <!-- <link rel="stylesheet" href="./common/css/style.css" /> -->
   <script src="../../../scripts/buildfire.js"></script>
   <script src="../../../scripts/buildfire/services/notifications/pushNotifications.js"></script>
@@ -36,7 +38,7 @@
   <script src="../../../scripts/buildfire/components/carousel/carousel.js"></script>
   <script src="../../../scripts/buildfire/components/listView/listView.js"></script>
   <script src="../../../scripts/buildfire/components/drawer/drawer.js"></script>
-
+  <script src="../../../scripts/materialDesign/material-components-web@4.0.0.min.js"></script>
   <script src="./common/js/language.js"></script>
   <script src="./common/js/shared/stringsConfig.js"></script>
   <script src="./common/js/app.js" defer></script>
@@ -63,7 +65,7 @@
     <div id="full_state">
       <div id="carousel"></div>
     <div id="my_container_div" class="wysiwygContainer"></div>
-    <div id="listViewContainer" style="height: 500px; overflow: scroll;"></div>
+    <div id="listViewContainer" style="height: 300px; overflow: scroll;"></div>
     </div>
   </div>
 
@@ -78,8 +80,11 @@
     <div id="my_sub_container_div"></div>
 
   </div>
-  <script>
-  </script>
+
+
+  <div id="skeleton"></div>
+  <div id="skeleton2"></div>
+
 </body>
 
 </html>
