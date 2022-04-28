@@ -349,7 +349,7 @@ const saveItem = (id, element) => {
   } else {
     if (
       newItem.title !== "" &&
-      (newItem.listImage !== "") & (newItem.coverImage !== "")
+      (thumbnail.imageUrl!== "") && (thumbnail2.imageUrl!== "")
     ) {
       document.getElementById("items-table").style.visibility = "hidden";
       document.getElementById("empty-state").style.display = "none";
@@ -426,6 +426,9 @@ const massaging = () => {
     console.log("Message received in control", message);
     if (message.show && message.data) {
       showSubPage(message, null);
+    } else {
+      document.getElementById("mainPage").style.display = "block";
+      document.getElementById("subPage").style.display = "none";
     }
   };
 };

@@ -9,7 +9,7 @@ let sortA = "";
 let sortB = "";
 const init = () => {
   // load list view
-
+  skeletonRender("main");
   const getListViewData = async () => {
     items = [];
     let list = document.getElementById("listViewContainer");
@@ -18,7 +18,7 @@ const init = () => {
       skip: skipItems,
       limit: 5,
     };
-    skeletonRender("main");
+
     await Items.search(options, (err, res) => {
       document.getElementById("skeleton").classList.add("hidden");
       if (err) console.error(err);
@@ -28,8 +28,6 @@ const init = () => {
       } else {
         full_state.style.display = "block";
         empty_state.style.display = "none";
-        
-
         res.forEach((element) => {
           console.log(element);
           let itemObj = {
@@ -234,9 +232,27 @@ const init = () => {
   // });
 
   // on back Button Click
+
+  let backTimer;
+
   buildfire.navigation.onBackButtonClick = () => {
-    console.log("from back button");
-    sendMassageToControl("");
+    if (backTimer) {
+      clearTimeout(backTimer);
+    }
+
+    backTimer = setTimeout(() => {
+      if (mainPage.classList.contains("hidden") == true) {
+        mainPage.classList.remove("hidden");
+        subPage.classList.add("hidden");
+        buildfire.messaging.sendMessageToControl({
+          show: false,
+        });
+        return;
+      }
+      buildfire.auth.login({}, (err, user) => {
+        console.log(err, user);
+      });
+    }, 100);
   };
 };
 
@@ -347,6 +363,12 @@ const drawer = () => {
 
 const supPageHandler = () => {
   listView.onItemClicked = (item) => {
+    skeletonRender("sub");
+    subPage.style.display = "none";
+    setTimeout(() => {
+      subPage.style.display = "block";
+      document.getElementById("skeleton2").classList.add("hidden");
+    }, 200);
     subItemInfoHandler(item);
     console.log("item selected", item);
     buildfire.messaging.sendMessageToControl({
@@ -396,6 +418,7 @@ const massaging = () => {
     }
   };
 };
+document.getElementById("listViewContainer").classList.remove("full-width");
 
 // skeleton
 const skeletonRender = (screen) => {

@@ -108,7 +108,7 @@ html[buildfire="widget"] {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 /* ---------------------- */
 #skeleton,
@@ -172,10 +172,10 @@ html[buildfire="widget"] {
   border-radius: 57px;
   margin-bottom: 1.5rem;
 }
-.loading-description{
+.loading-description {
   width: 343px;
-height: 200px;
-border-radius: 8px;
+  height: 200px;
+  border-radius: 8px;
 }
 
 .animation-loading {
