@@ -82,13 +82,13 @@ const init = () => {
       (err, res) => {
         if (err)
           return console.error("there was a problem retrieving your data");
-        if(res.length == 0) {
+        if (res.length == 0) {
           full_state.style.display = "none";
           empty_state.style.display = "flex";
           return;
-        } 
+        }
         full_state.style.display = "block";
-          empty_state.style.display = "none";
+        empty_state.style.display = "none";
         res.forEach((element) => {
           let itemObj = {
             id: element.id,
@@ -231,9 +231,24 @@ const init = () => {
   // });
 
   // on back Button Click
+
+  let backTimer;
+
   buildfire.navigation.onBackButtonClick = () => {
-    console.log("from back button");
-    sendMassageToControl("");
+    if (backTimer) {
+      clearTimeout(backTimer);
+    }
+
+    backTimer = setTimeout(() => {
+      if (mainPage.classList.contains("hidden") == true) {
+        mainPage.classList.remove("hidden");
+        subPage.classList.add("hidden");
+        return;
+      }
+      buildfire.auth.login({}, (err, user) => {
+        console.log(err, user);
+      });
+    }, 100);
   };
 };
 
@@ -390,6 +405,7 @@ const massaging = () => {
     }
   };
 };
+document.getElementById("listViewContainer").classList.remove("full-width");
 massaging();
 supPageHandler();
 init();
