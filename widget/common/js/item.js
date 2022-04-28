@@ -150,10 +150,10 @@ const Items = {
     thumbnail.loadbackground(imgUrl);
   },
 };
-const searchSortHelper = (data, par1, sort, callback) => {
+const searchSortHelper = (data, attribute, sort, callback) => {
   console.log(data, "before sort");
   ///
-  if (par1 == "title") {
+  if (attribute == "title") {
     let sortB = null;
     sort > 0 ? (sortB = -1) : (sortB = 1);
     Items.search(
@@ -175,7 +175,7 @@ const searchSortHelper = (data, par1, sort, callback) => {
       }
     );
   }
-  if (par1 == "Subtitle") {
+  if (attribute == "Subtitle") {
     Items.search(
       {
         sort: { Subtitle: sort },
@@ -195,7 +195,7 @@ const searchSortHelper = (data, par1, sort, callback) => {
       }
     );
   }
-  if (par1 == "date") {
+  if (attribute == "date") {
     Items.search(
       {
         sort: { createdOn: sort },

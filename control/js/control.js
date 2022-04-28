@@ -96,10 +96,10 @@ createDateSort.addEventListener("click", (e) => {
   sortevent(createDateSort, "date", titleSort, subTitleSort);
 });
 
-const sortevent = (elemenet, per1, ele1, ele2) => {
+const sortevent = (elemenet, sortby, ele1, ele2) => {
   let sort = null;
-  elemenet.childNodes[1].classList.add("active");
   elemenet.childNodes[1].classList.remove("hidden");
+  elemenet.childNodes[1].classList.add("active");
   ele1.childNodes[1].classList.add("hidden");
   ele2.childNodes[1].classList.add("hidden");
 
@@ -115,7 +115,7 @@ const sortevent = (elemenet, per1, ele1, ele2) => {
       sort = 1;
     }
   }
-  let sortBy = per1;
+  let sortBy = sortby;
   searchSortHelper(data, sortBy, sort, (err, res) => {
     if (err) console.error(err);
     else if (res) {
