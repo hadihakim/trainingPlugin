@@ -82,13 +82,13 @@ const init = () => {
       (err, res) => {
         if (err)
           return console.error("there was a problem retrieving your data");
-        if(res.length == 0) {
+        if (res.length == 0) {
           full_state.style.display = "none";
           empty_state.style.display = "flex";
           return;
-        } 
+        }
         full_state.style.display = "block";
-          empty_state.style.display = "none";
+        empty_state.style.display = "none";
         res.forEach((element) => {
           let itemObj = {
             id: element.id,
@@ -233,7 +233,14 @@ const init = () => {
   // on back Button Click
   buildfire.navigation.onBackButtonClick = () => {
     console.log("from back button");
-    sendMassageToControl("");
+    if (my_container_div.classList.contains("hidden")) {
+      console.log("kkkkkkkkk");
+      buildfire.messaging.sendMessageToControl({
+        show: true,
+      });
+    }
+    // sendMassageToControl("");
+    // buildfire.navigation.goBack();
   };
 };
 
@@ -390,6 +397,7 @@ const massaging = () => {
     }
   };
 };
+
 massaging();
 supPageHandler();
 init();
