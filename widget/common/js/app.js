@@ -231,16 +231,24 @@ const init = () => {
   // });
 
   // on back Button Click
+
+  let backTimer;
+
   buildfire.navigation.onBackButtonClick = () => {
-    console.log("from back button");
-    if (my_container_div.classList.contains("hidden")) {
-      console.log("kkkkkkkkk");
-      buildfire.messaging.sendMessageToControl({
-        show: true,
-      });
+    if (backTimer) {
+      clearTimeout(backTimer);
     }
-    // sendMassageToControl("");
-    // buildfire.navigation.goBack();
+
+    backTimer = setTimeout(() => {
+      if (mainPage.classList.contains("hidden") == true) {
+        mainPage.classList.remove("hidden");
+        subPage.classList.add("hidden");
+        return;
+      }
+      buildfire.auth.login({}, (err, user) => {
+        console.log(err, user);
+      });
+    }, 100);
   };
 };
 
@@ -397,7 +405,11 @@ const massaging = () => {
     }
   };
 };
+<<<<<<< HEAD
 
+=======
+document.getElementById("listViewContainer").classList.remove("full-width");
+>>>>>>> ab211d6eba0b89ee2e75f140aab04b71323a19a0
 massaging();
 supPageHandler();
 init();
