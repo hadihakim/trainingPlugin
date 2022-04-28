@@ -11,16 +11,22 @@ const init = () => {
   // load list view
 
   const getListViewData = async () => {
-    console.log("anything>>>>>>>>>>>>>>>>>>>>>>>>");
     items = [];
+    let list = document.getElementById("listViewContainer");
+    let skipItems = list.childNodes.length;
     let options = {
-      skip: 0,
+      skip: skipItems,
       limit: 5,
     };
 
     await Items.search(options, (err, res) => {
       if (err) console.error(err);
-      else {
+      else if (res.length == 0 && skipItems == 0) {
+        full_state.style.display = "none";
+        empty_state.style.display = "flex";
+      } else {
+        full_state.style.display = "block";
+        empty_state.style.display = "none";
         res.forEach((element) => {
           console.log(element);
           let itemObj = {
@@ -39,34 +45,80 @@ const init = () => {
     });
   };
 
-  const onscrollHelper = () => {
+  const searchAndAddItems = async (listViewSize, items) => {
+    buildfire.publicData.search(
+      {
+        skip: listViewSize,
+        limit: 5,
+      },
+      "Items",
+      (err, res) => {
+        if (err)
+          return console.error("there was a problem retrieving your data");
+        res.forEach((element) => {
+          let itemObj = {
+            id: element.id,
+            title: element.data.title,
+            description: element.data.description,
+            imageUrl: element.data.listImage,
+            subTitle: element.data.Subtitle,
+            data: element.data,
+          };
+          items.push(itemObj);
+        });
+        createList(items);
+      }
+    );
+  };
+
+  const UpdateOnList = (listViewSize, items) => {
+    listViewSize < 5 ? (listViewSize = 5) : true;
+    buildfire.publicData.search(
+      {
+        skip: 0,
+        limit: listViewSize,
+      },
+      "Items",
+      (err, res) => {
+        if (err)
+          return console.error("there was a problem retrieving your data");
+        if(res.length == 0) {
+          full_state.style.display = "none";
+          empty_state.style.display = "flex";
+          return;
+        } 
+        full_state.style.display = "block";
+          empty_state.style.display = "none";
+        res.forEach((element) => {
+          let itemObj = {
+            id: element.id,
+            title: element.data.title,
+            description: element.data.description,
+            imageUrl: element.data.listImage,
+            subTitle: element.data.Subtitle,
+            data: element.data,
+          };
+          items.push(itemObj);
+        });
+        listView.clear();
+        createList(items);
+      }
+    );
+  };
+
+  const getNewItemsOnUpdate = async () => {
+    let list = document.getElementById("listViewContainer");
+    let listViewSize = list.childNodes.length;
+    let items = [];
+    await searchAndAddItems(listViewSize, items);
+  };
+
+  const onscrollHelper = async () => {
     let list = document.getElementById("listViewContainer");
     let listViewSize = list.childNodes.length;
     let items = [];
     if ((list.scrollTop + list.clientHeight) / list.scrollHeight > 0.99) {
-      buildfire.publicData.search(
-        {
-          skip: listViewSize,
-          limit: 3,
-        },
-        "Items",
-        (err, res) => {
-          if (err)
-            return console.error("there was a problem retrieving your data");
-          res.forEach((element) => {
-            let itemObj = {
-              id: element.id,
-              title: element.data.title,
-              description: element.data.description,
-              imageUrl: element.data.listImage,
-              subTitle: element.data.Subtitle,
-              data: element.data,
-            };
-            items.push(itemObj);
-          });
-          createList(items);
-        }
-      );
+      await searchAndAddItems(listViewSize, items);
     }
   };
 
@@ -85,17 +137,24 @@ const init = () => {
   const createList = (list) => {
     listView.loadListViewItems(list);
   };
+
+  let onUpdateTimer;
   // on update the public data
   buildfire.publicData.onUpdate((event) => {
-    console.log(event.tag, event.data.title, title.value, " ONUPDATE");
-    if(event.tag == "Items") {
-      document.getElementById('title').innerHTML = "asdas";
-      document.getElementById('subtitle').value = event.data.Subtitle;
-
+    full_state.style.display = "block";
+    empty_state.style.display = "none";
+    if (onUpdateTimer) {
+      clearTimeout(onUpdateTimer);
     }
-    //console.log(event);
-    console.log("do it");
-    getListViewData();
+    onUpdateTimer = setTimeout(() => {
+      if (event.tag == "Items") {
+        UpdateOnList(
+          document.getElementById("listViewContainer").childNodes.length,
+          []
+        );
+        subItemInfoHandler(event);
+      }
+    }, 300);
   });
 
   // load the carousel items
@@ -165,11 +224,11 @@ const init = () => {
     drawer();
   });
 
- /* buildfire.publicData.onUpdate((event) => {
-    //console.log("Data has been updated ", event);
-    
-    getListViewData(event);
-  });*/
+  // buildfire.publicData.onUpdate((event) => {
+  //   //console.log("Data has been updated ", event);
+
+  //   getListViewData(event);
+  // });
 
   // on back Button Click
   buildfire.navigation.onBackButtonClick = () => {
@@ -179,7 +238,7 @@ const init = () => {
 };
 
 const search = async (input) => {
-  await Items.searchFilter(input, (err, res) => {
+  Items.searchFilter(input, (err, res) => {
     if (err) console.error(err);
     else renderListView(res);
   });
@@ -259,7 +318,7 @@ const drawer = () => {
       buildfire.components.drawer.closeDrawer();
       searchSortHelper(items, res.id, (err, res) => {
         if (err) console.log(err);
-        
+
         items = [];
         listView.clear();
         res.forEach((element) => {
@@ -286,7 +345,7 @@ const supPageHandler = () => {
     console.log("item selected", item);
     buildfire.messaging.sendMessageToControl({
       show: true,
-      data:item.data
+      data: item.data,
     });
   };
 };
@@ -324,9 +383,9 @@ const massaging = () => {
     if (!message.show) {
       mainPage.classList.remove("hidden");
       subPage.classList.add("hidden");
-    } 
-    
-    if(message.data && message.show){
+    }
+
+    if (message.data && message.show) {
       subItemInfoHandler(message);
     }
   };

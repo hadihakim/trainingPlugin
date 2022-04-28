@@ -2,6 +2,11 @@ html[buildfire="widget"] {
   padding-top: 0 !important;
 }
 
+
+#mainPage {
+  height: 90% !important;
+}
+
 #mainPage .mdc-card {
   flex-direction: row !important;
   height: 2.5rem;
@@ -87,4 +92,20 @@ html[buildfire="widget"] {
   justify-content: center;
   align-items: center;
   color: #808080;
+}
+
+
+
+#empty_state {
+  height: 80%;
+  width: 100%;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#full_state {
+  height: 100%;
+  width: 100%;
 }

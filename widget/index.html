@@ -42,6 +42,7 @@
   <script src="./common/js/app.js" defer></script>
   <script src="./common/js/introduction.js"></script>
   <script src="./common/js/item.js"></script>
+  <link rel="stylesheet" href="./common/css/style.css">
 
 </head>
 
@@ -55,9 +56,15 @@
         <label class="material-icons icon " id="sortIcon">sort</label>
       </div>
     </div>
-    <div id="carousel"></div>
+    <div id="empty_state">
+      <img src="../../../pluginTester/media/ic_bookmark_empty.svg" alt="">
+    </div>
+
+    <div id="full_state">
+      <div id="carousel"></div>
     <div id="my_container_div" class="wysiwygContainer"></div>
     <div id="listViewContainer" style="height: 500px; overflow: scroll;"></div>
+    </div>
   </div>
 
 
