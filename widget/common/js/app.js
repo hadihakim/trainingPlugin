@@ -87,9 +87,13 @@ const init = () => {
   };
   // on update the public data
   buildfire.publicData.onUpdate((event) => {
+    if(event.tag == "Items"){
     //console.log(event);
     console.log("do it");
     getListViewData();
+    console.log(event , "eeeeeeeeeeeeeeeeee");
+    subItemInfoHandler(event);
+  }
   });
 
   // load the carousel items
@@ -159,9 +163,11 @@ const init = () => {
     drawer();
   });
 
-  buildfire.publicData.onUpdate((event) => {
-    getListViewData(event);
-  });
+  // buildfire.publicData.onUpdate((event) => {
+  //   //console.log("Data has been updated ", event);
+    
+  //   getListViewData(event);
+  // });
 
   // on back Button Click
   buildfire.navigation.onBackButtonClick = () => {
@@ -323,6 +329,15 @@ const massaging = () => {
     }
   };
 };
+
+
+// const skeleton=()=>{
+//   ui("div",document.getElementById("skeleton"),[])
+//   ui("div",document.getElementById("skeleton"),"", ["carouselLoad", "loadColor"])
+// }
+
+// skeleton()
+
 massaging();
 supPageHandler();
 init();

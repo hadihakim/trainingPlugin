@@ -88,3 +88,44 @@ html[buildfire="widget"] {
   align-items: center;
   color: #808080;
 }
+.hidden{
+  display: none;
+}
+/* ---------------------- */
+/* #skeleton{
+  position: absolute;
+  top: 0;
+}
+.carouse-loading {
+  width: 375px;
+  height: 211px;
+}
+.content-loading{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.listImage-loading {
+  width: 40px;
+  height: 40px;
+  margin: 10px;
+}
+.item-loading {
+  width: 291px;
+  height: 16px;
+}
+
+.animation-loading {
+  background: #eee;
+  background: linear-gradient(90deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+  border-radius: 5px;
+  background-size: 200% 100%;
+  -webkit-animation: 1s shine linear infinite;
+  animation: 1s skeleton linear infinite;
+}
+
+@keyframes skeleton {
+  to {
+    background-position-x: -200%;
+  }
+} */

@@ -388,9 +388,9 @@ const saveItem = (id, element) => {
 
   document.getElementById("mainPage").style.display = "block";
   document.getElementById("subPage").style.display = "none";
-  buildfire.messaging.sendMessageToWidget({
-    show: false,
-  });
+  // buildfire.messaging.sendMessageToWidget({
+  //   show: true,
+  // });
 };
 
 const uiRow = (el, state) => {
