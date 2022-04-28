@@ -405,11 +405,7 @@ const massaging = () => {
     }
   };
 };
-<<<<<<< HEAD
-
-=======
 document.getElementById("listViewContainer").classList.remove("full-width");
->>>>>>> ab211d6eba0b89ee2e75f140aab04b71323a19a0
 massaging();
 supPageHandler();
 init();
