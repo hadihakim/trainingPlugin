@@ -9,7 +9,7 @@ let sortA = "";
 let sortB = "";
 const init = () => {
   // load list view
-
+  skeletonRender("main");
   const getListViewData = async () => {
     items = [];
     let list = document.getElementById("listViewContainer");
@@ -20,6 +20,7 @@ const init = () => {
     };
 
     await Items.search(options, (err, res) => {
+      document.getElementById("skeleton").classList.add("hidden");
       if (err) console.error(err);
       else if (res.length == 0 && skipItems == 0) {
         full_state.style.display = "none";
@@ -243,6 +244,9 @@ const init = () => {
       if (mainPage.classList.contains("hidden") == true) {
         mainPage.classList.remove("hidden");
         subPage.classList.add("hidden");
+        buildfire.messaging.sendMessageToControl({
+          show: false,
+        });
         return;
       }
       buildfire.auth.login({}, (err, user) => {
@@ -301,7 +305,7 @@ const viewDetails = (item) => {
   }
 };
 
-function ui(elementType, appendTo, innerHTML, classNameArray) {
+function ui(elementType, appendTo, innerHTML, classNameArray, id) {
   let e = document.createElement(elementType);
 
   if (innerHTML) {
@@ -311,6 +315,9 @@ function ui(elementType, appendTo, innerHTML, classNameArray) {
   if (Array.isArray(classNameArray))
     classNameArray.forEach((c) => e.classList.add(c));
   if (appendTo) appendTo.appendChild(e);
+  if (id) {
+    e.setAttribute("id", id);
+  }
   return e;
 }
 
@@ -356,6 +363,12 @@ const drawer = () => {
 
 const supPageHandler = () => {
   listView.onItemClicked = (item) => {
+    skeletonRender("sub");
+    subPage.style.display = "none";
+    setTimeout(() => {
+      subPage.style.display = "block";
+      document.getElementById("skeleton2").classList.add("hidden");
+    }, 200);
     subItemInfoHandler(item);
     console.log("item selected", item);
     buildfire.messaging.sendMessageToControl({
@@ -406,6 +419,61 @@ const massaging = () => {
   };
 };
 document.getElementById("listViewContainer").classList.remove("full-width");
+
+// skeleton
+const skeletonRender = (screen) => {
+  if (screen === "main") {
+    ui("div", document.getElementById("skeleton"), "", [
+      "carouse-loading",
+      "animation-loading",
+    ]);
+    ui(
+      "div",
+      document.getElementById("skeleton"),
+      "",
+      ["content-loading"],
+      "skeCon"
+    );
+    for (let i = 0; i < 4; i++) {
+      ui("div", document.getElementById("skeCon"), "", [
+        "listImage-loading",
+        "animation-loading",
+      ]);
+      ui("div", document.getElementById("skeCon"), "", [
+        "item-loading",
+        "animation-loading",
+      ]);
+    }
+  }
+
+  if (screen === "sub") {
+    ui("div", document.getElementById("skeleton2"), "", [
+      "loading-coverImage",
+      "animation-loading",
+    ]);
+    ui("div", document.getElementById("skeleton2"), "", ["loading-listImage"]);
+    ui(
+      "div",
+      document.getElementById("skeleton2"),
+      "",
+      ["loading-info-container"],
+      "lIC"
+    );
+    ui("div", document.getElementById("lIC"), "", [
+      "loading-title",
+      "animation-loading",
+    ]);
+    ui("div", document.getElementById("lIC"), "", [
+      "loading-subtitle",
+      "animation-loading",
+    ]);
+    ui("div", document.getElementById("lIC"), "", [
+      "loading-description",
+      "animation-loading",
+    ]);
+  }
+};
+
 massaging();
 supPageHandler();
 init();
