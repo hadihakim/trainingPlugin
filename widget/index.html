@@ -30,6 +30,7 @@
   <link href="../../../styles/helper.css" rel="stylesheet" />
   <link href="../../../styles/material-icons.css" rel="stylesheet" />
   <link href="../../../styles/materialDesign/material-components-web@4.0.0.min.css" rel="stylesheet" />
+  <meta name="buildfire" content="disableBootstrap" />
   <!-- JS -->
   <script src="../../../scripts/buildfire.js"></script>
   <script src="../../../scripts/jquery/jquery-1.11.2.min.js"></script>
@@ -38,17 +39,17 @@
   <script src="../../../scripts/buildfire/components/listView/listView.js"></script>
   <script src="../../../scripts/buildfire/components/drawer/drawer.js"></script>
   <script src="../../../scripts/materialDesign/material-components-web@4.0.0.min.js"></script>
-
   <script src="./common/js/language.js"></script>
   <script src="./common/js/shared/stringsConfig.js"></script>
   <script src="./common/js/app.js" defer></script>
   <script src="./common/js/introduction.js"></script>
   <script src="./common/js/item.js"></script>
+  <link rel="stylesheet" href="./common/css/style.css">
 
 </head>
 
 <body>
-  <div id="mainPage" class="slide-in">
+  <div id="mainPage">
     <div class="mdc-card">
       <div class="search-container">
         <label for="searchInput" class="material-icons icon iconTheme" id="searchIcon">search</label>
@@ -57,18 +58,16 @@
         <label class="material-icons icon " id="sortIcon">sort</label>
       </div>
     </div>
-    <div id="carousel"></div>
+    <div id="empty_state">
+      <img src="../../../pluginTester/media/ic_bookmark_empty.svg" alt="">
+    </div>
+
+    <div id="full_state">
+      <div id="carousel"></div>
     <div id="my_container_div" class="wysiwygContainer"></div>
     <div id="listViewContainer" style="height: 500px; overflow: scroll;"></div>
-  </div>
-
-  <!-- <div id="skeleton">
-    <div class="carouse-loading animation-loading"></div>
-    <div class="content-loading">
-      <div class="listImage-loading animation-loading"></div>
-      <div class="item-loading animation-loading"></div>
     </div>
-  </div> -->
+  </div>
 
 
   <div id="subPage" class="hidden slide-in">
@@ -81,6 +80,11 @@
     <div id="my_sub_container_div"></div>
 
   </div>
+
+
+  <div id="skeleton"></div>
+  <div id="skeleton2"></div>
+
 </body>
 
 </html>

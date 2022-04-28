@@ -11,16 +11,25 @@ const init = () => {
   // load list view
 
   const getListViewData = async () => {
-    console.log("anything>>>>>>>>>>>>>>>>>>>>>>>>");
     items = [];
+    let list = document.getElementById("listViewContainer");
+    let skipItems = list.childNodes.length;
     let options = {
-      skip: 0,
+      skip: skipItems,
       limit: 5,
     };
-
+    skeletonRender("main");
     await Items.search(options, (err, res) => {
+      document.getElementById("skeleton").classList.add("hidden");
       if (err) console.error(err);
-      else {
+      else if (res.length == 0 && skipItems == 0) {
+        full_state.style.display = "none";
+        empty_state.style.display = "flex";
+      } else {
+        full_state.style.display = "block";
+        empty_state.style.display = "none";
+        
+
         res.forEach((element) => {
           console.log(element);
           let itemObj = {
@@ -39,34 +48,80 @@ const init = () => {
     });
   };
 
-  const onscrollHelper = () => {
+  const searchAndAddItems = async (listViewSize, items) => {
+    buildfire.publicData.search(
+      {
+        skip: listViewSize,
+        limit: 5,
+      },
+      "Items",
+      (err, res) => {
+        if (err)
+          return console.error("there was a problem retrieving your data");
+        res.forEach((element) => {
+          let itemObj = {
+            id: element.id,
+            title: element.data.title,
+            description: element.data.description,
+            imageUrl: element.data.listImage,
+            subTitle: element.data.Subtitle,
+            data: element.data,
+          };
+          items.push(itemObj);
+        });
+        createList(items);
+      }
+    );
+  };
+
+  const UpdateOnList = (listViewSize, items) => {
+    listViewSize < 5 ? (listViewSize = 5) : true;
+    buildfire.publicData.search(
+      {
+        skip: 0,
+        limit: listViewSize,
+      },
+      "Items",
+      (err, res) => {
+        if (err)
+          return console.error("there was a problem retrieving your data");
+        if (res.length == 0) {
+          full_state.style.display = "none";
+          empty_state.style.display = "flex";
+          return;
+        }
+        full_state.style.display = "block";
+        empty_state.style.display = "none";
+        res.forEach((element) => {
+          let itemObj = {
+            id: element.id,
+            title: element.data.title,
+            description: element.data.description,
+            imageUrl: element.data.listImage,
+            subTitle: element.data.Subtitle,
+            data: element.data,
+          };
+          items.push(itemObj);
+        });
+        listView.clear();
+        createList(items);
+      }
+    );
+  };
+
+  const getNewItemsOnUpdate = async () => {
+    let list = document.getElementById("listViewContainer");
+    let listViewSize = list.childNodes.length;
+    let items = [];
+    await searchAndAddItems(listViewSize, items);
+  };
+
+  const onscrollHelper = async () => {
     let list = document.getElementById("listViewContainer");
     let listViewSize = list.childNodes.length;
     let items = [];
     if ((list.scrollTop + list.clientHeight) / list.scrollHeight > 0.99) {
-      buildfire.publicData.search(
-        {
-          skip: listViewSize,
-          limit: 1,
-        },
-        "Items",
-        (err, res) => {
-          if (err)
-            return console.error("there was a problem retrieving your data");
-          res.forEach((element) => {
-            let itemObj = {
-              id: element.id,
-              title: element.data.title,
-              description: element.data.description,
-              imageUrl: element.data.listImage,
-              subTitle: element.data.Subtitle,
-              data: element.data,
-            };
-            items.push(itemObj);
-          });
-          createList(items);
-        }
-      );
+      await searchAndAddItems(listViewSize, items);
     }
   };
 
@@ -85,15 +140,24 @@ const init = () => {
   const createList = (list) => {
     listView.loadListViewItems(list);
   };
+
+  let onUpdateTimer;
   // on update the public data
   buildfire.publicData.onUpdate((event) => {
-    if(event.tag == "Items"){
-    //console.log(event);
-    console.log("do it");
-    getListViewData();
-    console.log(event , "eeeeeeeeeeeeeeeeee");
-    subItemInfoHandler(event);
-  }
+    full_state.style.display = "block";
+    empty_state.style.display = "none";
+    if (onUpdateTimer) {
+      clearTimeout(onUpdateTimer);
+    }
+    onUpdateTimer = setTimeout(() => {
+      if (event.tag == "Items") {
+        UpdateOnList(
+          document.getElementById("listViewContainer").childNodes.length,
+          []
+        );
+        subItemInfoHandler(event);
+      }
+    }, 300);
   });
 
   // load the carousel items
@@ -165,7 +229,7 @@ const init = () => {
 
   // buildfire.publicData.onUpdate((event) => {
   //   //console.log("Data has been updated ", event);
-    
+
   //   getListViewData(event);
   // });
 
@@ -177,7 +241,7 @@ const init = () => {
 };
 
 const search = async (input) => {
-  await Items.searchFilter(input, (err, res) => {
+  Items.searchFilter(input, (err, res) => {
     if (err) console.error(err);
     else renderListView(res);
   });
@@ -225,7 +289,7 @@ const viewDetails = (item) => {
   }
 };
 
-function ui(elementType, appendTo, innerHTML, classNameArray) {
+function ui(elementType, appendTo, innerHTML, classNameArray, id) {
   let e = document.createElement(elementType);
 
   if (innerHTML) {
@@ -235,6 +299,9 @@ function ui(elementType, appendTo, innerHTML, classNameArray) {
   if (Array.isArray(classNameArray))
     classNameArray.forEach((c) => e.classList.add(c));
   if (appendTo) appendTo.appendChild(e);
+  if (id) {
+    e.setAttribute("id", id);
+  }
   return e;
 }
 
@@ -330,13 +397,59 @@ const massaging = () => {
   };
 };
 
+// skeleton
+const skeletonRender = (screen) => {
+  if (screen === "main") {
+    ui("div", document.getElementById("skeleton"), "", [
+      "carouse-loading",
+      "animation-loading",
+    ]);
+    ui(
+      "div",
+      document.getElementById("skeleton"),
+      "",
+      ["content-loading"],
+      "skeCon"
+    );
+    for (let i = 0; i < 4; i++) {
+      ui("div", document.getElementById("skeCon"), "", [
+        "listImage-loading",
+        "animation-loading",
+      ]);
+      ui("div", document.getElementById("skeCon"), "", [
+        "item-loading",
+        "animation-loading",
+      ]);
+    }
+  }
 
-// const skeleton=()=>{
-//   ui("div",document.getElementById("skeleton"),[])
-//   ui("div",document.getElementById("skeleton"),"", ["carouselLoad", "loadColor"])
-// }
-
-// skeleton()
+  if (screen === "sub") {
+    ui("div", document.getElementById("skeleton2"), "", [
+      "loading-coverImage",
+      "animation-loading",
+    ]);
+    ui("div", document.getElementById("skeleton2"), "", ["loading-listImage"]);
+    ui(
+      "div",
+      document.getElementById("skeleton2"),
+      "",
+      ["loading-info-container"],
+      "lIC"
+    );
+    ui("div", document.getElementById("lIC"), "", [
+      "loading-title",
+      "animation-loading",
+    ]);
+    ui("div", document.getElementById("lIC"), "", [
+      "loading-subtitle",
+      "animation-loading",
+    ]);
+    ui("div", document.getElementById("lIC"), "", [
+      "loading-description",
+      "animation-loading",
+    ]);
+  }
+};
 
 massaging();
 supPageHandler();

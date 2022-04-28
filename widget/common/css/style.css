@@ -2,6 +2,10 @@ html[buildfire="widget"] {
   padding-top: 0 !important;
 }
 
+#mainPage {
+  height: 90% !important;
+}
+
 #mainPage .mdc-card {
   flex-direction: row !important;
   height: 2.5rem;
@@ -50,10 +54,10 @@ html[buildfire="widget"] {
   position: relative;
 }
 #subPage #listImage {
+  position: absolute;
   width: 7.5rem;
   height: 7.5rem;
   top: 7.1rem;
-  position: absolute;
   left: 1rem;
   border-radius: 0.25rem;
   box-shadow: 0 0.125rem 0.5rem rgba(150, 150, 150, 0.2);
@@ -88,37 +92,95 @@ html[buildfire="widget"] {
   align-items: center;
   color: #808080;
 }
-.hidden{
+
+#empty_state {
+  height: 80%;
+  width: 100%;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#full_state {
+  height: 100%;
+  width: 100%;
+}
+
+.hidden {
   display: none;
 }
 /* ---------------------- */
-/* #skeleton{
+#skeleton,
+#skeleton2 {
   position: absolute;
-  top: 0;
+  top: 70px;
+  z-index: 10;
+}
+#skeleton2 {
+  top: 0 !important;
+  padding: 0;
 }
 .carouse-loading {
   width: 375px;
   height: 211px;
 }
-.content-loading{
-  display: flex;
-  justify-content: center;
+.content-loading {
+  display: grid;
+  grid-template-columns: auto auto;
+  padding-right: 27px;
   align-items: center;
 }
 .listImage-loading {
   width: 40px;
   height: 40px;
   margin: 10px;
+  border-radius: 4px;
 }
 .item-loading {
   width: 291px;
   height: 16px;
+  border-radius: 16px;
+}
+
+.loading-coverImage {
+  width: 375px;
+  height: 211px;
+}
+.loading-listImage {
+  position: absolute;
+  width: 7.5rem;
+  height: 7.5rem;
+  top: 7.1rem;
+  left: 1rem;
+  background: #f9fcfc;
+  box-shadow: 0px 2px 8px rgba(118, 118, 118, 0.25);
+  border-radius: 4px;
+}
+.loading-info-container {
+  padding: 0.5rem;
+}
+.loading-title {
+  width: 343px;
+  height: 24px;
+  border-radius: 57px;
+  margin: 1.5rem 0 0.5rem;
+}
+.loading-subtitle {
+  width: 172px;
+  height: 16px;
+  border-radius: 57px;
+  margin-bottom: 1.5rem;
+}
+.loading-description{
+  width: 343px;
+height: 200px;
+border-radius: 8px;
 }
 
 .animation-loading {
   background: #eee;
   background: linear-gradient(90deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
-  border-radius: 5px;
   background-size: 200% 100%;
   -webkit-animation: 1s shine linear infinite;
   animation: 1s skeleton linear infinite;
@@ -128,4 +190,4 @@ html[buildfire="widget"] {
   to {
     background-position-x: -200%;
   }
-} */
+}
