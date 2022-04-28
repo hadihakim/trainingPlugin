@@ -83,3 +83,18 @@
 .thumbnail-picker2 > .item {
   margin-right: 30vw !important;
 }
+
+.active{
+  color: green !important;
+}
+.iconSort{
+  color: rgba(190, 188, 188, 0.754);
+}
+
+.hidden {
+  visibility: hidden !important;
+}
+th:hover{
+  background-color: rgba(167, 167, 165, 0.113);
+  
+}
