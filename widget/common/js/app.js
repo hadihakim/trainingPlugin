@@ -1,6 +1,6 @@
 let view = new buildfire.components.carousel.view("#carousel", []);
 let description = document.getElementById("my_container_div");
-
+let lazyloading = false;
 const listView = new buildfire.components.listView("listViewContainer", {
   enableAddButton: false,
 });
@@ -70,6 +70,7 @@ const init = () => {
         createList(items);
       }
     );
+    lazyloading = false;
   };
 
   const UpdateOnList = (listViewSize, items) => {
@@ -116,19 +117,25 @@ const init = () => {
 
   const onscrollHelper = async () => {
     let list = document.getElementById("listViewContainer");
+    let mainPage = document.getElementById("mainPage");
     let listViewSize = list.childNodes.length;
     let items = [];
-    if ((list.scrollTop + list.clientHeight) / list.scrollHeight > 0.99) {
+    if ((mainPage.scrollTop + mainPage.clientHeight) / mainPage.scrollHeight == 1) {
       await searchAndAddItems(listViewSize, items);
     }
   };
 
   let scrollTimer;
-  document.getElementById("listViewContainer").onscroll = function (e) {
+  document.getElementById("mainPage").onscroll = function (e) {
+    
+    let mainPage = document.getElementById("mainPage");
+    console.log((mainPage.scrollTop + mainPage.clientHeight) / mainPage.scrollHeight);
     if (scrollTimer) {
       clearTimeout(scrollTimer);
     }
     scrollTimer = setTimeout(() => {
+      if(lazyloading == true) return;
+      lazyloading = true;
       onscrollHelper();
     }, 100);
   };
