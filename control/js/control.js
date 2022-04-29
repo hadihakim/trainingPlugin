@@ -167,7 +167,7 @@ function helpershowSubPage(id, e) {
 
 const showSubPage = (item, element) => {
   if (!item) {
-    let btn=document.getElementById(saeBtn);
+    let btn=document.getElementById("saveBtn");
     document.getElementById("mainPage").style.display = "none";
     document.getElementById("subPage").style.display = "block";
    btn.setAttribute("onclick", `saveItem(${null},${element})`);
