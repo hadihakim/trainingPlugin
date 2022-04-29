@@ -79,11 +79,32 @@ searchButton.addEventListener("click", (e) => {
   });
 });
 
+// -------------------------------Sort  ----------------------------------------------------//
 let titleSort = document.getElementById("titleSort");
+let subTitleSort = document.getElementById("subTitleSort");
+let createDateSort = document.getElementById("dateSort");
+
 titleSort.addEventListener("click", (e) => {
+  sortevent(titleSort, "title", subTitleSort, createDateSort);
+});
+
+subTitleSort.addEventListener("click", (e) => {
+  sortevent(subTitleSort, "Subtitle", titleSort, createDateSort);
+});
+
+createDateSort.addEventListener("click", (e) => {
+  sortevent(createDateSort, "date", titleSort, subTitleSort);
+});
+
+const sortevent = (elemenet, sortby, ele1, ele2) => {
   let sort = null;
-  if (titleSort.childNodes[1]) {
-    let el = titleSort.childNodes[1];
+  elemenet.childNodes[1].classList.remove("hidden");
+  elemenet.childNodes[1].classList.add("active");
+  ele1.childNodes[1].classList.add("hidden");
+  ele2.childNodes[1].classList.add("hidden");
+
+  if (elemenet.childNodes[1]) {
+    let el = elemenet.childNodes[1];
     if (el.classList.contains("icon-chevron-down")) {
       sort = -1;
       el.classList.remove("icon-chevron-down");
@@ -94,8 +115,8 @@ titleSort.addEventListener("click", (e) => {
       sort = 1;
     }
   }
-  // ------------------------------sort -------------------------//
-  searchSortHelper(data, sort, (err, res) => {
+  let sortBy = sortby;
+  searchSortHelper(data, sortBy, sort, (err, res) => {
     if (err) console.error(err);
     else if (res) {
       var tbl = document.getElementById("items-table"); // Get the table
@@ -111,12 +132,11 @@ titleSort.addEventListener("click", (e) => {
             return uiRow(el);
           })
           .join("")}
-        
-        `
+          `
       );
     }
   });
-});
+};
 
 const croppedImage = (imgUrl) => {
   let croppedImg = buildfire.imageLib.cropImage(imgUrl, {
@@ -147,11 +167,10 @@ function helpershowSubPage(id, e) {
 
 const showSubPage = (item, element) => {
   if (!item) {
+    let btn=document.getElementById(saeBtn);
     document.getElementById("mainPage").style.display = "none";
     document.getElementById("subPage").style.display = "block";
-    document
-      .getElementById("saveBtn")
-      .setAttribute("onclick", `saveItem(${null},${element})`);
+   btn.setAttribute("onclick", `saveItem(${null},${element})`);
   }
   if (item) {
     let id = item["id"];
@@ -349,7 +368,8 @@ const saveItem = (id, element) => {
   } else {
     if (
       newItem.title !== "" &&
-      (thumbnail.imageUrl!== "") && (thumbnail2.imageUrl!== "")
+      thumbnail.imageUrl !== "" &&
+      thumbnail2.imageUrl !== ""
     ) {
       document.getElementById("items-table").style.visibility = "hidden";
       document.getElementById("empty-state").style.display = "none";
