@@ -52,7 +52,7 @@
   <div id="mainPage">
     <div class="mdc-card">
       <div class="search-container">
-        <label for="searchInput" class="material-icons icon iconTheme" id="searchIcon">search</label>
+        <label for="searchInput" class="material-icons icon" id="searchIcon">search</label>
         <input class="bodyTextTheme " type="text" name="search" id="searchInput" placeholder="Search"
           autocomplete="off" />
         <label class="material-icons icon " id="sortIcon">sort</label>
@@ -61,11 +61,10 @@
     <div id="empty_state">
       <img src="../../../pluginTester/media/ic_bookmark_empty.svg" alt="">
     </div>
-
     <div id="full_state">
       <div id="carousel"></div>
-    <div id="my_container_div" class="wysiwygContainer"></div>
-    <div id="listViewContainer" style="height: 300px; overflow: scroll;"></div>
+      <div id="my_container_div" class="wysiwygContainer"></div>
+      <div id="listViewContainer" style="height: 300px; overflow: scroll;"></div>
     </div>
   </div>
 
@@ -84,6 +83,18 @@
 
   <div id="skeleton"></div>
   <div id="skeleton2"></div>
+  <div id="skeleton3" class="hidden">
+    <div class="content-loading">
+      <div class="listImage-loading animation-loading"></div>
+      <div class="item-loading animation-loading"></div>
+      <div class="listImage-loading animation-loading"></div>
+      <div class="item-loading animation-loading"></div>
+      <div class="listImage-loading animation-loading"></div>
+      <div class="item-loading animation-loading"></div>
+      <div class="listImage-loading animation-loading"></div>
+      <div class="item-loading animation-loading"></div>
+    </div>
+  </div>
 
 </body>
 

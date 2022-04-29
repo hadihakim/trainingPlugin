@@ -396,9 +396,9 @@ const saveItem = (id, element) => {
 const uiRow = (el, state) => {
   let row = `
           <tr class="${state}">
-          <td><div class="img-holder aspect-1-1"><img src="${croppedImage(
+          <td><img class="img-holder" src="${croppedImage(
             el.data.listImage
-          )}" alt=""></div></td>
+          )}" alt=""></td>
           <td><a class="link" onclick="helpershowSubPage('${el.id}');">${
     el.data.title
   }</a></td>

@@ -204,15 +204,17 @@ const init = () => {
   // search text filed
   let timer;
   searchInput.addEventListener("keyup", (e) => {
+    document.getElementById("listViewContainer").classList.add("hidden");
     if (timer) {
       clearTimeout(timer);
     }
-
     timer = setTimeout(() => {
       if (searchInput.value != "") {
+        skeletonRender("search");
         carousel.classList.add("hidden");
         my_container_div.classList.add("hidden");
       } else {
+        document.getElementById("skeleton3").classList.add("hidden");
         carousel.classList.remove("hidden");
         my_container_div.classList.remove("hidden");
       }
@@ -257,13 +259,19 @@ const init = () => {
 };
 
 const search = async (input) => {
-  Items.searchFilter(input, (err, res) => {
+  await Items.searchFilter(input, (err, res) => {
     if (err) console.error(err);
-    else renderListView(res);
+    else {
+      document.getElementById("skeleton3").classList.add("hidden");
+      document.getElementById("listViewContainer").classList.add("hidden");
+      renderListView(res);
+    }
   });
 };
 
 const renderListView = (data) => {
+  document.getElementById("listViewContainer").classList.remove("hidden");
+
   listView.clear();
   items = [];
   data.forEach((element) => {
@@ -472,8 +480,10 @@ const skeletonRender = (screen) => {
       "animation-loading",
     ]);
   }
+  if (screen === "search") {
+    document.getElementById("skeleton3").classList.remove("hidden");
+  }
 };
-
 massaging();
 supPageHandler();
 init();

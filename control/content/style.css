@@ -1,17 +1,42 @@
+.sticky {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: var(--c-white);
+}
+.table-row {
+  height: 100vh;
+  overflow: scroll;
+  position: relative;
+  padding: 0 0.5px !important;
+}
+
+.table-row .table thead {
+  position: sticky;
+  top: 0;
+  background-color: var(--c-white);
+  width: 100%;
+  box-shadow: -5px 0px 0px 0px var(--c-white), 5px 0px 0px 0px var(--c-white);
+  z-index: 1;
+}
 .table tbody td .pull-right .bf-btn-icon {
   width: 40px;
   height: 40px;
 }
 
 .table tbody td .pull-right .bf-btn-icon:hover {
-  background-color: #f2f2f2;
+  background-color: var(--c-white);
 }
 
 .table tbody td .pull-right .bf-btn-icon:hover .icon-pencil {
-  color: #05acf0;
+  color: var(--c-primary);
 }
 .table tbody td .pull-right .bf-btn-icon:hover .icon-cross2 {
-  color: #ed4b4b;
+  color: var(--c-danger);
+}
+.table tbody td img {
+  width: 40px !important;
+  height: 40px !important;
 }
 
 .empty-row {
@@ -54,12 +79,11 @@
   > .main
   > .screens
   > .screen {
-    width: 96px !important;
-    height: 96px !important;
+  width: 96px !important;
+  height: 96px !important;
 }
 
 .sub-page h1 {
-  font-style: normal;
   font-weight: 700;
   font-size: 18px;
   line-height: 18px;

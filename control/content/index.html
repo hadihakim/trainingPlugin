@@ -10,7 +10,7 @@
     />
     <link rel="stylesheet" href="../../../../styles/helper.css" />
     <link rel="stylesheet" href="../../../../styles/bootstrap.css" />
-    <link rel="stylesheet" href="../../../../styles/" />
+    <link rel="stylesheet" href="../../../../styles/appStyle.css" />
     <script src="../../widget/common/js/item.js"></script>
     <script src="../../widget/common/js/analytics.js"></script>
     <script src="../../../../scripts/buildfire.js"></script>
@@ -23,36 +23,43 @@
   <body>
     <div class="container slide-in" id="mainPage">
       <!-- top page info section -->
-      <div class="row maring-bottom-twenty">
-        <p class="info-note col-12">
-          You can create a list of items with images, actions and other details.
-          Add an introduction section on the
-          <a class="link" href="javascript:navigateToTab();">Introduction</a>
-          tab.
-        </p>
-      </div>
-
-      <!--Search and Add item section-->
-      <div class="row">
-        <div class="col-md-9 search-input">
-          <div class="input-group margin-bottom-twenty">
-            <input
-              type="text"
-              placeholder="Search"
-              class="form-control"
-              id="searchInput"
-            />
-            <span class="input-group-btn"
-              ><button class="btn btn-info stretch" id="searchButton">
-                <span class="icon icon-magnifier"></span></button
-            ></span>
+      <div class="row sticky padding-right-twenty">
+        <div class="container">
+          <div class="row">
+            <div class="maring-bottom-thirty">
+              <p class="info-note col-12">
+                You can create a list of items with images, actions and other
+                details. Add an introduction section on the
+                <a class="link" href="javascript:navigateToTab();"
+                  >Introduction</a
+                >
+                tab.
+              </p>
+            </div>
           </div>
-        </div>
-        <div class="col-md-3 search-btn">
-          <button class="btn btn-success stretch" id="addItem">
-            <span class="icon icon-plus margin-right-ten"></span>
-            <span>Add Item</span>
-          </button>
+          <!--Search and Add item section-->
+          <div class="row">
+            <div class="col-md-9 search-input">
+              <div class="input-group margin-bottom-twenty">
+                <input
+                  type="text"
+                  placeholder="Search"
+                  class="form-control"
+                  id="searchInput"
+                />
+                <span class="input-group-btn"
+                  ><button class="btn btn-info stretch" id="searchButton">
+                    <span class="icon icon-magnifier"></span></button
+                ></span>
+              </div>
+            </div>
+            <div class="col-md-3 search-btn">
+              <button class="btn btn-success stretch" id="addItem">
+                <span class="icon icon-plus margin-right-ten"></span>
+                <span>Add Item</span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -91,9 +98,12 @@
       </div>
 
       <!-- Items table section-->
-      <div style="visibility: hidden" class="row maring-bottom-twenty tt">
+      <div
+        style="visibility: hidden"
+        class="row maring-bottom-twenty table-row"
+      >
         <table class="table table-bf" id="items-table">
-          <thead>
+          <thead class="">
             <td></td>
             <th>
               <h5 id="titleSort">
@@ -178,10 +188,7 @@
         </div>
 
         <div class="row bottom-actions">
-          <button
-            class="btn btn-default"
-            onclick="hideSubPage();"
-          >
+          <button class="btn btn-default" onclick="hideSubPage();">
             Cancel
           </button>
           <button class="btn btn-success" id="saveBtn" onclick="saveItem()">
