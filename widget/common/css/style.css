@@ -79,15 +79,7 @@ html[buildfire="widget"] {
   margin-bottom: 1.5rem;
 }
 
-#subPage #my_sub_container_div {
-  width: 100%;
-  height: 346px;
-  background: #afafaf;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #808080;
-}
+
 
 #empty_state {
   height: 80%;

@@ -33,9 +33,9 @@ const init = () => {
           let itemObj = {
             id: element.id,
             title: element.data.title,
-            description: element.data.description,
+            // description: element.data.description,
             imageUrl: element.data.listImage,
-            subTitle: element.data.Subtitle,
+            subtitle: element.data.Subtitle,
             data: element.data,
           };
           items.push(itemObj);
@@ -60,9 +60,9 @@ const init = () => {
           let itemObj = {
             id: element.id,
             title: element.data.title,
-            description: element.data.description,
+            // description: element.data.description,
             imageUrl: element.data.listImage,
-            subTitle: element.data.Subtitle,
+            subtitle: element.data.Subtitle,
             data: element.data,
           };
           items.push(itemObj);
@@ -97,7 +97,7 @@ const init = () => {
             title: element.data.title,
             description: element.data.description,
             imageUrl: element.data.listImage,
-            subTitle: element.data.Subtitle,
+            subtitle: element.data.Subtitle,
             data: element.data,
           };
           items.push(itemObj);
@@ -286,9 +286,9 @@ const renderListView = (data) => {
     let itemObj = {
       id: element.id,
       title: element.data.title,
-      description: element.data.description,
+      // description: element.data.description,
       imageUrl: element.data.listImage,
-      subTitle: element.data.Subtitle,
+      subtitle: element.data.Subtitle,
       data: element.data,
     };
     items.push(itemObj);
@@ -353,7 +353,7 @@ const drawer = () => {
     (err, res) => {
       if (err) console.error(err);
       buildfire.components.drawer.closeDrawer();
-      searchSortHelper(items, res.id, (err, res) => {
+      searchSortHelper(items,"title", res.id, (err, res) => {
         if (err) console.log(err);
 
         items = [];
@@ -363,9 +363,9 @@ const drawer = () => {
           let itemObj = {
             id: element.id,
             title: element.data.title,
-            description: element.data.description,
+            // description: element.data.description,
             imageUrl: element.data.listImage,
-            subTitle: element.data.Subtitle,
+            subtitle: element.data.Subtitle,
             data: element.data,
           };
           items.push(itemObj);

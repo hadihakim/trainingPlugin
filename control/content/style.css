@@ -116,7 +116,7 @@
 }
 
 .active{
-  color: green !important;
+  color: var(--c-success) !important;
 }
 .iconSort{
   color: rgba(190, 188, 188, 0.754);
@@ -125,7 +125,16 @@
 .hidden {
   visibility: hidden !important;
 }
+
 th:hover{
-  background-color: var(--c-gray1);
+  /* background-color: var(--c-gray1); */
+  cursor: pointer;
+}
+th h5:hover{
+  color: var(--c-gray4);
+  
+}
+th:first-child:hover,th:last-child:hover{
+  cursor: default;
   
 }
