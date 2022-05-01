@@ -45,6 +45,14 @@ html[buildfire="widget"] {
   border-radius: 4px !important;
 }
 
+#listViewContainer {
+  padding: 0 !important;
+}
+
+#my_container_div {
+ padding: 1rem;
+}
+
 /* sub page */
 #subPage {
   position: relative;
@@ -114,6 +122,7 @@ html[buildfire="widget"] {
   height: 211px;
 }
 .content-loading {
+  position: absolute;
   display: grid;
   grid-template-columns: auto auto;
   padding-right: 27px;

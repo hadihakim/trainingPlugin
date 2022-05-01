@@ -93,7 +93,7 @@ const init = () => {
           let itemObj = {
             id: element.id,
             title: element.data.title,
-            description: element.data.description,
+            //description: element.data.description,
             imageUrl: element.data.listImage,
             subtitle: element.data.Subtitle,
             data: element.data,
@@ -106,12 +106,12 @@ const init = () => {
     );
   };
 
-  const getNewItemsOnUpdate = async () => {
+  /*const getNewItemsOnUpdate = async () => {
     let list = document.getElementById("listViewContainer");
     let listViewSize = list.childNodes.length;
     let items = [];
     await searchAndAddItems(listViewSize, items);
-  };
+  };*/
 
   const onscrollHelper = async (element) => {
     let list = document.getElementById("listViewContainer");
@@ -123,7 +123,6 @@ const init = () => {
     } else {
       lazyloading = false;
     }
-    
   };
 
   let scrollTimer;
@@ -181,18 +180,18 @@ const init = () => {
   });
 
   // load the carousel items
-  const loadItems = (carouselItems) => {
-    //console.log("loadItems", carouselItems);
-    // create an instance and pass it the items if you don'itemList have items yet just pass []
-    view.loadItems(carouselItems);
+  const loadItems = async (carouselItems) => {
+    await view.loadItems(carouselItems);
   };
 
   //   get carousel items
   Introductions.get((err, res) => {
     if (err) console.error(err);
     else {
+      let wysiwygContainer = document.getElementById('my_container_div');
       loadItems(res.data.images);
       description.innerHTML = res.data.description;
+      document.getElementsByClassName('content-loading')[0].style.top = (wysiwygContainer.lastChild.getBoundingClientRect().y) +"px";
     }
   });
 
@@ -222,7 +221,8 @@ const init = () => {
 
   // search text filed
   let timer;
-  searchInput.addEventListener("keyup", (e) => {
+  searchInput.addEventListener("input", (e) => {
+    document.getElementById('empty_state').style.display = "none"
     document.getElementById("listViewContainer").classList.add("hidden");
     if (timer) {
       clearTimeout(timer);
@@ -289,6 +289,11 @@ const search = async (input) => {
 };
 
 const renderListView = (data) => {
+  console.log(data, data.length, "RENDERLIST HH");
+  if(data.length == 0) {
+    document.getElementById("empty_state").style.display = "flex";
+    return;
+  } 
   document.getElementById("listViewContainer").classList.remove("hidden");
 
   listView.clear();
