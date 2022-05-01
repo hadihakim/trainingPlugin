@@ -11,13 +11,15 @@
     <link rel="stylesheet" href="../../../../styles/helper.css" />
     <link rel="stylesheet" href="../../../../styles/bootstrap.css" />
     <link rel="stylesheet" href="../../../../styles/appStyle.css" />
-    <script src="../../widget/common/js/item.js"></script>
-    <script src="../../widget/common/js/analytics.js"></script>
+    <script src="../../widget/common/model/Item.model.js"></script>
+    <script src="../../widget/common/controllers/Items.controller.js"></script>
+    <script src="../../widget/common/repository/analytics.js"></script>
     <script src="../../../../scripts/buildfire.js"></script>
     <script src="../../../../scripts/tinymce/tinymce.min.js"></script>
     <script src="../../../../scripts/buildfire/components/images/thumbnail.js"></script>
 
-    <script src="../js/control.js" defer></script>
+    <script src="./js/content.controller.js" defer></script>
+    <script src="./js/content.js" defer></script>
   </head>
 
   <body>
@@ -98,23 +100,25 @@
       </div>
 
       <!-- Items table section-->
-      <div
-        style="visibility: hidden"
-        class="row maring-bottom-twenty"
-      >
+      <div style="visibility: hidden" class="row maring-bottom-twenty">
         <table class="table table-bf" id="items-table">
           <thead class="sticky-thead">
-            <td></td>
+            <th></th>
             <th>
               <h5 id="titleSort">
                 Title <span class="icon icon-chevron-down iconSort"></span>
               </h5>
             </th>
             <th>
-              <h5 id="subTitleSort">Subtitle <span class="icon icon-chevron-down iconSort"></span></h5>
+              <h5 id="subTitleSort">
+                Subtitle <span class="icon icon-chevron-down iconSort"></span>
+              </h5>
             </th>
             <th>
-              <h5 class="text-center" id="dateSort">Date of Creation <span class="icon icon-chevron-down iconSort"></span></h5>
+              <h5 class="text-center" id="dateSort">
+                Date of Creation
+                <span class="icon icon-chevron-down iconSort"></span>
+              </h5>
             </th>
             <th></th>
           </thead>
@@ -197,48 +201,5 @@
         </div>
       </div>
     </div>
-
-    <script>
-      const thumbnail = new buildfire.components.images.thumbnail(
-        ".thumbnail-picker",
-        {
-          imageUrl: "",
-          title: " ",
-          dimensionsLabel: "Recommended: 600 x 600px",
-          multiSelection: false,
-        }
-      );
-      const thumbnail2 = new buildfire.components.images.thumbnail(
-        ".thumbnail-picker2",
-        {
-          imageUrl: "",
-          title: " ",
-          dimensionsLabel: "Recommended: 1200x675px",
-          multiSelection: false,
-        }
-      );
-
-      tinymce.init({
-        selector: "#wysiwygContent",
-      });
-
-      const navigateToTab = () => {
-        console.log("hi");
-        buildfire.navigation.navigateToTab(
-          {
-            tabTitle: "Introduction",
-            deeplinkData: { username: "John" },
-          },
-          (err) => {
-            if (err) return console.error(err);
-            console.log("NAVIGATION FINISHED");
-          }
-        );
-      };
-
-      // for analytics
-
-      Analytics.init();
-    </script>
   </body>
 </html>

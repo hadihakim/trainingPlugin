@@ -32,9 +32,9 @@ const init = () => {
           let itemObj = {
             id: element.id,
             title: element.data.title,
-            description: element.data.description,
+            // description: element.data.description,
             imageUrl: element.data.listImage,
-            subTitle: element.data.Subtitle,
+            subtitle: element.data.Subtitle,
             data: element.data,
           };
           items.push(itemObj);
@@ -59,9 +59,9 @@ const init = () => {
           let itemObj = {
             id: element.id,
             title: element.data.title,
-            description: element.data.description,
+            // description: element.data.description,
             imageUrl: element.data.listImage,
-            subTitle: element.data.Subtitle,
+            subtitle: element.data.Subtitle,
             data: element.data,
           };
           items.push(itemObj);
@@ -95,7 +95,7 @@ const init = () => {
             title: element.data.title,
             description: element.data.description,
             imageUrl: element.data.listImage,
-            subTitle: element.data.Subtitle,
+            subtitle: element.data.Subtitle,
             data: element.data,
           };
           items.push(itemObj);
@@ -130,7 +130,7 @@ const init = () => {
   document.getElementById("mainPage").onscroll = function (e) {
     if(lazyloading == true) return;
     let mainPage = document.getElementById("mainPage");
-    console.log((mainPage.scrollTop + mainPage.clientHeight) / mainPage.scrollHeight);
+    // console.log((mainPage.scrollTop + mainPage.clientHeight) / mainPage.scrollHeight);
     if (scrollTimer) {
       clearTimeout(scrollTimer);
     }
@@ -202,17 +202,14 @@ const init = () => {
     searchInput.placeholder = res.data.screenOne.search.value;
     sortA = res.data.screenOne.sortAsc.value;
     sortB = res.data.screenOne.sortDesc.value;
-    console.log(res.data.screenOne, "language get data");
   });
 
   buildfire.datastore.onUpdate((e) => {
     if (e.tag == "Introduction") {
-      console.log("event intro", e);
       loadItems(e.data.images);
       description.innerHTML = e.data.description;
     }
     if (e.tag == "$bfLanguageSettings_en-us") {
-      console.log("event lang", e);
       searchInput.placeholder = e.data.screenOne.search.value;
       sortA = e.data.screenOne.sortAsc.value;
       sortB = e.data.screenOne.sortDesc.value;
@@ -301,9 +298,9 @@ const renderListView = (data) => {
     let itemObj = {
       id: element.id,
       title: element.data.title,
-      description: element.data.description,
+      // description: element.data.description,
       imageUrl: element.data.listImage,
-      subTitle: element.data.Subtitle,
+      subtitle: element.data.Subtitle,
       data: element.data,
     };
     items.push(itemObj);
@@ -368,7 +365,7 @@ const drawer = () => {
     (err, res) => {
       if (err) console.error(err);
       buildfire.components.drawer.closeDrawer();
-      searchSortHelper(items, res.id, (err, res) => {
+      searchSortHelper(items,"title", res.id, (err, res) => {
         if (err) console.log(err);
 
         items = [];
@@ -378,9 +375,9 @@ const drawer = () => {
           let itemObj = {
             id: element.id,
             title: element.data.title,
-            description: element.data.description,
+            // description: element.data.description,
             imageUrl: element.data.listImage,
-            subTitle: element.data.Subtitle,
+            subtitle: element.data.Subtitle,
             data: element.data,
           };
           items.push(itemObj);

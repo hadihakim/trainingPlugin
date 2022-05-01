@@ -2,13 +2,14 @@
 <html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="../../widget/common/js/introduction.js"></script>
+  <script src="../../widget/common/controllers/Introduction.controller.js"></script>
+  <script src="../../widget/common/model/Introduction.model.js"></script>
   <script src="../../../../scripts/tinymce/tinymce.min.js"></script>
   <script src="../../../../scripts/buildfire.js"></script>
   <!-- Load helper.css to use our helper classes -->
   <link href="../../../../styles/helper.css" rel="stylesheet" />
   <link href="../../../../styles/siteIcons.css" rel="stylesheet" />
-  <link href="../../widget/common/css/introduction.css" rel="stylesheet"/>
+  <link href="./introduction.css" rel="stylesheet"/>
   <link href="../../../../styles/control/bf-base.css" rel="stylesheet"/>
 
 
@@ -17,6 +18,7 @@
   <script src="../../../../scripts/buildfire.js"></script>
   <script src="../../../../scripts/sortable.min.js"></script>
   <script src="../../../../scripts/buildfire/components/carousel/carousel.js"></script>
+  <script src="./js/introduction.controller.js" defer></script>
 </head>
 <body>
   <div class="container slide-in" id="introduction-container">
@@ -24,37 +26,9 @@
       <p class="info-note">Add an introduction section with images, text and other elements with the text editor. </p>
     
     <div class="carousel"></div></br>
-    <textarea id="wysiwygContent" name="content" placeholder="WYSIWYG"></textarea>
+    <textarea id="wysiwygIntroduction" name="content" placeholder="WYSIWYG"></textarea>
   </div>
   
-  <script>
-    buildfire.messaging.sendMessageToWidget({
-  show: false,
-});
-    tinymce.init({
-      selector: "#wysiwygContent",
-      setup:(editor)=>{
-        editor.on("keyup change",(e)=>{
-          let content=tinymce.activeEditor.getContent();
-          Introductions.save({ images: Introductions.getImages(), description:content },(err,res)=>{
-            if(err) console.error(err);
-            console.log(res);
-          });
-        });
-      },
-    });
-    //create a new instance of the buildfire carousel editor
-    let editor = new buildfire.components.carousel.editor(".carousel");
-
-    Introductions.get((err, res) => {
-      if (err)
-        console.error(err);
-      else
-        Introductions.loadItemsCP(res.data.images, res.data.description)
-        console.log(res, "Its introduction loading")
-    })
-    Introductions.carouselEvents();
-  </script>
 </body>
 
 </html>
