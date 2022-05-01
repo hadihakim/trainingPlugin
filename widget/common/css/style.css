@@ -7,7 +7,7 @@ html[buildfire="widget"] {
   overflow: scroll;
 }
 
-#mainPage .mdc-card {
+#mainPage .searchItem.mdc-card {
   position: sticky;
   flex-direction: row !important;
   height: 2.5rem;
@@ -43,6 +43,14 @@ html[buildfire="widget"] {
 
 #mainPage #listViewContainer .listViewItem img {
   border-radius: 4px !important;
+}
+
+#listViewContainer {
+  padding: 0 !important;
+}
+
+.wysiwygContainer {
+  padding: 1rem;
 }
 
 /* sub page */

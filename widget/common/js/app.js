@@ -16,11 +16,10 @@ const init = () => {
     let skipItems = list.childNodes.length;
     let options = {
       skip: skipItems,
-      limit: 5,
+      limit: 7,
     };
 
     await Items.search(options, (err, res) => {
-      document.getElementById("skeleton").classList.add("hidden");
       if (err) console.error(err);
       else if (res.length == 0 && skipItems == 0) {
         full_state.style.display = "none";
@@ -50,7 +49,7 @@ const init = () => {
     buildfire.publicData.search(
       {
         skip: listViewSize,
-        limit: 5,
+        limit: 7,
       },
       "Items",
       (err, res) => {
@@ -70,7 +69,6 @@ const init = () => {
         createList(items);
       }
     );
-    lazyloading = false;
   };
 
   const UpdateOnList = (listViewSize, items) => {
@@ -115,35 +113,52 @@ const init = () => {
     await searchAndAddItems(listViewSize, items);
   };
 
-  const onscrollHelper = async () => {
+  const onscrollHelper = async (element) => {
     let list = document.getElementById("listViewContainer");
-    let mainPage = document.getElementById("mainPage");
+    //let mainPage = document.getElementById("mainPage");
     let listViewSize = list.childNodes.length;
     let items = [];
-    if ((mainPage.scrollTop + mainPage.clientHeight) / mainPage.scrollHeight == 1) {
+    if ((element.scrollTop + element.clientHeight) / element.scrollHeight == 1) {
       await searchAndAddItems(listViewSize, items);
+    } else {
+      lazyloading = false;
     }
+    
   };
 
   let scrollTimer;
   document.getElementById("mainPage").onscroll = function (e) {
-    
+    if(lazyloading == true) return;
     let mainPage = document.getElementById("mainPage");
     console.log((mainPage.scrollTop + mainPage.clientHeight) / mainPage.scrollHeight);
     if (scrollTimer) {
       clearTimeout(scrollTimer);
     }
     scrollTimer = setTimeout(() => {
-      if(lazyloading == true) return;
       lazyloading = true;
-      onscrollHelper();
+      onscrollHelper(mainPage);
+    }, 100);
+  };
+
+  document.getElementById("listViewContainer").onscroll = function (e) {
+    if(lazyloading == true) return;
+    let list = document.getElementById("listViewContainer");
+    console.log((list.scrollTop + list.clientHeight) / list.scrollHeight, "LISTVIEW");
+    if (scrollTimer) {
+      clearTimeout(scrollTimer);
+    }
+    scrollTimer = setTimeout(() => {
+      lazyloading = true;
+      onscrollHelper(list);
     }, 100);
   };
 
   getListViewData();
   // load the list view
-  const createList = (list) => {
-    listView.loadListViewItems(list);
+  const createList = async (list) => {
+    await listView.loadListViewItems(list);
+    lazyloading = false;
+    document.getElementById("skeleton").classList.add("hidden");
   };
 
   let onUpdateTimer;
