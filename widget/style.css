@@ -34,6 +34,10 @@ html[buildfire="widget"] {
   color: var(--bf-theme-footer-icon);
 }
 
+#my_sub_container_div {
+  padding: 1rem;
+}
+
 #mainPage .owl-carousel .owl-item img {
   width: 100% !important;
 }
@@ -68,7 +72,7 @@ html[buildfire="widget"] {
   top: 7.1rem;
   left: 1rem;
   border-radius: 0.25rem;
-  box-shadow: 0 0.125rem 0.5rem rgba(150, 150, 150, 0.2);
+  box-shadow: 0 0.125rem 0.5rem var(--c-gray4);
 }
 
 #subPage .info-container {

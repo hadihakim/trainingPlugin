@@ -10,7 +10,7 @@
   box-shadow: -50px 0px 5px white;
   padding: 0 !important;
   position: sticky;
-  top: 8em;
+  top: 9em;
   z-index: 10;
   background-color: var(--c-white);
 }
@@ -20,17 +20,6 @@
   overflow: scroll;
   position: relative;
   padding: 0 0.5px !important;
-}*/
-
-
-/* WORKING ON TABLE CONTENT
-/*td {
-  display: block;
-  border: 2px solid #000;
-  width: 6rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }*/
 
 .table tbody td .pull-right .bf-btn-icon {
