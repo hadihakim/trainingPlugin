@@ -44,7 +44,7 @@
   <script src="./common/shared/stringsConfig.js"></script>
   <script src="./app.js" defer></script>
   <script src="./common/controllers/Introduction.controller.js"></script>
-  <script src="./common/controllers/Items.controller.js"></script>
+  <!-- <script src="./common/controllers/Items.controller.js" defer></script> -->
   <script src="./common/controllers/Language.controller.js"></script>
   <script src="./common/controllers/"></script>
 
@@ -71,12 +71,36 @@
       <div id="my_container_div" class="wysiwygContainer"></div>
       <div id="listViewContainer"></div>
     </div>
+
+    <div id="listViewLoading" class="hidden">
+      <embed  src="../resources/Spinner-1s-200px.svg" type="ss" >
+    </div>
+
+    <div id="skeletonSort" class="hidden">
+      <div class="content-loadingSort">
+        <div class="listImage-loading animation-loading"></div>
+        <div class="item-loading animation-loading"></div>
+        <div class="listImage-loading animation-loading"></div>
+        <div class="item-loading animation-loading"></div>
+        <div class="listImage-loading animation-loading"></div>
+        <div class="item-loading animation-loading"></div>
+        <div class="listImage-loading animation-loading"></div>
+        <div class="item-loading animation-loading"></div>
+        <div class="listImage-loading animation-loading"></div>
+        <div class="item-loading animation-loading"></div>
+        <div class="listImage-loading animation-loading"></div>
+        <div class="item-loading animation-loading"></div>
+      </div>
+  </div>
   </div>
 
 
   <div id="subPage" class="hidden slide-in">
-    <img id="coverImage"></img>
-    <img id="listImage" onclick="imagePreviewer(this.src)"></img>
+    <div class="images-container">
+      <img id="coverImage"></img>
+      <img id="listImage" onclick="imagePreviewer(this.src)"></img>
+
+    </div>
     <div class="info-container">
       <h3 id="title"></h3>
       <p id="subtitle"></p>
@@ -100,6 +124,7 @@
       <div class="item-loading animation-loading"></div>
     </div>
   </div>
+
 
 </body>
 

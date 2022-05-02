@@ -50,12 +50,16 @@ html[buildfire="widget"] {
 }
 
 #my_container_div {
- padding: 1rem;
+  padding: 1rem;
 }
 
 /* sub page */
 #subPage {
   position: relative;
+}
+#subPage .images-container {
+  position: relative;
+  height: 15rem;
 }
 #subPage #listImage {
   position: absolute;
@@ -69,7 +73,7 @@ html[buildfire="widget"] {
 
 #subPage .info-container {
   display: block;
-  margin: 2.5rem 1rem 0.75rem;
+  margin: 1.5rem 1rem;
 }
 
 #subPage .info-container #title {
@@ -87,8 +91,6 @@ html[buildfire="widget"] {
   margin-bottom: 1.5rem;
 }
 
-
-
 #empty_state {
   height: 80%;
   width: 100%;
@@ -99,7 +101,7 @@ html[buildfire="widget"] {
 }
 
 #full_state {
-  height: 100%;
+  /* height: 100%; */
   width: 100%;
 }
 
@@ -108,10 +110,14 @@ html[buildfire="widget"] {
 }
 /* ---------------------- */
 #skeleton,
-#skeleton2,#skeleton3 {
+#skeleton2,
+#skeleton3 {
   position: absolute;
   top: 70px;
   z-index: 10;
+}
+#skeletonSort {
+  display: block;
 }
 #skeleton2 {
   top: 0 !important;
@@ -121,12 +127,15 @@ html[buildfire="widget"] {
   width: 375px;
   height: 211px;
 }
-.content-loading {
+.content-loading,.content-loadingSort{
   position: absolute;
   display: grid;
   grid-template-columns: auto auto;
   padding-right: 27px;
   align-items: center;
+}
+.content-loadingSort {
+  position: relative !important;
 }
 .listImage-loading {
   width: 40px;
@@ -187,4 +196,13 @@ html[buildfire="widget"] {
   to {
     background-position-x: -200%;
   }
+}
+
+#listViewLoading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#listViewLoading embed {
+  width: 15%;
 }
