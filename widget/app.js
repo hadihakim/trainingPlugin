@@ -93,7 +93,7 @@ const init = () => {
           let itemObj = {
             id: element.id,
             title: element.data.title,
-            //description: element.data.description,
+            // description: element.data.description,
             imageUrl: element.data.listImage,
             subtitle: element.data.Subtitle,
             data: element.data,
@@ -118,7 +118,11 @@ const init = () => {
     //let mainPage = document.getElementById("mainPage");
     let listViewSize = list.childNodes.length;
     let items = [];
-    if ((element.scrollTop + element.clientHeight) / element.scrollHeight == 1) {
+    if (
+      (element.scrollTop + element.clientHeight) / element.scrollHeight >=
+      0.9
+    ) {
+      
       await searchAndAddItems(listViewSize, items);
     } else {
       lazyloading = false;
@@ -127,22 +131,24 @@ const init = () => {
 
   let scrollTimer;
   document.getElementById("mainPage").onscroll = function (e) {
-    if(lazyloading == true) return;
-    let mainPage = document.getElementById("mainPage");
+    if (lazyloading == true) return;
     // console.log((mainPage.scrollTop + mainPage.clientHeight) / mainPage.scrollHeight);
     if (scrollTimer) {
       clearTimeout(scrollTimer);
     }
     scrollTimer = setTimeout(() => {
       lazyloading = true;
-      onscrollHelper(mainPage);
+      onscrollHelper(e.target);
     }, 100);
   };
 
   document.getElementById("listViewContainer").onscroll = function (e) {
-    if(lazyloading == true) return;
+    if (lazyloading == true) return;
     let list = document.getElementById("listViewContainer");
-    console.log((list.scrollTop + list.clientHeight) / list.scrollHeight, "LISTVIEW");
+    console.log(
+      (list.scrollTop + list.clientHeight) / list.scrollHeight,
+      "LISTVIEW"
+    );
     if (scrollTimer) {
       clearTimeout(scrollTimer);
     }
@@ -188,10 +194,11 @@ const init = () => {
   Introductions.get((err, res) => {
     if (err) console.error(err);
     else {
-      let wysiwygContainer = document.getElementById('my_container_div');
+      let wysiwygContainer = document.getElementById("my_container_div");
       loadItems(res.data.images);
       description.innerHTML = res.data.description;
-      document.getElementsByClassName('content-loading')[0].style.top = (wysiwygContainer.lastChild.getBoundingClientRect().y) +"px";
+      document.getElementsByClassName("content-loading")[0].style.top =
+        wysiwygContainer.lastChild.getBoundingClientRect().y + "px";
     }
   });
 
@@ -222,7 +229,7 @@ const init = () => {
   // search text filed
   let timer;
   searchInput.addEventListener("input", (e) => {
-    document.getElementById('empty_state').style.display = "none"
+    document.getElementById("empty_state").style.display = "none";
     document.getElementById("listViewContainer").classList.add("hidden");
     if (timer) {
       clearTimeout(timer);
@@ -290,10 +297,10 @@ const search = async (input) => {
 
 const renderListView = (data) => {
   console.log(data, data.length, "RENDERLIST HH");
-  if(data.length == 0) {
+  if (data.length == 0) {
     document.getElementById("empty_state").style.display = "flex";
     return;
-  } 
+  }
   document.getElementById("listViewContainer").classList.remove("hidden");
 
   listView.clear();
@@ -353,8 +360,8 @@ function ui(elementType, appendTo, innerHTML, classNameArray, id) {
   return e;
 }
 
-const drawer = () => {
-  buildfire.components.drawer.open(
+const drawer = async () => {
+  await buildfire.components.drawer.open(
     {
       listItems: [
         {
@@ -368,9 +375,11 @@ const drawer = () => {
       ],
     },
     (err, res) => {
+      skeletonRender("sort");
+      document.getElementById("listViewContainer").classList.add("hidden");
       if (err) console.error(err);
       buildfire.components.drawer.closeDrawer();
-      searchSortHelper(items,"title", res.id, (err, res) => {
+      searchSortHelper(items, "title", res.id, (err, res) => {
         if (err) console.log(err);
 
         items = [];
@@ -387,10 +396,13 @@ const drawer = () => {
           };
           items.push(itemObj);
         });
+        document.getElementById("skeletonSort").classList.add("hidden");
+        document.getElementById("listViewContainer").classList.remove("hidden");
         listView.loadListViewItems(items);
       });
     }
   );
+  // document.getElementById("sortSkeleton").classList.add("hidden");
 };
 
 const supPageHandler = () => {
@@ -412,6 +424,7 @@ const supPageHandler = () => {
 
 // show item data in sub page
 const subItemInfoHandler = (item) => {
+  
   title.innerHTML = item.data.title;
   subtitle.innerHTML = item.data.Subtitle;
   coverImage.src = item.data.coverImage;
@@ -506,6 +519,9 @@ const skeletonRender = (screen) => {
   }
   if (screen === "search") {
     document.getElementById("skeleton3").classList.remove("hidden");
+  }
+  if (screen === "sort") {
+    document.getElementById("skeletonSort").classList.remove("hidden");
   }
 };
 massaging();
