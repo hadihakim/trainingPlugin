@@ -425,7 +425,7 @@ const uiRow = (el, state) => {
           <td><img class="img-holder" src="${croppedImage(
             el.data.listImage
           )}" alt=""></td>
-          <td><a class="link" onclick="helpershowSubPage('${el.id}');">${
+          <td><a class="link align-middle" onclick="helpershowSubPage('${el.id}');">${
     el.data.title
   }</a></td>
           <td><p class="subTitle-ellipsis">${el.data.Subtitle}</p></td>
