@@ -429,7 +429,7 @@ const uiRow = (el, state) => {
     el.data.title
   }</a></td>
           <td><p class="subTitle-ellipsis">${el.data.Subtitle}</p></td>
-          <td class="text-center">${el.data.createdOn}</td>
+          <td class="text-center align-middle">${el.data.createdOn}</td>
           <td>
                         <div class="pull-right">
                             <button class="btn bf-btn-icon" id="${

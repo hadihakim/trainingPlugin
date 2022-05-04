@@ -106,8 +106,8 @@
   margin-right: 30vw !important;
 }
 
-.active {
-  color: var(--c-success) !important;
+span.active {
+  color: var(--c-info) !important;
 }
 
 .iconSort {
@@ -125,11 +125,34 @@ th:hover {
 
 th h5:hover {
   color: var(--c-gray4);
-
 }
+
+th h5:hover span, .active {
+  color: var(--c-gray4) !important;
+}
+
 
 th:first-child:hover,
 th:last-child:hover {
   cursor: default;
+}
 
+.align-middle{
+  vertical-align: middle !important;
+}
+
+td {
+  vertical-align: middle !important;
+}
+
+td > p {
+  margin: 0 !important;
+}
+
+th > h5 {
+  font-weight: 700 !important;
+}
+
+td div .btn {
+  display: inline-flex !important;
 }
