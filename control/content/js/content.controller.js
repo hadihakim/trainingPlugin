@@ -362,20 +362,23 @@ const updateNewRecord = (obj, element) => {
   }
 };
 
-const getCreatedOn = async (id) => {
-  await Items.getById(id, (err, res) => {
-    if (err) console.error(err);
-    else return res.data.createdOn;
+async function getCreatedOn(id) {
+   Items.getById(id, (err, res) => {
+     let date;
+    if (err) return console.error(err);
+    date = res.data.createdOn;
+    return date;
   });
 };
 
 const saveItem = async (id, element) => {
+  let date = "df"
   console.log("id", id, "element", element);
   var table = document.getElementById("items-table");
-  let date = await getCreatedOn(id);
+  date = await getCreatedOn(id);
   console.log("date ::::::", date);
   let newItem = {
-    title: title.value,
+    title: title.value, 
     Subtitle: subtitle.value,
     listImage: croppedImage(thumbnail.imageUrl),
     coverImage: croppedCoverImage(thumbnail2.imageUrl),
@@ -384,10 +387,11 @@ const saveItem = async (id, element) => {
   };
 
   if (id != null) {
-    Items.edit(
-      id,
-
-      newItem,
+    Items.edit( id,
+      {
+      newItem
+    },
+      
       (err, res) => {
         if (err) console.error(err);
         else {
