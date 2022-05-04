@@ -182,7 +182,7 @@ const showSubPage = (item, element) => {
       data: item.data,
     });
     document.getElementById("saveBtn").onclick = function () {
-      saveItem(id, element);
+      saveItem(item, element);
     };
   }
 };
@@ -362,37 +362,37 @@ const updateNewRecord = (obj, element) => {
   }
 };
 
-const getCreatedOn = async (id) => {
-  await Items.getById(id, (err, res) => {
-    if (err) console.error(err);
-    else return res.data.createdOn;
-  });
-};
-
-const saveItem = async (id, element) => {
-  console.log("id", id, "element", element);
+// const getCreatedOn = async (id) => {
+//   await Items.getById(id, (err, res) => {
+//     if (err) console.error(err);
+//     else return res.data.createdOn;
+//   });
+// };
+const saveItem = async (item, element) => {
+  console.log("id", item, "element", element);
   var table = document.getElementById("items-table");
-  let date = await getCreatedOn(id);
-  console.log("date ::::::", date);
+  // let date = await getCreatedOn(id);
+  // console.log("date ::::::", date);
   let newItem = {
     title: title.value,
     Subtitle: subtitle.value,
     listImage: croppedImage(thumbnail.imageUrl),
     coverImage: croppedCoverImage(thumbnail2.imageUrl),
     description: tinymce.activeEditor.getContent(),
-    createdOn: date,
   };
 
-  if (id != null) {
+  if (item != null) {
     Items.edit(
-      id,
-
-      newItem,
+      item.id,
+      {
+        createdOn: item.data.createdOn,
+        ...newItem,
+      },
       (err, res) => {
         if (err) console.error(err);
         else {
           updateNewRecord(
-            { id: id, createdOn: res.data.createdOn, ...newItem },
+            { id: item.id, createdOn: res.data.createdOn, ...newItem },
             element
           );
           buildfire.dialog.toast({
