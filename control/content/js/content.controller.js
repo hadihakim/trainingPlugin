@@ -328,14 +328,14 @@ const addNewRow = (el) => {
 
 const updateNewRecord = (obj, element) => {
   let any = document.getElementById(obj.id);
-  console.log("element: ", element);
+  console.log("element: ", obj);
   if (element === null) {
     console.log("from if");
     element = any;
   }
   if (element.classList.contains("btn")) {
-    element.parentElement.parentElement.previousElementSibling.innerHTML =
-      obj.createdOn;
+    // element.parentElement.parentElement.previousElementSibling.innerHTML =
+    //   obj.createdOn;
     element.parentElement.parentElement.previousElementSibling.previousElementSibling.innerHTML = `<p class="subTitle-ellipsis">${obj.Subtitle}</p>`;
     element.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.innerHTML = `<a class="link" onclick="helpershowSubPage('${obj.id}');">${obj.title}</a>`;
     element.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.firstChild.firstChild.src =
@@ -346,62 +346,63 @@ const updateNewRecord = (obj, element) => {
     element.parentElement.previousElementSibling.firstChild.src = obj.listImage;
     element.innerHTML = `<a class="link" onclick="helpershowSubPage('${obj.id}');">${obj.title}</a>`;
     element.parentElement.nextElementSibling.firstChild.innerHTML = `<p class="subTitle-ellipsis">${obj.Subtitle}</p>`;
-    element.parentElement.nextElementSibling.nextElementSibling.firstChild.innerHTML =
-      obj.createdOn;
+    // element.parentElement.nextElementSibling.nextElementSibling.firstChild.innerHTML =
+    //   obj.createdOn;
 
     return;
   }
   if (element.classList.contains("icon-pencil")) {
-    element.parentElement.parentElement.parentElement.previousElementSibling.innerHTML =
-      obj.createdOn;
+    // element.parentElement.parentElement.parentElement.previousElementSibling.innerHTML =
+    //   obj.createdOn;
     element.parentElement.parentElement.parentElement.previousElementSibling.previousElementSibling.innerHTML = `<p class="subTitle-ellipsis">${obj.Subtitle}</p>`;
     element.parentElement.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.innerHTML = `<a class="link" onclick="helpershowSubPage('${obj.id}');">${obj.title}</a>`;
     //console.log("here>>>>>",element.parentElement.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.firstChild);
     element.parentElement.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.firstChild.firstChild.src =
-      croppedImage(obj.listImage);
+      croppedImage(obj.listImage); // here check
   }
 };
 
-const getCreatedOn = async (id) => {
-  await Items.getById(id, (err, res) => {
-    if (err) console.error(err);
-    else return res.data.createdOn;
+const getCreatedOn = (id) => {
+  return new Promise((resolve) => {
+    Items.getById(id, (err, res) => {
+      if (err) console.error(err);
+      else resolve(res);
+    });
   });
 };
 
 const saveItem = async (id, element) => {
   console.log("id", id, "element", element);
   var table = document.getElementById("items-table");
-  let date = await getCreatedOn(id);
-  console.log("date ::::::", date);
+  const result = await getCreatedOn(id);
+
   let newItem = {
     title: title.value,
     Subtitle: subtitle.value,
     listImage: croppedImage(thumbnail.imageUrl),
     coverImage: croppedCoverImage(thumbnail2.imageUrl),
     description: tinymce.activeEditor.getContent(),
-    createdOn: date,
+    createdOn:
+      result.data.createdOn ||
+      new Date().toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      }),
   };
 
   if (id != null) {
-    Items.edit(
-      id,
-
-      newItem,
-      (err, res) => {
-        if (err) console.error(err);
-        else {
-          updateNewRecord(
-            { id: id, createdOn: res.data.createdOn, ...newItem },
-            element
-          );
-          buildfire.dialog.toast({
-            message: "updated",
-            type: "success",
-          });
-        }
+    Items.edit(id, newItem, (err, res) => {
+      if (err) console.error(err);
+      else {
+        console.log("after", res);
+        updateNewRecord({ id: id, ...newItem }, element);
+        buildfire.dialog.toast({
+          message: "updated",
+          type: "success",
+        });
       }
-    );
+    });
   } else {
     if (
       newItem.title !== "" &&
