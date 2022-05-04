@@ -275,7 +275,7 @@ const addNewRow = (el) => {
       `<td><img class="img-holder" src="${croppedImage(
         el.listImage
       )}" alt=""></td>
-    <td><a class="link" onclick="helpershowSubPage('${el.id}');">${el.title}</a></td>
+    <td><a class="link" onclick="helpershowSubPage('${el.id}');>${el.title}</a></td>
     <td><p class="subTitle-ellipsis">${el.Subtitle}</p></td>
     <td class="text-center">${el.createdOn}</td>
     <td>
