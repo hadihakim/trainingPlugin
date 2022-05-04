@@ -418,6 +418,7 @@ const supPageHandler = () => {
     buildfire.messaging.sendMessageToControl({
       show: true,
       data: item.data,
+      id:item.id,
     });
   };
 };

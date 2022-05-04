@@ -10,10 +10,10 @@
   box-shadow: -50px 0px 5px white;
   padding: 0 !important;
   position: sticky;
-  top: 8em;
+  top: 9em;
   z-index: 10;
   background-color: var(--c-white);
-} 
+}
 
 /*.table-row {
   height: 100vh;
@@ -63,28 +63,12 @@
   cursor: pointer;
 }
 
-.sub-page
-  > .container
-  > .row
-  > .col-md-4
-  > .thumbnail-picker
-  > .item
-  > .main
-  > .screens
-  > .screen {
+.sub-page>.container>.row>.col-md-4>.thumbnail-picker>.item>.main>.screens>.screen {
   width: 96px !important;
   height: 96px !important;
 }
 
-.sub-page
-  > .container
-  > .row
-  > .col-md-4
-  > .thumbnail-picker2
-  > .item
-  > .main
-  > .screens
-  > .screen {
+.sub-page>.container>.row>.col-md-4>.thumbnail-picker2>.item>.main>.screens>.screen {
   width: 96px !important;
   height: 96px !important;
 }
@@ -95,6 +79,14 @@
   line-height: 18px;
 }
 
+.link,.subTitle-ellipsis {
+  overflow: hidden;
+  width: 13em;
+  display: block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 #loading-state {
   height: 40vh !important;
 }
@@ -103,21 +95,22 @@
   height: 40vh !important;
 }
 
-#empty-state > .container {
+#empty-state>.container {
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.thumbnail-picker2 > .item {
+.thumbnail-picker2>.item {
   margin-right: 30vw !important;
 }
 
-.active{
-  color: var(--c-success) !important;
+span.active {
+  color: var(--c-info) !important;
 }
-.iconSort{
+
+.iconSort {
   color: rgba(190, 188, 188, 0.754);
 }
 
@@ -125,16 +118,41 @@
   visibility: hidden !important;
 }
 
-th:hover{
+th:hover {
   /* background-color: var(--c-gray1); */
   cursor: pointer;
 }
-th h5:hover{
+
+th h5:hover {
   color: var(--c-gray4);
-  
 }
 
-th:first-child:hover,th:last-child:hover{
+th h5:hover span, .active {
+  color: var(--c-gray4) !important;
+}
+
+
+th:first-child:hover,
+th:last-child:hover {
   cursor: default;
-  
+}
+
+.align-middle{
+  vertical-align: middle !important;
+}
+
+td {
+  vertical-align: middle !important;
+}
+
+td > p {
+  margin: 0 !important;
+}
+
+th > h5 {
+  font-weight: 700 !important;
+}
+
+td div .btn {
+  display: inline-flex !important;
 }
