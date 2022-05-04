@@ -275,13 +275,21 @@ const addNewRow = (el) => {
       `<td><img class="img-holder" src="${croppedImage(
         el.listImage
       )}" alt=""></td>
-    <td><a class="link" onclick="helpershowSubPage('${el.id}');>${el.title}</a></td>
+    <td><a class="link" onclick="helpershowSubPage('${el.id}');">${
+        el.title
+      }</a></td>
     <td><p class="subTitle-ellipsis">${el.Subtitle}</p></td>
     <td class="text-center">${el.createdOn}</td>
     <td>
                   <div class="pull-right">
-                      <button class="btn bf-btn-icon" id="${el.id}" onclick="helpershowSubPage('${el.id}')"><span class="icon icon-pencil"></span></button>
-                      <button class="btn bf-btn-icon" onclick="deleteItem('${el.id}')"><span class="icon icon-cross2"></span></button>
+                      <button class="btn bf-btn-icon" id="${
+                        el.id
+                      }" onclick="helpershowSubPage('${
+        el.id
+      }')"><span class="icon icon-pencil"></span></button>
+                      <button class="btn bf-btn-icon" onclick="deleteItem('${
+                        el.id
+                      }')"><span class="icon icon-cross2"></span></button>
                   </div>
               </td>`
     );
@@ -319,6 +327,30 @@ const addNewRow = (el) => {
 };
 
 const updateNewRecord = (obj, element) => {
+  let any = document.getElementById(obj.id);
+  console.log("element: ", element);
+  if (element === null) {
+    console.log("from if");
+    element = any;
+  }
+  if (element.classList.contains("btn")) {
+    element.parentElement.parentElement.previousElementSibling.innerHTML =
+      obj.createdOn;
+    element.parentElement.parentElement.previousElementSibling.previousElementSibling.innerHTML = `<p class="subTitle-ellipsis">${obj.Subtitle}</p>`;
+    element.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.innerHTML = `<a class="link" onclick="helpershowSubPage('${obj.id}');">${obj.title}</a>`;
+    element.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.firstChild.firstChild.src =
+      obj.listImage;
+    return;
+  }
+  if (element.classList.contains("link")) {
+    element.parentElement.previousElementSibling.firstChild.src = obj.listImage;
+    element.innerHTML = `<a class="link" onclick="helpershowSubPage('${obj.id}');">${obj.title}</a>`;
+    element.parentElement.nextElementSibling.firstChild.innerHTML = `<p class="subTitle-ellipsis">${obj.Subtitle}</p>`;
+    element.parentElement.nextElementSibling.nextElementSibling.firstChild.innerHTML =
+      obj.createdOn;
+
+    return;
+  }
   if (element.classList.contains("icon-pencil")) {
     element.parentElement.parentElement.parentElement.previousElementSibling.innerHTML =
       obj.createdOn;
@@ -327,36 +359,35 @@ const updateNewRecord = (obj, element) => {
     //console.log("here>>>>>",element.parentElement.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.firstChild);
     element.parentElement.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.firstChild.firstChild.src =
       croppedImage(obj.listImage);
-  } else {
-    element.parentElement.parentElement.previousElementSibling.innerHTML =
-      obj.createdOn;
-    element.parentElement.parentElement.previousElementSibling.previousElementSibling.innerHTML = `<p class="subTitle-ellipsis">${obj.Subtitle}</p>`;
-    element.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.innerHTML = `<a class="link" onclick="helpershowSubPage('${obj.id}');">${obj.title}</a>`;
-    element.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.firstChild.firstChild.src =
-      obj.listImage;
   }
 };
 
-const saveItem = (id, element) => {
+const getCreatedOn = async (id) => {
+  await Items.getById(id, (err, res) => {
+    if (err) console.error(err);
+    else return res.data.createdOn;
+  });
+};
+
+const saveItem = async (id, element) => {
+  console.log("id", id, "element", element);
   var table = document.getElementById("items-table");
+  let date = await getCreatedOn(id);
+  console.log("date ::::::", date);
   let newItem = {
     title: title.value,
     Subtitle: subtitle.value,
     listImage: croppedImage(thumbnail.imageUrl),
     coverImage: croppedCoverImage(thumbnail2.imageUrl),
     description: tinymce.activeEditor.getContent(),
+    createdOn: date,
   };
+
   if (id != null) {
     Items.edit(
       id,
-      {
-        createdOn: new Date().toLocaleDateString("en-US", {
-          month: "short",
-          day: "numeric",
-          year: "numeric",
-        }),
-        ...newItem,
-      },
+
+      newItem,
       (err, res) => {
         if (err) console.error(err);
         else {
