@@ -328,14 +328,14 @@ const addNewRow = (el) => {
 
 const updateNewRecord = (obj, element) => {
   let any = document.getElementById(obj.id);
-  console.log("element: ", element);
+  console.log("element: ", obj);
   if (element === null) {
     console.log("from if");
     element = any;
   }
   if (element.classList.contains("btn")) {
-    element.parentElement.parentElement.previousElementSibling.innerHTML =
-      obj.createdOn;
+    // element.parentElement.parentElement.previousElementSibling.innerHTML =
+    //   obj.createdOn;
     element.parentElement.parentElement.previousElementSibling.previousElementSibling.innerHTML = `<p class="subTitle-ellipsis">${obj.Subtitle}</p>`;
     element.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.innerHTML = `<a class="link" onclick="helpershowSubPage('${obj.id}');">${obj.title}</a>`;
     element.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.firstChild.firstChild.src =
@@ -346,19 +346,19 @@ const updateNewRecord = (obj, element) => {
     element.parentElement.previousElementSibling.firstChild.src = obj.listImage;
     element.innerHTML = `<a class="link" onclick="helpershowSubPage('${obj.id}');">${obj.title}</a>`;
     element.parentElement.nextElementSibling.firstChild.innerHTML = `<p class="subTitle-ellipsis">${obj.Subtitle}</p>`;
-    element.parentElement.nextElementSibling.nextElementSibling.firstChild.innerHTML =
-      obj.createdOn;
+    // element.parentElement.nextElementSibling.nextElementSibling.firstChild.innerHTML =
+    //   obj.createdOn;
 
     return;
   }
   if (element.classList.contains("icon-pencil")) {
-    element.parentElement.parentElement.parentElement.previousElementSibling.innerHTML =
-      obj.createdOn;
+    // element.parentElement.parentElement.parentElement.previousElementSibling.innerHTML =
+    //   obj.createdOn;
     element.parentElement.parentElement.parentElement.previousElementSibling.previousElementSibling.innerHTML = `<p class="subTitle-ellipsis">${obj.Subtitle}</p>`;
     element.parentElement.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.innerHTML = `<a class="link" onclick="helpershowSubPage('${obj.id}');">${obj.title}</a>`;
     //console.log("here>>>>>",element.parentElement.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.firstChild);
     element.parentElement.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.firstChild.firstChild.src =
-      croppedImage(obj.listImage);
+      croppedImage(obj.listImage); // here check
   }
 };
 
@@ -369,7 +369,7 @@ const updateNewRecord = (obj, element) => {
 //   });
 // };
 const saveItem = async (item, element) => {
-  console.log("id", item, "element", element);
+  console.log("item", item, "element", element);
   var table = document.getElementById("items-table");
   // let date = await getCreatedOn(id);
   // console.log("date ::::::", date);
