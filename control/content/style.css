@@ -133,6 +133,7 @@ th h5:hover{
   color: var(--c-gray4);
   
 }
+
 th:first-child:hover,th:last-child:hover{
   cursor: default;
   
