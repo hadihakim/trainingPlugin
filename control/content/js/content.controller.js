@@ -182,7 +182,7 @@ const showSubPage = (item, element) => {
       data: item.data,
     });
     document.getElementById("saveBtn").onclick = function () {
-      saveItem(id, element);
+      saveItem(item, element);
     };
   }
 };
@@ -328,17 +328,17 @@ const addNewRow = (el) => {
 
 const updateNewRecord = (obj, element) => {
   let any = document.getElementById(obj.id);
-  console.log("element: ", element);
+  console.log("element: ", obj);
   if (element === null) {
     console.log("from if");
     element = any;
   }
   if (element.classList.contains("btn")) {
-    element.parentElement.parentElement.previousElementSibling.innerHTML =
-      obj.createdOn;
+    // element.parentElement.parentElement.previousElementSibling.innerHTML =
+    //   obj.createdOn;
     element.parentElement.parentElement.previousElementSibling.previousElementSibling.innerHTML = `<p class="subTitle-ellipsis">${obj.Subtitle}</p>`;
     element.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.innerHTML = `<a class="link" onclick="helpershowSubPage('${obj.id}');">${obj.title}</a>`;
-    element.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.firstChild.firstChild.src =
+    element.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.firstChild.src =
       obj.listImage;
     return;
   }
@@ -346,57 +346,53 @@ const updateNewRecord = (obj, element) => {
     element.parentElement.previousElementSibling.firstChild.src = obj.listImage;
     element.innerHTML = `<a class="link" onclick="helpershowSubPage('${obj.id}');">${obj.title}</a>`;
     element.parentElement.nextElementSibling.firstChild.innerHTML = `<p class="subTitle-ellipsis">${obj.Subtitle}</p>`;
-    element.parentElement.nextElementSibling.nextElementSibling.firstChild.innerHTML =
-      obj.createdOn;
+    // element.parentElement.nextElementSibling.nextElementSibling.firstChild.innerHTML =
+    //   obj.createdOn;
 
     return;
   }
   if (element.classList.contains("icon-pencil")) {
-    element.parentElement.parentElement.parentElement.previousElementSibling.innerHTML =
-      obj.createdOn;
+    // element.parentElement.parentElement.parentElement.previousElementSibling.innerHTML =
+    //   obj.createdOn;
     element.parentElement.parentElement.parentElement.previousElementSibling.previousElementSibling.innerHTML = `<p class="subTitle-ellipsis">${obj.Subtitle}</p>`;
     element.parentElement.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.innerHTML = `<a class="link" onclick="helpershowSubPage('${obj.id}');">${obj.title}</a>`;
     //console.log("here>>>>>",element.parentElement.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.firstChild);
-    element.parentElement.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.firstChild.firstChild.src =
-      croppedImage(obj.listImage);
+    element.parentElement.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.firstChild.src =
+      croppedImage(obj.listImage); // here check
   }
 };
 
-async function getCreatedOn(id) {
-   Items.getById(id, (err, res) => {
-     let date;
-    if (err) return console.error(err);
-    date = res.data.createdOn;
-    return date;
-  });
-};
-
-const saveItem = async (id, element) => {
-  let date = "df"
-  console.log("id", id, "element", element);
+// const getCreatedOn = async (id) => {
+//   await Items.getById(id, (err, res) => {
+//     if (err) console.error(err);
+//     else return res.data.createdOn;
+//   });
+// };
+const saveItem = async (item, element) => {
+  console.log("item", item, "element", element);
   var table = document.getElementById("items-table");
-  date = await getCreatedOn(id);
-  console.log("date ::::::", date);
+  // let date = await getCreatedOn(id);
+  // console.log("date ::::::", date);
   let newItem = {
     title: title.value, 
     Subtitle: subtitle.value,
     listImage: croppedImage(thumbnail.imageUrl),
     coverImage: croppedCoverImage(thumbnail2.imageUrl),
     description: tinymce.activeEditor.getContent(),
-    createdOn: date,
   };
 
-  if (id != null) {
-    Items.edit( id,
+  if (item != null) {
+    Items.edit(
+      item.id,
       {
-      newItem
-    },
-      
+        createdOn: item.data.createdOn,
+        ...newItem,
+      },
       (err, res) => {
         if (err) console.error(err);
         else {
           updateNewRecord(
-            { id: id, createdOn: res.data.createdOn, ...newItem },
+            { id: item.id, createdOn: res.data.createdOn, ...newItem },
             element
           );
           buildfire.dialog.toast({

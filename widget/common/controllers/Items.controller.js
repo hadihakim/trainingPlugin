@@ -40,7 +40,7 @@ const Items = {
   getById: async (id, callback) => {
     await buildfire.publicData.getById(id, Items.TAG, (err, res) => {
       if (err) return callback(err, null);
-      else return callback(null, res);
+      else return  callback(null, res);
     });
   },
   search: async (options, callback) => {
