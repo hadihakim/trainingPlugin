@@ -47,29 +47,31 @@ const init = () => {
   };
 
   const searchAndAddItems = async (listViewSize, items) => {
-    buildfire.publicData.search(
-      {
-        skip: listViewSize,
-        limit: 7,
-      },
-      "Items",
-      (err, res) => {
-        if (err)
-          return console.error("there was a problem retrieving your data");
-        res.forEach((element) => {
-          let itemObj = {
-            id: element.id,
-            title: element.data.title,
-            // description: element.data.description,
-            imageUrl: element.data.listImage,
-            subtitle: element.data.Subtitle,
-            data: element.data,
-          };
-          items.push(itemObj);
-        });
-        createList(items);
-      }
-    );
+    return new Promise((resolve, reject) => {
+      buildfire.publicData.search(
+        {
+          skip: listViewSize,
+          limit: 7,
+        },
+        "Items",
+        (err, res) => {
+          if (err)
+            return console.error("there was a problem retrieving your data");
+          res.forEach((element) => {
+            let itemObj = {
+              id: element.id,
+              title: element.data.title,
+              // description: element.data.description,
+              imageUrl: element.data.listImage,
+              subtitle: element.data.Subtitle,
+              data: element.data,
+            };
+            items.push(itemObj);
+          });
+          resolve(createList(items));
+        }
+      );
+    });
   };
 
   const UpdateOnList = (listViewSize, items) => {
@@ -117,14 +119,17 @@ const init = () => {
   const onscrollHelper = async (element) => {
     let list = document.getElementById("listViewContainer");
     //let mainPage = document.getElementById("mainPage");
+
     let listViewSize = list.childNodes.length;
     let items = [];
     if (
       (element.scrollTop + element.clientHeight) / element.scrollHeight >=
       0.9
     ) {
-      
+      document.getElementById("listViewLoading").classList.remove("hidden");
       await searchAndAddItems(listViewSize, items);
+
+      document.getElementById("listViewLoading").classList.add("hidden");
     } else {
       lazyloading = false;
     }
@@ -206,9 +211,14 @@ const init = () => {
   // get language data
   Languages.get((err, res) => {
     if (err) console.error(err);
-    searchInput.placeholder = res.data.screenOne.search.value;
-    sortA = res.data.screenOne.sortAsc.value;
-    sortB = res.data.screenOne.sortDesc.value;
+    else {
+      searchInput.placeholder =
+        res.data.screenOne.search.value.trim() == ""
+          ? "Search"
+          : res.data.screenOne.search.value;
+      sortA = res.data.screenOne.sortAsc.value;
+      sortB = res.data.screenOne.sortDesc.value;
+    }
   });
 
   buildfire.datastore.onUpdate((e) => {
@@ -367,11 +377,11 @@ const drawer = async () => {
       listItems: [
         {
           id: 1,
-          text: sortA,
+          text: sortA.trim() === "" ? "Sort A-Z" : sortA,
         },
         {
           id: -1,
-          text: sortB,
+          text: sortB.trim() === "" ? "Sort A-Z" : sortB,
         },
       ],
     },
@@ -419,14 +429,13 @@ const supPageHandler = () => {
     buildfire.messaging.sendMessageToControl({
       show: true,
       data: item.data,
-      id:item.id,
+      id: item.id,
     });
   };
 };
 
 // show item data in sub page
 const subItemInfoHandler = (item) => {
-  
   title.innerHTML = item.data.title;
   subtitle.innerHTML = item.data.Subtitle;
   coverImage.src = item.data.coverImage;

@@ -62,6 +62,8 @@ async function checkInputs() {
 
   return true;
 }
-
+buildfire.messaging.sendMessageToWidget({
+  show: false,
+});
 initialState();
 checkInputs();
