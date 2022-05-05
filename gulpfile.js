@@ -5,6 +5,17 @@ const concat = require("gulp-concat");
 const autoprefixer = require("gulp-autoprefixer");
 const cssmain = require("gulp-cssmin");
 const htmlmin = require("gulp-htmlmin");
+
+const destinationFolder = releaseFolder();
+
+function releaseFolder() {
+  var arr = __dirname.split("/");
+  var folder = arr.pop();
+  arr.push(folder + "_release");
+  return arr.join("/");
+}
+
+console.log(">> Building to ", destinationFolder);
 // control
 const minifyContent = () => {
   return src("control/content/js/*.js")
@@ -16,7 +27,7 @@ const minifyContent = () => {
       })
     )
     .pipe(sourcemaps.write("./"))
-    .pipe(dest("dist/assets/js/control/content"));
+    .pipe(dest(destinationFolder + "/control/content"));
 };
 
 const minifyIntroduction = () => {
@@ -29,7 +40,7 @@ const minifyIntroduction = () => {
       })
     )
     .pipe(sourcemaps.write("./"))
-    .pipe(dest("dist/assets/js/control/introduction"));
+    .pipe(dest(destinationFolder+"/control/introduction"));
 };
 
 const minifyLanguage = () => {
@@ -42,7 +53,7 @@ const minifyLanguage = () => {
       })
     )
     .pipe(sourcemaps.write("./"))
-    .pipe(dest("dist/assets/js/control/language"));
+    .pipe(dest(destinationFolder+"/control/language"));
 };
 
 // widget
@@ -56,7 +67,7 @@ const minifyWidget = () => {
       })
     )
     .pipe(sourcemaps.write("./"))
-    .pipe(dest("dist/assets/js/widget"));
+    .pipe(dest(destinationFolder+"/widget"));
 };
 
 // widget common
@@ -77,7 +88,7 @@ const minifyWidgetCommon = () => {
       })
     )
     .pipe(sourcemaps.write("./"))
-    .pipe(dest("dist/assets/js/widget/common"));
+    .pipe(dest(destinationFolder+"/widget/common"));
 };
 
 // style
@@ -92,7 +103,7 @@ const minifyStyleControl = () => {
     .pipe(cssmain())
     .pipe(concat("styleControl.css"))
     .pipe(sourcemaps.write("."))
-    .pipe(dest("dist/assets/style"));
+    .pipe(dest(destinationFolder+"/style"));
 };
 
 const minifyStyleWidget = () => {
@@ -102,7 +113,7 @@ const minifyStyleWidget = () => {
     .pipe(cssmain())
     .pipe(concat("styleWidget.css"))
     .pipe(sourcemaps.write("."))
-    .pipe(dest("dist/assets/style"));
+    .pipe(dest(destinationFolder+"/style"));
 };
 
 // html
@@ -111,14 +122,14 @@ const minifyHTMLControl = () => {
     "control/content/*.html",
     "control/introduction/*.html",
     "control/language/*.html",
-  ])
+  ],{base:"."})
     .pipe(htmlmin({ collapseWhitespace: true }))
-    .pipe(dest("dist/assets/html/control"));
+    .pipe(dest(destinationFolder+"/control"));
 };
 const minifyHTMLWidget = () => {
   return src("widget/*.html")
     .pipe(htmlmin({ collapseWhitespace: true }))
-    .pipe(dest("dist/assets/html/widget"));
+    .pipe(dest(destinationFolder+"/widget"));
 };
 
 const watchTask = () => {
