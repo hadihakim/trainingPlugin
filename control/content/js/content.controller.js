@@ -186,7 +186,6 @@ const showSubPage = (item, element) => {
     };
   }
 };
-
 const hideSubPage = () => {
   document.getElementById("mainPage").style.display = "block";
   document.getElementById("subPage").style.display = "none";
