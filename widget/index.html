@@ -73,16 +73,14 @@
     <div id="empty_state">
       <img src="../../../pluginTester/media/ic_bookmark_empty.svg" alt="empty-state">
     </div>
-    
+
     <div id="full_state">
       <div id="carousel"></div>
       <div id="my_container_div" class="wysiwygContainer"></div>
       <div id="listViewContainer"></div>
     </div>
 
-    <div id="listViewLoading" class="hidden">
-      <embed src="../resources/Spinner-1s-200px.svg" type="ss">
-    </div>
+
 
     <div id="skeletonSort" class="hidden">
       <div class="content-loadingSort">
@@ -103,23 +101,23 @@
   </div>
 
 
-  <div class="mdc-layout-grid hidden slide-in demo-grid" id="subPage">
+  <div class="mdc-layout-grid hidden slide-in " id="subPage">
     <div class="mdc-layout-grid__inner sub-image-container">
-      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-8 demo-cell">
+      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-8 ">
         <img id="coverImage"></img>
       </div>
-      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-3 demo-cell">
+      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-3 ">
         <img id="listImage" onclick="imagePreviewer(this.src)"></img>
       </div>
     </div>
     <div class="mdc-layout-grid__inner content-container">
-      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-8 demo-cell">
+      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-8 ">
         <h3 id="title"></h3>
       </div>
-      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-8 demo-cell">
+      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-8 ">
         <p id="subtitle"></p>
       </div>
-      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-8 demo-cell">
+      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-8 ">
         <div id="my_sub_container_div"></div>
       </div>
     </div>
@@ -129,7 +127,7 @@
 
   <div id="skeleton"></div>
   <div id="skeleton2"></div>
-  <div id="skeleton2" class="hidden">
+  <div id="skeleton3" class="hidden">
     <div class="content-loading">
       <div class="listImage-loading animation-loading"></div>
       <div class="item-loading animation-loading"></div>
@@ -141,7 +139,17 @@
       <div class="item-loading animation-loading"></div>
     </div>
   </div>
+ 
 
+
+  <!-- list view loading -->
+  <div id="listViewLoading" class="hidden">
+    <div class="loader">
+      <svg class="circular">
+        <circle class="path" fill="none" r="20" cx="50" cy="50" stroke-width="3" stroke-miterlimit="10" />
+      </svg>
+    </div>
+  </div>
 </body>
 
 </html>
