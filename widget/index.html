@@ -55,17 +55,25 @@
 
 <body>
   <div id="mainPage">
-    <div class="searchItem mdc-card">
-      <div class="search-container">
-        <label for="searchInput" class="material-icons icon" id="searchIcon">search</label>
-        <input class="bodyTextTheme " type="search" name="search" id="searchInput" placeholder="Search"
-          autocomplete="off" />
-        <label class="material-icons icon " id="sortIcon">sort</label>
+    <div class="mdc-layout-grid">
+      <div class="mdc-layout-grid__inner">
+        <div class="mdc-layout-grid__cell--span-12">
+          <div class="searchItem mdc-card">
+            <div class="search-container">
+              <label for="searchInput" class="material-icons icon" id="searchIcon">search</label>
+              <input class="bodyTextTheme " type="search" name="search" id="searchInput" placeholder="Search"
+                autocomplete="off" />
+              <label class="material-icons icon " id="sortIcon">sort</label>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+
     <div id="empty_state">
       <img src="../../../pluginTester/media/ic_bookmark_empty.svg" alt="empty-state">
     </div>
+    
     <div id="full_state">
       <div id="carousel"></div>
       <div id="my_container_div" class="wysiwygContainer"></div>
@@ -73,7 +81,7 @@
     </div>
 
     <div id="listViewLoading" class="hidden">
-      <embed  src="../resources/Spinner-1s-200px.svg" type="ss" >
+      <embed src="../resources/Spinner-1s-200px.svg" type="ss">
     </div>
 
     <div id="skeletonSort" class="hidden">
@@ -91,28 +99,37 @@
         <div class="listImage-loading animation-loading"></div>
         <div class="item-loading animation-loading"></div>
       </div>
-  </div>
-  </div>
-
-
-  <div id="subPage" class="hidden slide-in">
-    <div class="images-container">
-      <img id="coverImage"></img>
-      <img id="listImage" onclick="imagePreviewer(this.src)"></img>
-
     </div>
-    <div class="info-container">
-      <h3 id="title"></h3>
-      <p id="subtitle"></p>
-    </div>
-    <div id="my_sub_container_div"></div>
-
   </div>
+
+
+  <div class="mdc-layout-grid hidden slide-in demo-grid" id="subPage">
+    <div class="mdc-layout-grid__inner sub-image-container">
+      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-8 demo-cell">
+        <img id="coverImage"></img>
+      </div>
+      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-3 demo-cell">
+        <img id="listImage" onclick="imagePreviewer(this.src)"></img>
+      </div>
+    </div>
+    <div class="mdc-layout-grid__inner content-container">
+      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-8 demo-cell">
+        <h3 id="title"></h3>
+      </div>
+      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-8 demo-cell">
+        <p id="subtitle"></p>
+      </div>
+      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-8 demo-cell">
+        <div id="my_sub_container_div"></div>
+      </div>
+    </div>
+  </div>
+
 
 
   <div id="skeleton"></div>
   <div id="skeleton2"></div>
-  <div id="skeleton3" class="hidden">
+  <div id="skeleton2" class="hidden">
     <div class="content-loading">
       <div class="listImage-loading animation-loading"></div>
       <div class="item-loading animation-loading"></div>
@@ -124,7 +141,6 @@
       <div class="item-loading animation-loading"></div>
     </div>
   </div>
-
 
 </body>
 
