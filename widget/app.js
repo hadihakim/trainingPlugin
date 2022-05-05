@@ -24,6 +24,7 @@ const init = () => {
       else if (res.length == 0 && skipItems == 0) {
         full_state.style.display = "none";
         empty_state.style.display = "flex";
+        skeleton.classList.add("hidden");
       } else {
         full_state.style.display = "block";
         empty_state.style.display = "none";
