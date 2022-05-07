@@ -5,7 +5,7 @@ const concat = require("gulp-concat");
 const autoprefixer = require("gulp-autoprefixer");
 const cssmain = require("gulp-cssmin");
 const htmlmin = require("gulp-htmlmin");
-
+const imagemin = require("gulp-imagemin");
 const destinationFolder = releaseFolder();
 
 function releaseFolder() {
@@ -40,7 +40,7 @@ const minifyIntroduction = () => {
       })
     )
     .pipe(sourcemaps.write("./"))
-    .pipe(dest(destinationFolder+"/control/introduction"));
+    .pipe(dest(destinationFolder + "/control/introduction"));
 };
 
 const minifyLanguage = () => {
@@ -53,7 +53,7 @@ const minifyLanguage = () => {
       })
     )
     .pipe(sourcemaps.write("./"))
-    .pipe(dest(destinationFolder+"/control/language"));
+    .pipe(dest(destinationFolder + "/control/language"));
 };
 
 // widget
@@ -67,7 +67,7 @@ const minifyWidget = () => {
       })
     )
     .pipe(sourcemaps.write("./"))
-    .pipe(dest(destinationFolder+"/widget"));
+    .pipe(dest(destinationFolder + "/widget"));
 };
 
 // widget common
@@ -88,7 +88,7 @@ const minifyWidgetCommon = () => {
       })
     )
     .pipe(sourcemaps.write("./"))
-    .pipe(dest(destinationFolder+"/widget/common"));
+    .pipe(dest(destinationFolder + "/widget/common"));
 };
 
 // style
@@ -103,7 +103,7 @@ const minifyStyleControl = () => {
     .pipe(cssmain())
     .pipe(concat("styleControl.css"))
     .pipe(sourcemaps.write("."))
-    .pipe(dest(destinationFolder+"/style"));
+    .pipe(dest(destinationFolder + "/style"));
 };
 
 const minifyStyleWidget = () => {
@@ -113,23 +113,41 @@ const minifyStyleWidget = () => {
     .pipe(cssmain())
     .pipe(concat("styleWidget.css"))
     .pipe(sourcemaps.write("."))
-    .pipe(dest(destinationFolder+"/style"));
+    .pipe(dest(destinationFolder + "/style"));
 };
 
 // html
 const minifyHTMLControl = () => {
-  return src([
-    "control/content/*.html",
-    "control/introduction/*.html",
-    "control/language/*.html",
-  ],{base:"."})
+  return src(
+    [
+      "control/content/*.html",
+      "control/introduction/*.html",
+      "control/language/*.html",
+    ],
+    { base: "." }
+  )
     .pipe(htmlmin({ collapseWhitespace: true }))
-    .pipe(dest(destinationFolder+"/control"));
+    .pipe(dest(destinationFolder));
 };
 const minifyHTMLWidget = () => {
   return src("widget/*.html")
     .pipe(htmlmin({ collapseWhitespace: true }))
-    .pipe(dest(destinationFolder+"/widget"));
+    .pipe(dest(destinationFolder + "/widget"));
+};
+
+// resources folder
+// images
+const minifyImages = () => {
+  return src("resources/*").pipe(
+    imagemin().pipe(dest(destinationFolder + "/resources"))
+  );
+};
+
+// global file
+const minifyGlobalFile = () => {
+  return src(["plugin.json", "README.md"], { base: "." }).pipe(
+    dest(destinationFolder)
+  );
 };
 
 const watchTask = () => {
@@ -166,6 +184,8 @@ const watchTask = () => {
     minifyHTMLControl
   );
   watch("widget/*.html", minifyHTMLWidget);
+  watch("resources/*", minifyImages);
+  watch(["plugin.json", "README.md"], minifyGlobalFile);
 };
 
 exports.default = series(
@@ -178,5 +198,7 @@ exports.default = series(
   minifyStyleWidget,
   minifyHTMLControl,
   minifyHTMLWidget,
+  minifyImages,
+  minifyGlobalFile,
   watchTask
 );
