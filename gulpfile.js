@@ -21,11 +21,7 @@ const minifyContent = () => {
   return src("control/content/js/*.js")
     .pipe(sourcemaps.init())
     .pipe(concat("main.js"))
-    .pipe(
-      terser({
-        toplevel: true,
-      })
-    )
+    .pipe(terser())
     .pipe(sourcemaps.write("./"))
     .pipe(dest(destinationFolder + "/control/content"));
 };
@@ -34,24 +30,19 @@ const minifyIntroduction = () => {
   return src("control/introduction/js/*.js")
     .pipe(sourcemaps.init())
     .pipe(concat("main.js"))
-    .pipe(
-      terser({
-        toplevel: true,
-      })
-    )
+    .pipe(terser())
     .pipe(sourcemaps.write("./"))
     .pipe(dest(destinationFolder + "/control/introduction"));
 };
 
 const minifyLanguage = () => {
-  return src("control/language/JS/*.js")
+  return src([
+    "control/language/JS/stringsUI.js",
+    "control/language/JS/language.controller.js",
+  ])
     .pipe(sourcemaps.init())
     .pipe(concat("main.js"))
-    .pipe(
-      terser({
-        toplevel: true,
-      })
-    )
+    .pipe(terser())
     .pipe(sourcemaps.write("./"))
     .pipe(dest(destinationFolder + "/control/language"));
 };
