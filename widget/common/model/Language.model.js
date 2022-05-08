@@ -1,8 +1,8 @@
 class Language {
     constructor(data = {}) {
       this.search = data.search || "search";
-      this.sortA = data.sortA || "";
-      this.sortB = data.sortB || "";
+      this.sortA = data.sortA || "Sort A - Z";
+      this.sortB = data.sortB || "Sort Z - A";
   
       this.createdOn = data.createdOn || new Date();
       this.createdBy = data.createdBy || null;

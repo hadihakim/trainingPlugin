@@ -63,12 +63,30 @@
   cursor: pointer;
 }
 
-#contentBody .sub-page>.container>.row>.col-md-4>.thumbnail-picker>.item>.main>.screens>.screen {
+#contentBody
+  .sub-page
+  > .container
+  > .row
+  > .col-md-4
+  > .thumbnail-picker
+  > .item
+  > .main
+  > .screens
+  > .screen {
   width: 96px !important;
   height: 96px !important;
 }
 
-#contentBody .sub-page>.container>.row>.col-md-4>.thumbnail-picker2>.item>.main>.screens>.screen {
+#contentBody
+  .sub-page
+  > .container
+  > .row
+  > .col-md-4
+  > .thumbnail-picker2
+  > .item
+  > .main
+  > .screens
+  > .screen {
   width: 96px !important;
   height: 96px !important;
 }
@@ -79,7 +97,8 @@
   line-height: 18px;
 }
 
-#contentBody .link,.subTitle-ellipsis {
+#contentBody .link,
+.subTitle-ellipsis {
   overflow: hidden;
   width: 13em;
   display: block;
@@ -95,14 +114,14 @@
   height: 40vh !important;
 }
 
-#contentBody #empty-state>.container {
+#contentBody #empty-state > .container {
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-#contentBody .thumbnail-picker2>.item {
+#contentBody .thumbnail-picker2 > .item {
   margin-right: 30vw !important;
 }
 
@@ -127,17 +146,17 @@
   color: var(--c-gray4);
 }
 
-#contentBody th h5:hover span, .active {
+#contentBody th h5:hover span,
+.active {
   color: var(--c-gray4) !important;
 }
-
 
 #contentBody th:first-child:hover,
 #contentBody th:last-child:hover {
   cursor: default;
 }
 
-#contentBody .align-middle{
+#contentBody .align-middle {
   vertical-align: middle !important;
 }
 
