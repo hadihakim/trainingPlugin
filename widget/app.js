@@ -216,8 +216,14 @@ const init = () => {
         res.data.screenOne.search.value.trim() == ""
           ? "Search"
           : res.data.screenOne.search.value;
-      sortA = res.data.screenOne.sortAsc.value;
-      sortB = res.data.screenOne.sortDesc.value;
+      sortA =
+        res.data.screenOne.sortAsc.value.trim() == ""
+          ? "Sort A - Z"
+          : res.data.screenOne.sortAsc.value;
+      sortB =
+        res.data.screenOne.sortDesc.value.trim() == ""
+          ? "Sort Z - A"
+          : res.data.screenOne.sortAsc.value;
     }
   });
 
