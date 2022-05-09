@@ -132,7 +132,17 @@ html[buildfire="widget"] {
   justify-content: center;
   align-items: center;
 }
-
+.fade-animation{
+  animation: fade-animation 1s ease-in-out both;
+  opacity: 0;
+  background-color: #fff;
+  width: fit-content;
+}
+@keyframes fade-animation {
+  to{
+    opacity: 1;
+  }
+}
 #full_state {
   /* height: 100%; */
   width: 100%;
@@ -293,15 +303,3 @@ html[buildfire="widget"] {
   }
 }
 
-/* ------------- */
-.skeleton-container {
-  background-color: red;
-}
-.skeleton-container .skeleton-image-container,
-.skeleton-container .skeleton-item-container {
-  height: 90px !important;
-  /* width: 50px !important; */
-  margin: 5px !important;
-  /* padding: 10px !important; */
-  /* background-color: #ececec; */
-}
