@@ -127,18 +127,6 @@ const minifyHTMLControl = () => {
           'src="./main.js"'
         )
       )
-      // .pipe(
-      //   replace(
-      //     'src="../../../trainingPlugin_release/control/introduction/main.js"',
-      //     'src="./main.js"'
-      //   )
-      // )
-      // .pipe(
-      //   replace(
-      //     'src="../../../trainingPlugin_release/control/language/main.js"',
-      //     'src="./main.js"'
-      //   )
-      // )
       .pipe(
         replace(
           'src="../../../trainingPlugin_release/widget/common/main.js"',

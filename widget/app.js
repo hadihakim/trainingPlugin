@@ -521,6 +521,10 @@ const imagePreviewer = (imgUrl) => {
   });
 };
 
+listImage.addEventListener("click", () => {
+  let link=listImage.src;
+  imagePreviewer(link)
+})
 // croped image
 const cropImageHandler = (imgUrl) => {
   let croppedImage = buildfire.imageLib.cropImage(imgUrl, {

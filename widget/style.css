@@ -45,7 +45,7 @@ html[buildfire="widget"] {
 .icon {
   color: var(--bf-theme-footer-icon);
 }
-.icon:hover{
+.icon:hover {
   cursor: pointer;
 }
 #my_sub_container_div {
@@ -132,17 +132,18 @@ html[buildfire="widget"] {
   justify-content: center;
   align-items: center;
 }
-.fade-animation-list-image,.fade-animation-cover-image{
+.fade-animation-list-image,
+.fade-animation-cover-image {
   animation: fade-animation 1s ease-in-out both;
   opacity: 0;
   background-color: #fff;
   width: fit-content;
 }
-.fade-animation-cover-image{
+.fade-animation-cover-image {
   width: 100%;
 }
 @keyframes fade-animation {
-  to{
+  to {
     opacity: 1;
   }
 }
@@ -305,4 +306,3 @@ html[buildfire="widget"] {
     stroke-dashoffset: -124px;
   }
 }
-
