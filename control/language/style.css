@@ -1,32 +1,27 @@
-.subTitle {
+#languageBody .subTitle {
   margin-bottom: 25px;
   font-style: italic;
 }
 
-textarea:invalid,
-input:invalid {
-  background-color: lightpink;
-}
-
-.hidden {
+#languageBody .hidden {
   display: none;
 }
 
-#deleteButton {
+#languageBody #deleteButton {
   padding-right: 25px;
   margin-top: 5px;
 }
 
-label {
+#languageBody label {
   color: #5f5f5f;
   width: 20% !important;
 }
 
-.form-group {
+#languageBody .form-group {
   display: flex;
 }
 
-input {
+#languageBody input {
   margin-left: 20% !important;
   margin-right: 5% !important;
   width: 60% !important;

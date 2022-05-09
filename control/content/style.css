@@ -76,7 +76,28 @@
   width: 96px !important;
   height: 96px !important;
 }
-
+#contentBody
+  .sub-page
+  > .container
+  > .row
+  > .col-md-4
+  > .thumbnail-picker2
+  > .item
+  > .main
+  > .screens .screen {
+  max-width: 171px !important;
+}
+#contentBody
+  .sub-page
+  > .container
+  > .row
+  > .col-md-4
+  > .thumbnail-picker2
+  > .item
+  > .main
+  > .screens .screen.layouticon a {
+  max-width: 171px !important;
+}
 #contentBody
   .sub-page
   > .container
@@ -87,9 +108,10 @@
   > .main
   > .screens
   > .screen {
-  width: 96px !important;
+  width: 130px !important;
   height: 96px !important;
 }
+
 
 #contentBody .sub-page h1 {
   font-weight: 700;
