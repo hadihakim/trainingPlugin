@@ -18,6 +18,7 @@ const init = () => {
     let options = {
       skip: skipItems,
       limit: 7,
+      
     };
 
     await Items.search(options, (err, res) => {
