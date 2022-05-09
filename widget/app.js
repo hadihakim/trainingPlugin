@@ -52,6 +52,7 @@ const init = () => {
         {
           skip: listViewSize,
           limit: 7,
+          sort:{title:-1}
         },
         "Items",
         (err, res) => {
@@ -68,6 +69,7 @@ const init = () => {
             };
             items.push(itemObj);
           });
+          console.log("tetststststs>>>>>", items);
           resolve(createList(items));
         }
       );
@@ -223,7 +225,7 @@ const init = () => {
       sortB =
         res.data.screenOne.sortDesc.value.trim() == ""
           ? "Sort Z - A"
-          : res.data.screenOne.sortAsc.value;
+          : res.data.screenOne.sortDesc.value;
     }
   });
 
@@ -387,7 +389,7 @@ const drawer = async () => {
         },
         {
           id: -1,
-          text: sortB.trim() === "" ? "Sort A-Z" : sortB,
+          text: sortB.trim() === "" ? "Sort Z-A" : sortB,
         },
       ],
     },

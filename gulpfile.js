@@ -43,7 +43,7 @@ const minifyLanguage = () => {
   ])
     .pipe(sourcemaps.init())
     .pipe(concat("main.js"))
-    .pipe(terser())
+    .pipe(terser({ toplevel: true }))
     .pipe(sourcemaps.write("./"))
     .pipe(dest(destinationFolder + "/control/language"));
 };
@@ -110,46 +110,50 @@ const minifyStyleWidget = () => {
 
 // html
 const minifyHTMLControl = () => {
-  return src(
-    [
-      "control/content/*.html",
-      "control/introduction/*.html",
-      "control/language/*.html",
-    ],
-    { base: "." }
-  )
-    .pipe(
-      replace(
-        'src="../../../trainingPlugin_release/control/content/main.js"',
-        'src="./main.js"'
-      )
+  return (
+    src(
+      [
+        "control/content/*.html",
+        "control/introduction/*.html",
+        "control/language/*.html",
+      ],
+      { base: "." }
     )
-    .pipe(
-      replace(
-        'src="../../../trainingPlugin_release/control/introduction/main.js"',
-        'src="./main.js"'
+      .pipe(
+        replace(
+          'src="../../../trainingPlugin_release/control/content/main.js"' ||
+            'src="../../../trainingPlugin_release/control/introduction/main.js"' ||
+            'src="../../../trainingPlugin_release/control/language/main.js"',
+          'src="./main.js"'
+        )
       )
-    )
-    .pipe(
-      replace(
-        'src="../../../trainingPlugin_release/control/language/main.js"',
-        'src="./main.js"'
+      // .pipe(
+      //   replace(
+      //     'src="../../../trainingPlugin_release/control/introduction/main.js"',
+      //     'src="./main.js"'
+      //   )
+      // )
+      // .pipe(
+      //   replace(
+      //     'src="../../../trainingPlugin_release/control/language/main.js"',
+      //     'src="./main.js"'
+      //   )
+      // )
+      .pipe(
+        replace(
+          'src="../../../trainingPlugin_release/widget/common/main.js"',
+          'src="../../widget/common/main.js"'
+        )
       )
-    )
-    .pipe(
-      replace(
-        'src="../../../trainingPlugin_release/widget/common/main.js"',
-        'src="../../widget/common/main.js"'
+      .pipe(
+        replace(
+          'href="../../../trainingPlugin_release/style/styleControl.css"',
+          'href="../../style/styleControl.css"'
+        )
       )
-    )
-    .pipe(
-      replace(
-        'href="../../../trainingPlugin_release/style/styleControl.css"',
-        'href="../../style/styleControl.css"'
-      )
-    )
-    .pipe(htmlmin({ collapseWhitespace: true }))
-    .pipe(dest(destinationFolder));
+      .pipe(htmlmin({ collapseWhitespace: true }))
+      .pipe(dest(destinationFolder))
+  );
 };
 const minifyHTMLWidget = () => {
   return src("widget/*.html")
