@@ -47,36 +47,6 @@ const init = () => {
     });
   };
 
-<<<<<<< HEAD
-  const searchAndAddItems = async (listViewSize, items) => {
-    return new Promise((resolve, reject) => {
-      buildfire.publicData.search(
-        {
-          skip: listViewSize,
-          limit: 7,
-          sort:{title:-1}
-        },
-        "Items",
-        (err, res) => {
-          if (err)
-            return console.error("there was a problem retrieving your data");
-          res.forEach((element) => {
-            let itemObj = {
-              id: element.id,
-              title: element.data.title,
-              // description: element.data.description,
-              imageUrl: element.data.listImage,
-              subtitle: element.data.Subtitle,
-              data: element.data,
-            };
-            items.push(itemObj);
-          });
-          console.log("tetststststs>>>>>", items);
-          resolve(createList(items));
-        }
-      );
-    });
-=======
   const searchAndAddItems = async (listViewSize, items, sorting) => {
     if(sorting == 0) {
       return new Promise((resolve, reject) => {
@@ -132,8 +102,6 @@ const init = () => {
         );
       });
     }
-    
->>>>>>> ce5d7f74ae93ff5eee6a1f7aca24410cf7c25f99
   };
 
   const UpdateOnList = (listViewSize, items) => {
@@ -346,7 +314,6 @@ const init = () => {
     if (backTimer) {
       clearTimeout(backTimer);
     }
-
     backTimer = setTimeout(() => {
       if (mainPage.classList.contains("hidden") == true) {
         mainPage.classList.remove("hidden");
