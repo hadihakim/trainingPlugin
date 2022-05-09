@@ -132,11 +132,14 @@ html[buildfire="widget"] {
   justify-content: center;
   align-items: center;
 }
-.fade-animation{
+.fade-animation-list-image,.fade-animation-cover-image{
   animation: fade-animation 1s ease-in-out both;
   opacity: 0;
   background-color: #fff;
   width: fit-content;
+}
+.fade-animation-cover-image{
+  width: 100%;
 }
 @keyframes fade-animation {
   to{

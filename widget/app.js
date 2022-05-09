@@ -103,7 +103,6 @@ const init = () => {
         );
       });
     }
-    
   };
 
   const UpdateOnList = (listViewSize, items) => {
@@ -255,7 +254,7 @@ const init = () => {
       sortB =
         res.data.screenOne.sortDesc.value.trim() == ""
           ? "Sort Z - A"
-          : res.data.screenOne.sortAsc.value;
+          : res.data.screenOne.sortDesc.value;
     }
   });
 
@@ -316,7 +315,6 @@ const init = () => {
     if (backTimer) {
       clearTimeout(backTimer);
     }
-
     backTimer = setTimeout(() => {
       if (mainPage.classList.contains("hidden") == true) {
         mainPage.classList.remove("hidden");
@@ -419,7 +417,7 @@ const drawer = async () => {
         },
         {
           id: -1,
-          text: sortB.trim() === "" ? "Sort A-Z" : sortB,
+          text: sortB.trim() === "" ? "Sort Z-A" : sortB,
         },
       ],
     },
