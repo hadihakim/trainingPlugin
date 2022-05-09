@@ -109,6 +109,20 @@ const Items = {
       }
     );
   },
+
+  widgetSearchSort: (options, sort, callback) => { 
+    let sortB = null;
+    sort > 0 ? (sortB = -1) : (sortB = 1);
+    Items.search(
+      options,
+      (err, res) => {
+        if (err) return callback(err, null);
+        else {
+          return callback(null, res);
+        }
+      }
+    );
+  },
   thumbnailEvents: (imageUrl) => {
     thumbnail.onChange = (imageUrl) => {
     };

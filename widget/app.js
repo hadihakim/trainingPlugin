@@ -7,12 +7,13 @@ const listView = new buildfire.components.listView("listViewContainer", {
 let items = [];
 let sortA = "";
 let sortB = "";
+let sorting = 0;
+let list = document.getElementById("listViewContainer");
 const init = () => {
   // load list view
   skeletonRender("main");
   const getListViewData = async () => {
     items = [];
-    let list = document.getElementById("listViewContainer");
     let skipItems = list.childNodes.length;
     let options = {
       skip: skipItems,
@@ -46,6 +47,7 @@ const init = () => {
     });
   };
 
+<<<<<<< HEAD
   const searchAndAddItems = async (listViewSize, items) => {
     return new Promise((resolve, reject) => {
       buildfire.publicData.search(
@@ -74,6 +76,64 @@ const init = () => {
         }
       );
     });
+=======
+  const searchAndAddItems = async (listViewSize, items, sorting) => {
+    if(sorting == 0) {
+      return new Promise((resolve, reject) => {
+        buildfire.publicData.search(
+          {
+            skip: listViewSize,
+            limit: 7,
+          },
+          "Items",
+          (err, res) => {
+            if (err)
+              return console.error("there was a problem retrieving your data");
+            res.forEach((element) => {
+              let itemObj = {
+                id: element.id,
+                title: element.data.title,
+                // description: element.data.description,
+                imageUrl: element.data.listImage,
+                subtitle: element.data.Subtitle,
+                data: element.data,
+              };
+              items.push(itemObj);
+            });
+            resolve(createList(items));
+          }
+        );
+      });
+    } else {
+      return new Promise((resolve, reject) => {
+        buildfire.publicData.search(
+          {
+            sort: {title: sorting},
+            skip: listViewSize,
+            limit: 7,
+          },
+          "Items",
+          (err, res) => {
+            if (err)
+              return console.error("there was a problem retrieving your data");
+            res.forEach((element) => {
+              let itemObj = {
+                id: element.id,
+                title: element.data.title,
+                // description: element.data.description,
+                imageUrl: element.data.listImage,
+                subtitle: element.data.Subtitle,
+                data: element.data,
+              };
+              items.push(itemObj);
+            });
+            resolve(createList(items));
+          }
+        );
+      });
+    }
+    
+>>>>>>> ce5d7f74ae93ff5eee6a1f7aca24410cf7c25f99
   };
 
   const UpdateOnList = (listViewSize, items) => {
@@ -129,7 +189,7 @@ const init = () => {
       0.9
     ) {
       document.getElementById("listViewLoading").classList.remove("hidden");
-      await searchAndAddItems(listViewSize, items);
+      await searchAndAddItems(listViewSize, items, sorting);
 
       document.getElementById("listViewLoading").classList.add("hidden");
     } else {
@@ -315,7 +375,7 @@ const search = async (input) => {
 };
 
 const renderListView = (data) => {
-  console.log(data, data.length, "RENDERLIST HH");
+  //console.log(data, data.length, "RENDERLIST HH");
   if (data.length == 0) {
     document.getElementById("empty_state").style.display = "flex";
     return;
@@ -394,31 +454,66 @@ const drawer = async () => {
       ],
     },
     (err, res) => {
+      sorting = res.id;
       skeletonRender("sort");
       document.getElementById("listViewContainer").classList.add("hidden");
       if (err) console.error(err);
       buildfire.components.drawer.closeDrawer();
-      searchSortHelper(items, "title", res.id, (err, res) => {
-        if (err) console.log(err);
+      if (document.getElementById("searchInput").value != "") {
+        searchSortHelper(items, "title", res.id, (err, res) => {
+          if (err) console.log(err);
 
-        items = [];
-        listView.clear();
-        res.forEach((element) => {
-          console.log(element);
-          let itemObj = {
-            id: element.id,
-            title: element.data.title,
-            // description: element.data.description,
-            imageUrl: element.data.listImage,
-            subtitle: element.data.Subtitle,
-            data: element.data,
-          };
-          items.push(itemObj);
+          items = [];
+          listView.clear();
+          res.forEach((element) => {
+            console.log(element);
+            let itemObj = {
+              id: element.id,
+              title: element.data.title,
+              // description: element.data.description,
+              imageUrl: element.data.listImage,
+              subtitle: element.data.Subtitle,
+              data: element.data,
+            };
+            items.push(itemObj);
+          });
+          document.getElementById("skeletonSort").classList.add("hidden");
+          document
+            .getElementById("listViewContainer")
+            .classList.remove("hidden");
+          listView.loadListViewItems(items);
         });
-        document.getElementById("skeletonSort").classList.add("hidden");
-        document.getElementById("listViewContainer").classList.remove("hidden");
-        listView.loadListViewItems(items);
-      });
+      } else {
+        Items.widgetSearchSort(
+          { sort: { title: res.id },
+            skip: 0,
+            limit: 7 },
+          res.id,
+          (err, res) => {
+            console.log(list.childNodes.length, "BKAAKA");
+            if (err) return console.error(err);
+            items = [];
+            listView.clear();
+            res.forEach((element) => {
+              let itemObj = {
+                id: element.id,
+                title: element.data.title,
+                // description: element.data.description,
+                imageUrl: element.data.listImage,
+                subtitle: element.data.Subtitle,
+                data: element.data,
+              };
+              items.push(itemObj);
+            });
+            document.getElementById("skeletonSort").classList.add("hidden");
+            document
+              .getElementById("listViewContainer")
+              .classList.remove("hidden");
+            listView.loadListViewItems(items);
+            console.log(res, "widget Search Sort");
+          }
+        );
+      }
     }
   );
   // document.getElementById("sortSkeleton").classList.add("hidden");
