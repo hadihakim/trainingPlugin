@@ -18,7 +18,6 @@ const thumbnail2 = new buildfire.components.images.thumbnail(
 );
 
 const checkValidation = () => {
-  console.log("HELLO VALIDATION")
   return (title.value != "" && thumbnail.imageUrl != "" && thumbnail2.imageUrl != "") ? document.getElementById("saveBtn").disabled = false : document.getElementById("saveBtn").disabled = true;
 }
 
