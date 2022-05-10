@@ -17,6 +17,33 @@ const thumbnail2 = new buildfire.components.images.thumbnail(
   }
 );
 
+const checkValidation = () => {
+  console.log("HELLO VALIDATION")
+  return (title.value != "" && thumbnail.imageUrl != "" && thumbnail2.imageUrl != "") ? document.getElementById("saveBtn").disabled = false : document.getElementById("saveBtn").disabled = true;
+}
+
+thumbnail.onDelete = function (url) {
+  document.getElementById("saveBtn").disabled = true;
+}
+
+thumbnail2.onDelete = function (url) {
+  document.getElementById("saveBtn").disabled = true;
+}
+
+thumbnail.onChange = function (url) {
+  checkValidation();
+};
+
+thumbnail2.onChange = function (url) {
+  checkValidation();
+};
+
+title.addEventListener(
+  "keyup",
+  (e) => {
+    checkValidation();
+  });
+
 tinymce.init({
   selector: "#wysiwygContent",
 });

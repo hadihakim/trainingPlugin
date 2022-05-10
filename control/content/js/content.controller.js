@@ -373,7 +373,7 @@ const saveItem = async (item, element) => {
   // let date = await getCreatedOn(id);
   // console.log("date ::::::", date);
   let newItem = {
-    title: title.value, 
+    title: title.value,
     Subtitle: subtitle.value,
     listImage: croppedImage(thumbnail.imageUrl),
     coverImage: croppedCoverImage(thumbnail2.imageUrl),
@@ -455,9 +455,9 @@ const uiRow = (el, state) => {
           <td><img class="img-holder" src="${croppedImage(
             el.data.listImage
           )}" alt=""></td>
-          <td><a class="link align-middle" onclick="helpershowSubPage('${el.id}');">${
-    el.data.title
-  }</a></td>
+          <td><a class="link align-middle" onclick="helpershowSubPage('${
+            el.id
+          }');">${el.data.title}</a></td>
           <td><p class="subTitle-ellipsis">${el.data.Subtitle}</p></td>
           <td class="text-center align-middle">${el.data.createdOn}</td>
           <td>
